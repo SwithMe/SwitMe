@@ -1,1 +1,1 @@
-# SwithMe
+# SwitMe
