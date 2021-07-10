@@ -9,9 +9,18 @@ const StyledTitle = styled.p`
   color: ${(props) => props.color || "black"};
   display: inline-block;
   margin-right: ${(props) => props.marginLeft || 0}px;
+  margin-bottom: ${(props) => props.marginBottom || 0}px;
 `;
 
-const Title = ({ children, weight, size, lineHeight, color, marginLeft }) => {
+const Title = ({
+  children,
+  weight,
+  size,
+  lineHeight,
+  color,
+  marginLeft,
+  marginBottom,
+}) => {
   return (
     <StyledTitle
       weight={weight}
@@ -19,6 +28,7 @@ const Title = ({ children, weight, size, lineHeight, color, marginLeft }) => {
       lineHeight={lineHeight}
       color={color}
       marginLeft={marginLeft}
+      marginBottom={marginBottom}
     >
       {children}
     </StyledTitle>
