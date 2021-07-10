@@ -10,6 +10,7 @@ const StyledTitle = styled.p`
   display: inline-block;
   margin-right: ${(props) => props.marginLeft || 0}px;
   margin-bottom: ${(props) => props.marginBottom || 0}px;
+  margin-top: ${(props) => props.marginTop || 0}px;
 `;
 
 const Title = ({
@@ -20,6 +21,7 @@ const Title = ({
   color,
   marginLeft,
   marginBottom,
+  marginTop,
 }) => {
   return (
     <StyledTitle
@@ -29,6 +31,7 @@ const Title = ({
       color={color}
       marginLeft={marginLeft}
       marginBottom={marginBottom}
+      marginTop={marginTop}
     >
       {children}
     </StyledTitle>
