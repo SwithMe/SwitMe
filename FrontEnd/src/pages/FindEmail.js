@@ -18,33 +18,30 @@ const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 45vh;
+  height: 35vh;
 `;
 
 const Text_box = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  width: 80%;
+  width: 96%;
   color: #064538;
 `;
 
-const Login = () => {
+const FindEmail = () => {
   return (
     <Wrapper>
       <Items>
         <img src={logo} style={{ marginBottom: "1rem" }}></img>
-        <Input name="E-mail" width="29rem"></Input>
-        <Input name="비밀번호" width="29rem"></Input>
-        <Button name="로그인" width="29rem" color="#56BE9C"></Button>
+        <Input name="가입된 이메일 주소를 입력해주세요" width="29rem"></Input>
         <Text_box>
-          <div>이메일 / 비밀번호 찾기</div>
-          <div>회원가입</div>
+          <div>가입된 이메일 주소로 확인 메일이 발송됩니다.</div>
         </Text_box>
+        <Button name="이메일 찾기" width="29rem" color="#56BE9C"></Button>
       </Items>
     </Wrapper>
   );
 };
 
-export default Login;
+export default FindEmail;
