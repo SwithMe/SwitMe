@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Input2 from "../components/Input2";
 import Button from "../components/Button";
-
+import Header from "../components/Header";
 import logo from "../assets/logo.png";
 
 const Wrapper = styled.div`
@@ -33,6 +33,7 @@ const TextBox = styled.div`
 const Login = () => {
   return (
     <Wrapper>
+      <Header />
       <Items>
         <img src={logo} style={{ marginBottom: "1rem" }}></img>
         <Input2 name="E-mail" width="29rem"></Input2>
