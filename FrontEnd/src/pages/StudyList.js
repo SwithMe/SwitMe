@@ -63,7 +63,20 @@ const Study = styled.div`
   height: 92px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #56be9c;
+`;
+const State = styled.div`
+  width: 105px;
+  height: 45px;
+  border: ${(props) => props.color || "black"} 1px solid;
+  color: ${(props) => props.color || "black"};
+  font-size: 20px;
+  font-family: "NotoSans";
+  border-radius: 10px;
+  text-align: center;
+  padding: 7px 0px;
 `;
 
 const StudyList = () => {
@@ -338,16 +351,55 @@ const StudyList = () => {
         ></div>
         {studies.map((study, i) => {
           if (i > 5) return false;
+          let statecolor = "#FFE600";
+          if (study.state === "활동중") statecolor = "#56BE9C";
+          else if (study.state === "활동종료") statecolor = "#C70000";
           return (
-            <Study>
+            <Study key={i}>
               <img
                 alt="study profile"
                 src={require("../assets/rectangle.png").default}
-                style={{ width: "60px", height: "60px" }}
+                style={{ width: "60px", height: "60px", marginRight: "24px" }}
               />
-              <Title size="20" weight="400">
-                {study.name}
-              </Title>
+              <div style={{ width: "223px" }}>
+                <Title size="20" weight="400">
+                  {study.name}
+                </Title>
+              </div>
+              <State color={statecolor}>{study.state}</State>
+              <div style={{ width: "158px", marginLeft: "71px" }}>
+                <Title size="20" weight="400">
+                  {study.onoff}
+                </Title>
+              </div>
+              <div style={{ width: "159px" }}>
+                <Title size="20" weight="400">
+                  {study.temperature}°C
+                </Title>
+              </div>
+              <div style={{ width: "164px" }}>
+                <Title size="20" weight="400">
+                  {study.people}/{study.max}
+                </Title>
+              </div>
+              <img
+                alt="study profile"
+                src={require("../assets/circle.png").default}
+                style={{ width: "60px", height: "60px", marginRight: "24px" }}
+              />
+              <div style={{ width: "169px" }}>
+                <Title size="20" weight="400">
+                  {study.owner}
+                </Title>
+              </div>
+              {study.tags.map((tag, i) => {
+                if (i > 3) return false;
+                return (
+                  <Title key={i} size="20" weight="400">
+                    {tag}&nbsp;
+                  </Title>
+                );
+              })}
             </Study>
           );
         })}
