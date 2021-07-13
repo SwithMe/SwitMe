@@ -10,6 +10,7 @@ const Fix = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 50px;
 `;
 const Search = styled.div`
   width: 790%;
@@ -404,6 +405,35 @@ const StudyList = () => {
           );
         })}
       </List>
+      <div
+        style={{
+          width: "1520px",
+          marginTop: "29px",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <Title size="20" weight="400" color="#56BE9C">
+          조건에 맞는 스터디를 찾지 못하셨나요?
+        </Title>
+        <button
+          style={{
+            width: "342px",
+            height: "70px",
+            background: "#56Be9c",
+            border: "none",
+            borderRadius: "10px",
+            fontSize: "24px",
+            color: "#ffffff",
+            fontWeight: "700",
+            fontFamily: "NotoSans",
+            marginLeft: "12px",
+          }}
+        >
+          스터디 개설하기
+        </button>
+      </div>
     </Fix>
   );
 };
