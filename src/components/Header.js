@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "./assets/logo.png";
-import dot from "./assets/search.png";
+import logo from "../assets/logo.png";
+import dot from "../assets/search.png";
 
 const Logo = styled.div`
   background: ${logo};
@@ -28,7 +28,7 @@ const Menu = styled.li`
     color: #56be9c;
   }
 `;
-const Search = styled.search`
+const Search = styled.input`
   border-radius: 10px;
   height: 30px;
   outline: solid;
@@ -47,9 +47,6 @@ function Header() {
       <Menu>홈</Menu>
       <Menu>스톱워치</Menu>
       <Menu>스터디</Menu>
-      <Search>
-        <div></div>
-      </Search>
     </u1>
   );
 }
