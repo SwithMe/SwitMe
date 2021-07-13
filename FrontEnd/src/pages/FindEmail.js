@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../components/Input";
+import Input2 from "../components/Input2";
 import Button from "../components/Button";
 
 import logo from "../assets/logo.png";
@@ -21,7 +21,7 @@ const Items = styled.div`
   height: 35vh;
 `;
 
-const Text_box = styled.div`
+const TextBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,11 +33,11 @@ const FindEmail = () => {
   return (
     <Wrapper>
       <Items>
-        <img src={logo} style={{ marginBottom: "1rem" }}></img>
-        <Input name="가입된 이메일 주소를 입력해주세요" width="29rem"></Input>
-        <Text_box>
+        <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
+        <Input2 name="가입된 이메일 주소를 입력해주세요" width="29rem"></Input2>
+        <TextBox>
           <div>가입된 이메일 주소로 확인 메일이 발송됩니다.</div>
-        </Text_box>
+        </TextBox>
         <Button name="이메일 찾기" width="29rem" color="#56BE9C"></Button>
       </Items>
     </Wrapper>
