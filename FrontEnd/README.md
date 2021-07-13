@@ -61,6 +61,6 @@ EFUB 1기 "시계는영어로와치"
 
 ---
 ## 🔗 Links
-<a href="https://www.notion.so/13cf4a16072c499b89a179f700f9bc8d"><img src="https://img.shields.io/badge/Progress Board-000000?style=flat-square&logo=Notion&logoColor=white"/></a>
+<a href="https://www.notion.so/815ea521fff0422488b1950ce8072a52?v=4f71d33375914646b4d334b2c8e9f7fb"><img src="https://img.shields.io/badge/Progress Board-000000?style=flat-square&logo=Notion&logoColor=white"/></a>
 <a href="https://www.figma.com/file/SA23KzdHWIVDUmoEQn8sbL?embed_host=notion&kind=&node-id=0%3A1&viewer=1"><img src="https://img.shields.io/badge/Prototype Design-F24E1E?style=flat-square&logo=Figma&logoColor=white"/></a>
 <a href="https://github.com/SwithMe/SwitMe/tree/develop/BackEnd"><img src="https://img.shields.io/badge/BackEnd Repository-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
