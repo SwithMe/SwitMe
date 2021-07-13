@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import dot from "../assets/search.png";
+import { useHistory } from "react-router";
 
 const Logo = styled.div`
   background: ${logo};
@@ -41,10 +42,11 @@ const Search = styled.input`
 // };
 
 function Header() {
+  const history = useHistory();
   return (
     <u1>
       <Logo></Logo>
-      <Menu>홈</Menu>
+      <Menu onClick={() => history.push("/")}>홈</Menu>
       <Menu>스톱워치</Menu>
       <Menu>스터디</Menu>
     </u1>
