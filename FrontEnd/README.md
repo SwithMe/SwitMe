@@ -1,14 +1,12 @@
-# ReadMe
+# What's SwitMe ?
 
-## What's SwitMe ?
-
-### 📖 스터디팟 모집
+## 📖 스터디팟 모집
 
 - 학교 내에서 원하는 장소, 시간, 공부 스타일(완전 조용한 게 좋아요, 타이핑 정도는 괜찮아요, 짧은 통화정도는 괜찮아요 등) 등을 설정한 후 원하는 인원만큼 신청받아 함께 공부할 인원 수합을 도와주는 서비스
 - 대상 : 혼자 공부하면 집중하지 못하거나 열심히 공부하려고 나왔는데 몇시간 못버티고 다시 집으로 돌아가는 사람들
 - 특징 : 노쇼, 지각, 조퇴가 많으면 서비스 이용에 제한 두기
 
-![ReadMe%2066da10deefc345829dcc3d6b844f2ac8/Untitled.png](ReadMe%2066da10deefc345829dcc3d6b844f2ac8/Untitled.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8a0f7145-c637-47cc-8788-2b2458b4d8b0/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8a0f7145-c637-47cc-8788-2b2458b4d8b0/Untitled.png)
 
 스터디 리스트
 
