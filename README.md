@@ -54,4 +54,4 @@
 : 헤더 컴포넌트, 스탑워치 페이지
 
 ---
-[🎨 Figma](https://www.figma.com/embed?embed_host=notion&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FSA23KzdHWIVDUmoEQn8sbL%2FSwitme%3Fnode-id%3D0%253A1) &nbsp [📽️ Progress Board](https://www.notion.so/13cf4a16072c499b89a179f700f9bc8d) &nbsp [🐈 GitHub (BackEnd Repo)](https://github.com/SwithMe/SwitMe/tree/develop/BackEnd)
+[🎨 Figma](https://www.figma.com/embed?embed_host=notion&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FSA23KzdHWIVDUmoEQn8sbL%2FSwitme%3Fnode-id%3D0%253A1) [📽️ Progress Board](https://www.notion.so/13cf4a16072c499b89a179f700f9bc8d) [🐈 GitHub (BackEnd Repo)](https://github.com/SwithMe/SwitMe/tree/develop/BackEnd)
