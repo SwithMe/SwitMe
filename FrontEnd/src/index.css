@@ -19,3 +19,9 @@ code {
   font-family: "NotoSans";
   src: url(./assets/Noto_Sans_KR/NotoSansKR-Regular.otf);
 }
+
+:root {
+  --middle: #56be9c;
+  --deep: #064538;
+  --light: #dff6de;
+}
