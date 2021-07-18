@@ -4,12 +4,14 @@ import styled from "styled-components";
 import logo from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/logo.png";
 import profile from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/profile.png";
 import message from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/message.png";
+import dot from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/search.png";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 95px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 `;
@@ -37,14 +39,22 @@ const Menu = styled.div`
   }
 `;
 
-const Search = styled.input`
+const Search = styled.div`
   border: 1px solid var(--middle);
   box-sizing: border-box;
+  padding: 18px;
   padding-left: 30px;
+  margin-left: 80px;
   border-radius: 10px;
   width: 480px;
   height: 65px;
+`;
+
+const Input = styled.input`
+  width: 409px;
+  height: auto;
   font-size: 20px;
+  border: none;
   outline: none;
 `;
 
@@ -61,7 +71,10 @@ function Header() {
       <Menu onClick={() => history.push("/")}>홈</Menu>
       <Menu onClick={() => history.push("/stopwatch")}>스톱워치</Menu>
       <Menu onClick={() => history.push("/studylist")}>스터디</Menu>
-      <Search type="text" placeholder="새로운 스터디를 찾아보세요"></Search>
+      <Search>
+        <Input type="text" placeholder="새로운 스터디를 찾아보세요"></Input>
+        <img src={dot} style={{ width: "16px", height: "16px" }}></img>
+      </Search>
       <Button
         onClick={() => history.push("/")}
         src={message}
