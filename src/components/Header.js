@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import logo from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/logo.png";
-import profile from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/profile.png";
-import message from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/message.png";
-import dot from "C:/Users/김선영/Documents/GitHub/SwitMe/FrontEnd/src/assets/search.png";
+import logo from "../assets/logo.png";
+import profile from "../assets/profile.png";
+import message from "../assets/message.png";
+import dot from "../assets/search.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,9 +40,10 @@ const Menu = styled.div`
 `;
 
 const Search = styled.div`
+  display: flex;
+  align-items: center;
   border: 1px solid var(--middle);
   box-sizing: border-box;
-  padding: 18px;
   padding-left: 30px;
   margin-left: 80px;
   border-radius: 10px;
