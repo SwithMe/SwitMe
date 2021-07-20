@@ -8,6 +8,7 @@ import FindPassword from "./pages/FindPassword";
 import StudyList from "./pages/StudyList";
 import StopWatch from "./pages/StopWatch";
 import StudyDetail from "./pages/StudyDetail";
+import MemberList from "./pages/MemberList";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/studylist" component={StudyList} />
         <Route exact path="/stopwatch" component={StopWatch} />
         <Route exact path="/studydetail" component={StudyDetail} />
+        <Route exact path="/memberlist" component={MemberList} />
       </Switch>
     </Router>
   );
