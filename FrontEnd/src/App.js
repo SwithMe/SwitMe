@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import FindEmail from "./pages/FindEmail";
 import FindPassword from "./pages/FindPassword";
 import StudyList from "./pages/StudyList";
+import Online from "./pages/Online";
+import Offline from "./pages/Offline";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route exact path="/findemail" component={FindEmail} />
         <Route exact path="/findpassword" component={FindPassword} />
         <Route exact path="/studylist" component={StudyList} />
+        <Route exact path="/online" component={Online} />
+        <Route exact path="/offline" component={Offline} />
       </Switch>
     </Router>
   );
