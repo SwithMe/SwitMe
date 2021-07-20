@@ -91,7 +91,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -103,7 +103,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -115,7 +115,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -127,7 +127,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -139,7 +139,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -151,7 +151,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
@@ -163,7 +163,7 @@ const StudyList = () => {
       max: 11,
       temperature: "0",
       owner: "김김김",
-      ownerprofie: ".../assets/circle",
+      ownerprofile: ".../assets/circle",
       tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
   ]);
