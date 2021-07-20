@@ -64,6 +64,12 @@ const StudyDetail = () => {
     link: "https://www.naver.com/",
     etc: "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
+  const [isMember, setIsMember] = useState(true);
+  const [member, setMemver] = useState({
+    date: "2021-11-11",
+    participation: 3,
+    warning: 0,
+  });
   return (
     <Fix>
       <Header />
@@ -203,21 +209,97 @@ const StudyDetail = () => {
         >
           목록으로
         </button>
-        <button
-          style={{
-            width: "282px",
-            height: "70px",
-            background: "#56Be9c",
-            border: "none",
-            borderRadius: "10px",
-            fontSize: "24px",
-            color: "#ffffff",
-            fontWeight: "700",
-            fontFamily: "NotoSans",
-          }}
-        >
-          가입 신청하기
-        </button>
+        {isMember ? (
+          <div
+            style={{
+              background: "#56BE9C",
+              borderRadius: "10px",
+              width: "386px",
+              height: "192px",
+              marginTop: "-120px",
+              marginLeft: "-530px",
+              padding: "39px 27px",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ width: "190px" }}>
+                <Title color="white" size="20">
+                  가입일자
+                </Title>
+              </div>
+              <Title color="white" size="20" weight="400">
+                {member.date}
+              </Title>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "15px",
+              }}
+            >
+              <div style={{ width: "190px" }}>
+                <Title color="white" size="20">
+                  나의 참여 횟수
+                </Title>
+              </div>
+              <Title color="white" size="20" weight="400">
+                {member.participation}회
+              </Title>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "15px",
+              }}
+            >
+              <div style={{ width: "190px" }}>
+                <Title color="white" size="20">
+                  누적 경고 횟수
+                </Title>
+              </div>
+              <Title color="white" size="20" weight="400">
+                {member.warning}회
+              </Title>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        {isMember ? (
+          <button
+            style={{
+              width: "282px",
+              height: "70px",
+              background: "#cccccc",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "24px",
+              color: "#ffffff",
+              fontWeight: "700",
+              fontFamily: "NotoSans",
+            }}
+          >
+            탈퇴하기
+          </button>
+        ) : (
+          <button
+            style={{
+              width: "282px",
+              height: "70px",
+              background: "#56Be9c",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "24px",
+              color: "#ffffff",
+              fontWeight: "700",
+              fontFamily: "NotoSans",
+            }}
+          >
+            가입 신청하기
+          </button>
+        )}
       </Lower>
     </Fix>
   );
