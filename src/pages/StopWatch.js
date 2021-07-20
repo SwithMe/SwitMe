@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
+import Header from "../components/Header_watch";
 import pencil from "../assets/pencil.png";
 import whitePencil from "../assets/whitepencil.png";
 
