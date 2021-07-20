@@ -4,7 +4,6 @@ import Input2 from "../components/Input2";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import logo from "../assets/logo.png";
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -69,6 +69,7 @@ function Header() {
   return (
     <Wrapper>
       <Logo></Logo>
+
       <Menu onClick={() => history.push("/")}>홈</Menu>
       <Menu onClick={() => history.push("/stopwatch")}>스톱워치</Menu>
       <Menu onClick={() => history.push("/studylist")}>스터디</Menu>
