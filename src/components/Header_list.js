@@ -80,10 +80,9 @@ function Header() {
   return (
     <Wrapper>
       <Logo></Logo>
-
-      <Active onClick={() => history.push("/")}>홈</Active>
+      <Menu onClick={() => history.push("/")}>홈</Menu>
       <Menu onClick={() => history.push("/stopwatch")}>스톱워치</Menu>
-      <Menu onClick={() => history.push("/studylist")}>스터디</Menu>
+      <Active onClick={() => history.push("/studylist")}>스터디</Active>
       <Search>
         <Input type="text" placeholder="새로운 스터디를 찾아보세요"></Input>
         <img src={dot} style={{ width: "16px", height: "16px" }}></img>

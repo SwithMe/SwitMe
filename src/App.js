@@ -9,6 +9,8 @@ import StudyList from "./pages/StudyList";
 import StopWatch from "./pages/StopWatch";
 import StudyDetail from "./pages/StudyDetail";
 import MemberList from "./pages/MemberList";
+import Online from "./pages/Online";
+import Offline from "./pages/Offline";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route exact path="/stopwatch" component={StopWatch} />
         <Route exact path="/studydetail" component={StudyDetail} />
         <Route exact path="/memberlist" component={MemberList} />
+        <Route exact path="/online" component={Online} />
+        <Route exact path="/offline" component={Offline} />
       </Switch>
     </Router>
   );
