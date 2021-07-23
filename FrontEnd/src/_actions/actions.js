@@ -5,6 +5,7 @@ const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
 const GET_TOTAL_TIME = "GET_TOTAL_TIME";
 const GET_RANK = "GET_RANK";
+const RECOMMENDED_STUDY = "RECOMMENDED_STUDY";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -42,6 +43,14 @@ export const getRanking = () => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: GET_RANK, payload: request };
+};
+
+export const recommendedStudy = () => {
+  const request = axios
+    .get(`${USER_SERVER}/main/recomstudy`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: RECOMMENDED_STUDY, payload: request };
 };
 
 const actions = (state = {}, action) => {

@@ -3,6 +3,12 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import Title from "../components/Title";
 import Image from "../components/Image";
+import { useDispatch } from "react-redux";
+import {
+  getTotalTime,
+  getRanking,
+  recommendedStudy,
+} from "../_actions/actions";
 
 const Fix = styled.div`
   min-height: 100vh;
@@ -85,6 +91,10 @@ const Study = styled.div`
 `;
 
 const MainPage = () => {
+  const dispatch = useDispatch();
+  const hour = useRef(0);
+  const minute = useRef(0);
+  const second = useRef(0);
   const [ranking, setRanking] = useState([
     { name: "김김김", time: "00:00:00" },
     { name: "김김김", time: "00:00:00" },
@@ -168,7 +178,33 @@ const MainPage = () => {
   const move_max = useRef((studies.length - 6) * 260);
 
   const slideRef = useRef();
+
   useEffect(() => {
+    // dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
+    //   (response) => {
+    //     if (response.payload) {
+    //       hour.current = response.payload;
+    //       minute.current = response.payload;
+    //       second.current = response.payload;
+    //     } else {
+    //       console.log("공부 시간 가져오기 에러");
+    //     }
+    //   }
+    // );
+    // dispatch(getRanking()).then((response) => {
+    //   if (response.payload) {
+    //     setRanking(response.payload);
+    //   } else {
+    //     console.log("랭킹 가져오기 에러");
+    //   }
+    // });
+    // dispatch(recommendedStudy()).then((response) => {
+    //   if (response.payload) {
+    //     setStudies(response.payload);
+    //   } else {
+    //     console.log("추천 스터디 가져오기 에러");
+    //   }
+    // });
     slideRef.current.style.transform = `translateX(-0%)`;
   }, []);
 
@@ -191,7 +227,9 @@ const MainPage = () => {
             <Title>나의 누적 공부 시간</Title>
             <div></div>
             <Timer>
-              <Time>00:00:00</Time>
+              <Time>
+                {hour.current} : {minute.current} : {second.current}
+              </Time>
             </Timer>
           </div>
           <div>
