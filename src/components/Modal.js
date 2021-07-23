@@ -1,26 +1,64 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const Button = styled.button`
-  position: absolute;
-  width: 180px;
-  height: 70px;
-  left: 315px;
-  top: 178px;
-  background: var(--middle);
-  border-radius: 10px;
+const Screen = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-function Modal() {
+const Button = styled.button`
+  width: 180px;
+  height: 70px;
+  background: var(--middle);
+  border-radius: 10px;
+  margin: 10px;
+  margin-top: 40px;
+  color: white;
+  font-size: 24px;
+  outline: none;
+  border: none;
+`;
+
+const Wrapper = styled.div`
+  padding: 50px 110px;
+  justify-content: space-between;
+  text-align: center;
+  background-color: white;
+  position: fixed;
+  font-size: 20px;
+
+  .title {
+    font-weight: bold;
+    color: var(--deep);
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+`;
+
+const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+const Modal = () => {
   return (
-    <Modal>
-      <h2>Modal title</h2>
-      <p>Modal Body</p>
-      <div className="button">
-        <Button styled={{ backgroundColor: "var(--middle)" }}>뒤로가기</Button>
-        <Button>개설하기</Button>
-      </div>
-    </Modal>
+    <Screen>
+      <Overlay> </Overlay>
+      <Wrapper>
+        <div className="title">스터디 이름 쓰는칸</div>
+        <div>스터디를 개설하시겠습니까?</div>
+        <div>
+          <Button style={{ backgroundColor: "#CCCCCC" }}>뒤로가기</Button>
+          <Button>개설하기</Button>
+        </div>
+      </Wrapper>
+    </Screen>
   );
-}
+};
 export default Modal;
