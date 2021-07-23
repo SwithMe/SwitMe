@@ -11,11 +11,16 @@ const Button_box = styled.button`
   outline: none;
 `;
 
-const Button = ({ name, width, height, color }) => {
+const Button = ({ name, width, height, color, borderRadius }) => {
   return (
     <div>
       <Button_box
-        style={{ width: width, height: height, backgroundColor: color }}
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: color,
+          borderRadius: borderRadius,
+        }}
       >
         {name}
       </Button_box>
