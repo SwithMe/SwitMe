@@ -9,15 +9,15 @@ const InputBox = styled.input`
   padding-left: 1rem;
 `;
 
-const Input2 = ({ name, width }) => {
+const Input2 = ({ name, placeholder, width, ...rest }) => {
   return (
-    <div>
-      <InputBox
-        type="text"
-        style={{ width: width }}
-        placeholder={name}
-      ></InputBox>
-    </div>
+    <InputBox
+      type="text"
+      style={{ width: width }}
+      placeholder={placeholder}
+      name={name}
+      {...rest}
+    ></InputBox>
   );
 };
 

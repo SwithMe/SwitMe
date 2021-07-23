@@ -38,6 +38,7 @@ const Input = ({
   placeholder,
   marginTop,
   validinput,
+  ...rest
 }) => {
   return (
     <StyledDiv
@@ -46,6 +47,7 @@ const Input = ({
       borderRadius={borderRadius}
       border={border}
       marginTop={marginTop}
+      {...rest}
     >
       {validinput === "true" ? (
         <StyledInput placeholder={placeholder} inputwidth={inputwidth} />
