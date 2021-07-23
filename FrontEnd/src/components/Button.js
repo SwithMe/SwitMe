@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const Button_box = styled.button`
+const ButtonBox = styled.button`
   color: white;
   font-weight: 700;
   font-size: 1rem;
@@ -9,17 +9,17 @@ const Button_box = styled.button`
   border-radius: 6px;
   border: none;
   outline: none;
+  cursor: pointer;
 `;
 
-const Button = ({ name, width, height, color }) => {
+const Button = ({ name, width, height, color, ...rest }) => {
   return (
-    <div>
-      <Button_box
-        style={{ width: width, height: height, backgroundColor: color }}
-      >
-        {name}
-      </Button_box>
-    </div>
+    <ButtonBox
+      style={{ width: width, height: height, backgroundColor: color }}
+      {...rest}
+    >
+      {name}
+    </ButtonBox>
   );
 };
 
