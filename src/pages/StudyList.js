@@ -245,39 +245,23 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "전체" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "전체" })}>
+              <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "모집중" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "모집중" })}>
+              <Title size="20" weight="400">
                 모집 중
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "활동중" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "활동중" })}>
+              <Title size="20" weight="400">
                 활동 중
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "활동종료" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "활동종료" })}>
+              <Title size="20" weight="400">
                 활동 종료
               </Title>
             </li>
@@ -296,30 +280,18 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "전체" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "전체" })}>
+              <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "온라인" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "온라인" })}>
+              <Title size="20" weight="400">
                 온라인
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "오프라인" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "오프라인" })}>
+              <Title size="20" weight="400">
                 오프라인
               </Title>
             </li>
