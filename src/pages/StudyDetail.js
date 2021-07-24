@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
-import { getStudydetail, getStudylist } from "../_actions/actions";
+import { getStudydetail, joinStudy, leaveStudy } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -78,7 +78,7 @@ const StudyDetail = ({ match }) => {
     warning: 0,
   });
   useEffect(() => {
-    dispatch(getStudylist(study_id)).then((response) => {
+    dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
         setStudy(response.payload);
       } else {
@@ -86,6 +86,31 @@ const StudyDetail = ({ match }) => {
       }
     });
   }, []);
+
+  const join = () => {
+    const user_id = window.localStorage.getItem("id");
+    dispatch(joinStudy(user_id, study_id)).then((response) => {
+      if (response.payload) {
+        alert("스터디에 가입되었습니다.");
+        window.location.replace(`/studydetail/${study.id}`);
+      } else {
+        console.log("스터디 가입 실패");
+      }
+    });
+  };
+
+  const leave = () => {
+    const user_id = window.localStorage.getItem("id");
+    dispatch(leaveStudy(user_id, study_id)).then((response) => {
+      if (response.payload) {
+        alert("스터디에서 탈퇴되었습니다.");
+        window.location.replace(`/studydetail/${study.id}`);
+      } else {
+        console.log("스터디 탈퇴 실패");
+      }
+    });
+  };
+
   return (
     <Fix>
       <Header />
@@ -219,6 +244,7 @@ const StudyDetail = ({ match }) => {
             color: "#ffffff",
             fontWeight: "700",
             fontFamily: "NotoSans",
+            cursor: "pointer",
           }}
           onClick={() => history.push("/studylist")}
         >
@@ -294,7 +320,9 @@ const StudyDetail = ({ match }) => {
               color: "#ffffff",
               fontWeight: "700",
               fontFamily: "NotoSans",
+              cursor: "pointer",
             }}
+            onClick={leave}
           >
             탈퇴하기
           </button>
@@ -310,7 +338,9 @@ const StudyDetail = ({ match }) => {
               color: "#ffffff",
               fontWeight: "700",
               fontFamily: "NotoSans",
+              cursor: "pointer",
             }}
+            onClick={join}
           >
             가입 신청하기
           </button>
