@@ -429,7 +429,7 @@ const StudyList = () => {
             background: "#56BE9C",
           }}
         ></div>
-        {studies.map((study, i) => {
+        {studies?.map((study, i) => {
           if (i > 5) return false;
           let statecolor = "#FFE600";
           if (study.state === "활동중") statecolor = "#56BE9C";

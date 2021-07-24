@@ -7,6 +7,9 @@ const GET_TOTAL_TIME = "GET_TOTAL_TIME";
 const GET_RANK = "GET_RANK";
 const RECOMMENDED_STUDY = "RECOMMENDED_STUDY";
 const GET_STUDYLIST = "GET_STUDYLIST";
+const GET_STUDYDETAIL = "GET_STUDYDETAIL";
+const JOIN_STUDY = "JOIN_STUDY";
+const LEAVE_STUDY = "LEAVE_STUDY";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -60,6 +63,32 @@ export const getStudylist = (dataToSubmit) => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: GET_STUDYLIST, payload: request };
+};
+
+export const getStudydetail = (id) => {
+  const request = axios
+    .get(`${USER_SERVER}/list/array?study_idx=${id}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: GET_STUDYDETAIL, payload: request };
+};
+
+export const joinStudy = (user_id, study_id) => {
+  const request = axios
+    .put(`${USER_SERVER}/list/join?user_idx=${user_id}&sutdy_idx=${study_id}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { tyoe: JOIN_STUDY, payload: request };
+};
+
+export const leaveStudy = (user_id, study_id) => {
+  const request = axios
+    .delete(
+      `${USER_SERVER}/mylist/leave?user_idx=${user_id}&study_idx=${study_id}`
+    )
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: LEAVE_STUDY, payload: request };
 };
 
 const actions = (state = {}, action) => {
