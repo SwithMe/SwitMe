@@ -6,6 +6,7 @@ const SIGNUP = "SIGNUP";
 const GET_TOTAL_TIME = "GET_TOTAL_TIME";
 const GET_RANK = "GET_RANK";
 const RECOMMENDED_STUDY = "RECOMMENDED_STUDY";
+const GET_STUDYLIST = "GET_STUDYLIST";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -51,6 +52,14 @@ export const recommendedStudy = () => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: RECOMMENDED_STUDY, payload: request };
+};
+
+export const getStudylist = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/list/array`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: GET_STUDYLIST, payload: request };
 };
 
 const actions = (state = {}, action) => {
