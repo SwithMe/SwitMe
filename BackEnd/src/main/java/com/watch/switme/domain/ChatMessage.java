@@ -2,10 +2,12 @@ package com.watch.switme.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@ToString(exclude = "room")
 @Data
 @NoArgsConstructor
 @Entity

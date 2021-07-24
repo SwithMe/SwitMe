@@ -1,14 +1,12 @@
 package com.watch.switme.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@ToString(exclude = "messageList")
 @Getter
 @NoArgsConstructor
 @Entity
@@ -29,4 +27,10 @@ public class ChatRoom {
     @OneToMany(mappedBy = "room")
     private List<ChatMessage> messageList;
 
+    @Builder
+    public ChatRoom(Long study_idx, Long leader_idx, Long inquire_idx){
+        this.study_idx = study_idx;
+        this.leader_idx = leader_idx;
+        this.inquire_idx = inquire_idx;
+    }
 }

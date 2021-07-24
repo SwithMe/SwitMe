@@ -13,6 +13,6 @@ public class ChatController {
 
     @MessageMapping("/message")
     public void Message(SocketDto message){
-
+        messagingTemplate.convertAndSend("/topic/"+message.getRoom_idx(), message);
     }
 }
