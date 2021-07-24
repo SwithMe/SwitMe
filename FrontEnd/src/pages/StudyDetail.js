@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Image from "../components/Image";
@@ -45,7 +45,8 @@ const Lower = styled.div`
   justify-content: space-between;
 `;
 
-const StudyDetail = () => {
+const StudyDetail = ({ match }) => {
+  const study_id = match.params;
   const [study, setStudy] = useState({
     name: "스터디 이름 쓰는 칸",
     outline:
@@ -65,11 +66,12 @@ const StudyDetail = () => {
     etc: "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
   const [isMember, setIsMember] = useState(true);
-  const [member, setMemver] = useState({
+  const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
     warning: 0,
   });
+  useEffect(() => {}, []);
   return (
     <Fix>
       <Header />

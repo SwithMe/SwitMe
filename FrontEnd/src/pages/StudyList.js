@@ -4,6 +4,9 @@ import Header from "../components/Header";
 import Input from "../components/Input";
 import Title from "../components/Title";
 import Image from "../components/Image";
+import { getStudylist } from "../_actions/actions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
 const Fix = styled.div`
   min-height: 100vh;
@@ -81,92 +84,127 @@ const State = styled.div`
 `;
 
 const StudyList = () => {
+  const [search, setSearch] = useState({
+    title: "",
+    state: "전체",
+    type: "전체",
+    size: "",
+    tags: "",
+    Leader: "",
+  });
   const [studies, setStudies] = useState([
     {
+      id: 1,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 2,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 3,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 4,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 5,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 6,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
     {
+      id: 7,
       studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
+      title: "스터디명",
       state: "모집중",
-      onoff: "온라인",
+      type: "온라인",
       people: 3,
-      max: 11,
-      temperature: "0",
-      owner: "김김김",
+      size: 11,
+      manner: "0",
+      leader: "김김김",
       ownerprofile: ".../assets/circle",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
     },
   ]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearch({ ...search, [name]: value });
+    console.log(search);
+  };
+
+  const onFormSubmit = async (evt) => {
+    console.log(search);
+    // evt.preventDefault();
+    // dispatch(getStudylist(search)).then((response) => {
+    //   if (response.payload) {
+    //     setStudies(response.payload);
+    //   } else {
+    //     alert("스터디 검색 오류");
+    //   }
+    // });
+  };
+
   return (
     <Fix>
       <Header />
@@ -174,24 +212,31 @@ const StudyList = () => {
         <Item>
           <Title>스터디 이름</Title>
           <Input
+            name="title"
             placeholder="검색어를 입력하세요."
             width="368"
             inputwidth="300"
             marginTop="18"
             validinput="true"
+            onChange={onInputChange}
           >
-            <img
-              alt="search"
-              src={require("../assets/search.png").default}
-              style={{ width: "16px", height: "18px", cursor: "pointer" }}
-            />
+            <button
+              style={{ background: "none", border: "none" }}
+              onClick={onFormSubmit}
+            >
+              <img
+                alt="search"
+                src={require("../assets/search.png").default}
+                style={{ width: "16px", height: "18px", cursor: "pointer" }}
+              />
+            </button>
           </Input>
         </Item>
         <Item>
           <Title>모집상태</Title>
           <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
             <Title size="20" weight="400">
-              전체
+              {search.state}
             </Title>
             <img
               alt="dropdown"
@@ -201,22 +246,38 @@ const StudyList = () => {
           </Input>
           <ul>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, state: "전체" })}
+              >
                 전체
               </Title>
             </li>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, state: "모집중" })}
+              >
                 모집 중
               </Title>
             </li>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, state: "활동중" })}
+              >
                 활동 중
               </Title>
             </li>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, state: "활동종료" })}
+              >
                 활동 종료
               </Title>
             </li>
@@ -226,7 +287,7 @@ const StudyList = () => {
           <Title>진행방식</Title>
           <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
             <Title size="20" weight="400">
-              전체
+              {search.type}
             </Title>
             <img
               alt="dropdown"
@@ -236,17 +297,29 @@ const StudyList = () => {
           </Input>
           <ul>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, type: "전체" })}
+              >
                 전체
               </Title>
             </li>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, type: "온라인" })}
+              >
                 온라인
               </Title>
             </li>
             <li>
-              <Title size="20" weight="400">
+              <Title
+                size="20"
+                weight="400"
+                onClick={() => setSearch({ ...search, type: "오프라인" })}
+              >
                 오프라인
               </Title>
             </li>
@@ -268,31 +341,37 @@ const StudyList = () => {
         <Item>
           <Title>최대인원</Title>
           <Input
+            name="size"
             placeholder="Search"
             width="134"
             marginTop="18"
             validinput="true"
             inputwidth="80"
+            onChange={onInputChange}
           ></Input>
         </Item>
         <Item>
           <Title>스터디장</Title>
           <Input
+            name="Leader"
             placeholder="Search"
             width="267"
             marginTop="18"
             validinput="true"
             inputwidth="200"
+            onChange={onInputChange}
           ></Input>
         </Item>
         <Item>
           <Title>태그</Title>
           <Input
+            name="tags"
             placeholder="Search"
             width="220"
             marginTop="18"
             validinput="true"
             inputwidth="170"
+            onChange={onInputChange}
           ></Input>
         </Item>
       </Search>
@@ -362,25 +441,28 @@ const StudyList = () => {
                 src={require("../assets/rectangle.png").default}
                 style={{ width: "60px", height: "60px", marginRight: "24px" }}
               />
-              <div style={{ width: "223px" }}>
+              <div
+                style={{ width: "223px", cursor: "pointer" }}
+                onClick={() => history.push(`/studydetail/${study.id}`)}
+              >
                 <Title size="20" weight="400">
-                  {study.name}
+                  {study.title}
                 </Title>
               </div>
               <State color={statecolor}>{study.state}</State>
               <div style={{ width: "158px", marginLeft: "71px" }}>
                 <Title size="20" weight="400">
-                  {study.onoff}
+                  {study.type}
                 </Title>
               </div>
               <div style={{ width: "159px" }}>
                 <Title size="20" weight="400">
-                  {study.temperature}°C
+                  {study.manner}°C
                 </Title>
               </div>
               <div style={{ width: "164px" }}>
                 <Title size="20" weight="400">
-                  {study.people}/{study.max}
+                  {study.people}/{study.size}
                 </Title>
               </div>
               <img
@@ -390,17 +472,12 @@ const StudyList = () => {
               />
               <div style={{ width: "169px" }}>
                 <Title size="20" weight="400">
-                  {study.owner}
+                  {study.leader}
                 </Title>
               </div>
-              {study.tags.map((tag, i) => {
-                if (i > 3) return false;
-                return (
-                  <Title key={i} size="20" weight="400">
-                    {tag}&nbsp;
-                  </Title>
-                );
-              })}
+              <Title size="20" weight="400">
+                {study.tag.substr(0, 18)}
+              </Title>
             </Study>
           );
         })}
