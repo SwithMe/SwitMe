@@ -50,6 +50,7 @@ const Button = styled.button`
 `;
 
 function Watch(props) {
+  const { name } = props;
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
@@ -99,7 +100,7 @@ function Watch(props) {
     <Wrapper>
       <div style={{ height: "150px" }}></div>
       <div className="timerName">
-        <div style={{ fontSize: "48px" }}>타이머명</div>
+        <div style={{ fontSize: "48px" }}>{name}</div>
       </div>
       <div
         className="display"
@@ -118,7 +119,7 @@ function Watch(props) {
 
         {status === 1 ? (
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <Button onClick={stop}>일시정지</Button>{" "}
+            {/* <Button onClick={stop}>일시정지</Button>{" "} */}
             <Button
               style={{ backgroundColor: "white", color: "var(--deep)" }}
               onClick={reset}
@@ -132,12 +133,12 @@ function Watch(props) {
 
         {status === 2 ? (
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <Button onClick={resume}>재개하기</Button>{" "}
+            {/* <Button onClick={resume}>재개하기</Button>{" "} */}
             <Button
               style={{ backgroundColor: "white", color: "var(--deep)" }}
               onClick={reset}
             >
-              초기화
+              정지
             </Button>
           </div>
         ) : (
