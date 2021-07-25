@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../components/Header_watch";
+import Header_watch from "../components/Header_watch";
 import Watch from "../components/Watch";
 import TimerList from "../components/TimerList";
 
@@ -19,7 +19,7 @@ const StopWatch = () => {
 
   return (
     <div>
-      <Header />
+      <Header_watch />
       <Wrapper>
         <TimerList></TimerList>
         <Watch></Watch>
