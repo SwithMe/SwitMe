@@ -17,6 +17,7 @@ const StyledDiv = styled.div`
 const StyledInput = styled.input`
   width: ${(props) => props.inputwidth || 480}px;
   border: none;
+  background-color: none;
   font-size: 20px;
   &::placeholder {
     font-family: "NotoSans";
