@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
+import Header from "../components/Header_list";
 import Input from "../components/Input";
 import Title from "../components/Title";
 import Image from "../components/Image";
