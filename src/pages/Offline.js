@@ -115,7 +115,7 @@ const Offline = () => {
               <Input
                 placeholder="스터디의 이름을 작성해주세요"
                 width="1000"
-                inputwidth="300"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
               ></Input>
@@ -150,6 +150,7 @@ const Offline = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
+                    checked="true"
                     onClick={() => history.push("/offline")}
                   ></RadioButton>
                 </Col>
@@ -332,7 +333,7 @@ const Offline = () => {
               <Input
                 placeholder="태그를 입력하세요"
                 width="1000"
-                inputwidth="300"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
               ></Input>
@@ -365,7 +366,7 @@ const Offline = () => {
               <Input
                 placeholder="추가적인 사항을 기재해주세요 (조용한 정도, 타이핑/마우스 사용 여부 등)"
                 width="1000"
-                inputwidth="600"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
               ></Input>
@@ -379,7 +380,6 @@ const Offline = () => {
             }}
           >
             <Button
-              style={{ display: "flex" }}
               name="스터디 개설하기"
               width="220px"
               height="70px"
