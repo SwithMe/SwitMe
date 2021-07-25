@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import pencil from "../assets/pencil.png";
 import whitePencil from "../assets/whitepencil.png";
+import x from "../assets/close.png";
 
 const Content = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const Content = styled.div`
   }
 
   .name {
-    width: auto;
+    width: 232px;
   }
   .time {
     font-weight: bold;
@@ -40,7 +41,7 @@ const Content = styled.div`
   .delete {
     width: 19.1px;
     height: 19.1px;
-    background: url(${pencil});
+    background: url(${x});
     background-size: 100%;
   }
 
@@ -54,27 +55,33 @@ const Content = styled.div`
       color: white;
     }
     .edit {
-      background-size: 100%;
+      width: 19.1px;
+      height: 19.1px;
       background: url(${whitePencil});
+      background-size: 100%;
     }
     .delete {
+      width: 19.1px;
+      height: 19.1px;
+      background: url(${x});
       background-size: 100%;
-      background: url(${whitePencil});
     }
   }
 `;
 
-const TimerListContent = ({ timer, onRemove }) => {
+const TimerListContent = ({ timer, onRemove, openModal }) => {
   const { id, name, time } = timer;
   return (
-    <Content>
-      <div class="name">{name}</div>
-      <div class="green">
-        <div class="time">{time}</div>
-        <div class="edit"></div>
-        <div class="delete" onClick={() => onRemove(id)}></div>
-      </div>
-    </Content>
+    <>
+      <Content>
+        <div class="name">{name}</div>
+        <div class="green">
+          <div class="time">{time}</div>
+          <div class="edit" onClick={openModal}></div>
+          <div class="delete" onClick={() => onRemove(id)}></div>
+        </div>
+      </Content>
+    </>
   );
 };
 
