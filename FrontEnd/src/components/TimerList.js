@@ -52,7 +52,7 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
-function Watch(props) {
+function TimerList({ openModal }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
   const [timers, setTimers] = useState([
@@ -113,6 +113,8 @@ function Watch(props) {
     [timers]
   );
 
+  //수정
+
   return (
     <Wrapper>
       <div class="head">2021.07.18. 일요일</div>
@@ -123,6 +125,7 @@ function Watch(props) {
             timer={timer}
             key={timer.id}
             onRemove={onRemove}
+            openModal={openModal}
           ></TimerListContent>
         ))}
       </div>
@@ -152,4 +155,4 @@ function Watch(props) {
   );
 }
 
-export default Watch;
+export default TimerList;

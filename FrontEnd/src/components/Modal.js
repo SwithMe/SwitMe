@@ -46,16 +46,17 @@ const Overlay = styled.div`
   position: absolute;
 `;
 
-const Modal = () => {
+const Modal = (props) => {
+  const { open, close, title, text, choice } = props;
   return (
     <Screen>
       <Overlay> </Overlay>
       <Wrapper>
-        <div className="title">스터디 이름 쓰는칸</div>
-        <div>스터디를 개설하시겠습니까?</div>
+        <div className="title">{title}</div>
+        <div>{text}</div>
         <div>
           <Button style={{ backgroundColor: "#CCCCCC" }}>뒤로가기</Button>
-          <Button>개설하기</Button>
+          <Button>{choice}</Button>
         </div>
       </Wrapper>
     </Screen>
