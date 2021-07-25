@@ -4,7 +4,7 @@ import Header_watch from "../components/Header_watch";
 import Watch from "../components/Watch";
 import TimerList from "../components/TimerList";
 import ModalTimer from "../components/ModalTimer";
-import Modal from "../components/Modal";
+import TimerListContent from "../components/TimerListContent";
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const StopWatch = () => {
       <Header_watch />
       <Wrapper>
         <TimerList openModal={openModal}></TimerList>
-        <Watch></Watch>
+        <Watch name={TimerListContent.name}></Watch>
       </Wrapper>
     </div>
   );

@@ -32,6 +32,7 @@ const Content = styled.div`
     color: var(--middle);
     width: 102px;
   }
+
   .edit {
     width: 19.1px;
     height: 19.1px;
