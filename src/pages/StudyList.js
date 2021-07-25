@@ -479,6 +479,9 @@ const StudyList = () => {
             fontFamily: "NotoSans",
             marginLeft: "12px",
           }}
+          onClick={() => {
+            history.push("/makestudy");
+          }}
         >
           스터디 개설하기
         </button>
