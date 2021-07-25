@@ -110,7 +110,6 @@ const MakeStudy = () => {
   };
 
   const onInputChange = (e) => {
-    console.log(e);
     const { name, value } = e.target;
     setStudy({ ...study, [name]: value });
   };

@@ -298,19 +298,6 @@ const StudyList = () => {
           </ul>
         </Item>
         <Item>
-          <Title>매너온도</Title>
-          <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
-            <Title size="20" weight="400">
-              전체
-            </Title>
-            <img
-              alt="dropdown"
-              src={require("../assets/dropdown.png").default}
-              style={{ marginLeft: "21px" }}
-            />
-          </Input>
-        </Item>
-        <Item>
           <Title>최대인원</Title>
           <Input
             name="size"
@@ -339,10 +326,10 @@ const StudyList = () => {
           <Input
             name="tags"
             placeholder="Search"
-            width="220"
+            width="372"
             marginTop="18"
             validinput="true"
-            inputwidth="170"
+            inputwidth="350"
             onChange={onInputChange}
           ></Input>
         </Item>
