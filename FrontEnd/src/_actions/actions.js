@@ -10,6 +10,7 @@ const GET_STUDYLIST = "GET_STUDYLIST";
 const GET_STUDYDETAIL = "GET_STUDYDETAIL";
 const JOIN_STUDY = "JOIN_STUDY";
 const LEAVE_STUDY = "LEAVE_STUDY";
+const MAKE_STUDY = "MAKE_STUDY";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -89,6 +90,17 @@ export const leaveStudy = (user_id, study_id) => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: LEAVE_STUDY, payload: request };
+};
+
+export const makestudy = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/list/array/enroll`, dataToSubmit)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: MAKE_STUDY,
+    payload: request,
+  };
 };
 
 const actions = (state = {}, action) => {

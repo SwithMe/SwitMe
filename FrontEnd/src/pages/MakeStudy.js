@@ -6,6 +6,8 @@ import Input from "../components/Input";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { makestudy } from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,8 +78,9 @@ const RadioButton = styled.input`
   height: 41px;
 `;
 
-const Online = () => {
+const MakeStudy = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [study, setStudy] = useState({
     title: "",
     type: "online",
@@ -94,11 +97,22 @@ const Online = () => {
     link: "",
   });
 
+  const onFormSubmit = () => {
+    console.log(study);
+    dispatch(makestudy(study)).then((response) => {
+      if (response.payload) {
+        alert("스터디가 생성되었습니다..");
+        history.push(`/`);
+      } else {
+        console.log("스터디 생성 실패");
+      }
+    });
+  };
+
   const onInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
     setStudy({ ...study, [name]: value });
-    console.log(study);
   };
 
   return (
@@ -156,8 +170,7 @@ const Online = () => {
                     type="radio"
                     id="online"
                     name="onoff"
-                    checked="true"
-                    onClick={() => history.push("/online")}
+                    onClick={() => setStudy({ ...study, type: "online" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -175,7 +188,7 @@ const Online = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
-                    onClick={() => history.push("/offline")}
+                    onClick={() => setStudy({ ...study, type: "offline" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -326,12 +339,10 @@ const Online = () => {
           <Row
             style={{
               alignItems: "center",
-              marginTop: "18px",
-              marginBottom: "18px",
             }}
           >
             <Textbox>
-              <Title>시간</Title>
+              <Title>최대 모집 인원</Title>
             </Textbox>
             <Inputbox>
               <Item>
@@ -388,21 +399,45 @@ const Online = () => {
             </Inputbox>
           </Row>
           <Row style={{ alignItems: "center" }}>
-            <Textbox>
-              <Title>링크</Title>
-            </Textbox>
-            <Inputbox>
-              <Input
-                name="link"
-                value={study.link}
-                placeholder="사용하실 온라인 회의 링크를 입력하세요 (Zoom, Google Meet 등)"
-                width="1000"
-                inputwidth="950"
-                marginTop="18"
-                validinput="true"
-                onChange={onInputChange}
-              ></Input>
-            </Inputbox>
+            {study.type === "online" ? (
+              <>
+                <Textbox>
+                  <Title>링크</Title>
+                </Textbox>
+                <Inputbox>
+                  <Input
+                    name="link"
+                    value={study.link}
+                    placeholder="사용하실 온라인 회의 링크를 입력하세요 (Zoom, Google Meet 등)"
+                    width="1000"
+                    inputwidth="950"
+                    marginTop="18"
+                    validinput="true"
+                    onChange={onInputChange}
+                  ></Input>
+                </Inputbox>
+              </>
+            ) : (
+              <>
+                <Textbox>
+                  <Title>장소</Title>
+                </Textbox>
+                <Inputbox>
+                  <Input
+                    placeholder="장소찾기"
+                    width="178"
+                    inputwidth="110"
+                    marginTop="18"
+                    validinput="true"
+                  >
+                    <img
+                      alt="dropdown"
+                      src={require("../assets/vector.png").default}
+                    />
+                  </Input>
+                </Inputbox>
+              </>
+            )}
           </Row>
           <Row style={{ alignItems: "center" }}>
             <Textbox>
@@ -433,6 +468,7 @@ const Online = () => {
               width="220px"
               height="70px"
               color="#56BE9C"
+              onClick={onFormSubmit}
             ></Button>
           </Row>
         </Col>
@@ -441,4 +477,4 @@ const Online = () => {
   );
 };
 
-export default Online;
+export default MakeStudy;
