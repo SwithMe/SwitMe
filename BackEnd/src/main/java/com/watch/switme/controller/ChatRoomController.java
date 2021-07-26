@@ -1,6 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.dto.*;
+import com.watch.switme.repository.JpaInterface.ChatMessageInterface;
 import com.watch.switme.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,10 @@ public class ChatRoomController {
         Long study_idx = makeRoomDto.getStudy_idx();
         Long inquirer_idx = makeRoomDto.getUser_idx();
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto();
-        //study leader idx add
-        chatRoomDto.builder().study_idx(study_idx).inquirer_idx(inquirer_idx).build();
-
+        //study idx로 leader_idx 검색
+        Long leader_idx = (long)100;
+        ChatRoomDto chatRoomDto = ChatRoomDto.builder().study_idx(study_idx).leader_idx(leader_idx).inquirer_idx(inquirer_idx).build();
+        System.out.println(chatRoomDto);
         Long room_idx = chatRoomService.save(chatRoomDto);
 
         MakeRoomResponseDto makeRoomResponseDto = new MakeRoomResponseDto(room_idx);
@@ -35,7 +36,7 @@ public class ChatRoomController {
     }
 
     @GetMapping("/room/{room_idx}")
-    public List<MessageListResponseDto> roomDetail(@PathVariable("room_idx") Long room_idx){
+    public List<ChatMessageInterface> roomDetail(@PathVariable("room_idx") Long room_idx){
         return chatRoomService.getRoomDetail(room_idx);
     }
 

@@ -7,6 +7,7 @@ import com.watch.switme.dto.MessageListResponseDto;
 import com.watch.switme.dto.RoomListResponseDto;
 import com.watch.switme.repository.ChatMessageRepository;
 import com.watch.switme.repository.ChatRoomRepository;
+import com.watch.switme.repository.JpaInterface.ChatMessageInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +30,32 @@ public class ChatRoomService {
 
         for(ChatRoom room : chatRoomList){
             ChatMessage chatMessage = chatMessageRepository.findFirstByRoom_RoomIdxOrderByTimeDesc(room.getRoomIdx());
+            System.out.println(chatMessage);
+            String message;
+            if (chatMessage == null) {
+                message = "";
+            }else{
+                message = chatMessage.getMessage();
+            }
+            System.out.println(message);
 
-            RoomListResponseDto roomListResponseDto = new RoomListResponseDto();
+            //room_name에 스터디 이름으로 넣기
+            String room_name = "이름";
+            String other_user;
 
-            roomListResponseDto.builder()
+            if(room.getInquirerIdx() == user_idx){
+                other_user = "리더";
+                // 이름 얻기 room.getLeaderIdx();
+            } else{
+                other_user = "질문";
+                // 이름 얻기 room.getInquirerIdx();
+            }
+
+            RoomListResponseDto roomListResponseDto = RoomListResponseDto.builder()
                     .room_idx(room.getRoomIdx())
-                    .room_name("이름")    //foreign user
-                    .message(chatMessage.getMessage())
+                    .room_name(room_name)
+                    .other_user(other_user)
+                    .message(message)
                     .notification(chatMessageRepository.countByCheckEquals(0))
                     .build();
 
@@ -45,7 +65,8 @@ public class ChatRoomService {
         return roomListResponseDtoList;
     }
 
-    public List<MessageListResponseDto> getRoomDetail(Long room_idx){
+    public List<ChatMessageInterface> getRoomDetail(Long room_idx){
+
         return chatMessageRepository.findByRoom_RoomIdx(room_idx);
     }
 

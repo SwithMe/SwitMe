@@ -20,7 +20,8 @@ public class ChatMessage {
 
     private Date time;
 
-    //foreign key user
+//    @ManyToOne
+//    @JoinColumn(name="userIdx")
     private Long senderIdx;
 
     @ManyToOne
