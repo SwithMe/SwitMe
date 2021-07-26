@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
-    @Query("select new com.watch.switme.dto.MessageListResponseDto(m.room_idx, m.sender_idx, m.message, m.time) from ChatMessage m")
-    List<MessageListResponseDto> findByRoomIdx(Long room_idx);
+    @Query(value = "select new com.watch.switme.dto.MessageListResponseDto(m.room_idx, m.sender_idx, m.message, m.time) from ChatMessage m", nativeQuery = true)
+    List<MessageListResponseDto> findByRoom_RoomIdx(Long room_idx);
 
-    ChatMessage findFirstByRoomIdxOrderByTimeDesc(Long room_idx);
+    ChatMessage findFirstByRoom_RoomIdxOrderByTimeDesc(Long room_idx);
 
-    long countByCheckEquals0();
+    long countByCheckEquals(int num);
 }

@@ -20,7 +20,7 @@ public class ChatRoomService {
     private final ChatMessageRepository chatMessageRepository;
 
     public Long save(ChatRoomDto chatRoomDto){
-        return chatRoomRepository.save(chatRoomDto.toEntity()).getRoom_idx();
+        return chatRoomRepository.save(chatRoomDto.toEntity()).getRoomIdx();
     }
 
     public List<RoomListResponseDto> getRoomList(Long user_idx){
@@ -28,15 +28,15 @@ public class ChatRoomService {
         List<RoomListResponseDto> roomListResponseDtoList = new ArrayList<>();
 
         for(ChatRoom room : chatRoomList){
-            ChatMessage chatMessage = chatMessageRepository.findFirstByRoomIdxOrderByTimeDesc(room.getRoom_idx());
+            ChatMessage chatMessage = chatMessageRepository.findFirstByRoom_RoomIdxOrderByTimeDesc(room.getRoomIdx());
 
             RoomListResponseDto roomListResponseDto = new RoomListResponseDto();
 
             roomListResponseDto.builder()
-                    .room_idx(room.getRoom_idx())
+                    .room_idx(room.getRoomIdx())
                     .room_name("이름")    //foreign user
                     .message(chatMessage.getMessage())
-                    .notification(chatMessageRepository.countByCheckEquals0())
+                    .notification(chatMessageRepository.countByCheckEquals(0))
                     .build();
 
             roomListResponseDtoList.add(roomListResponseDto);
@@ -46,7 +46,7 @@ public class ChatRoomService {
     }
 
     public List<MessageListResponseDto> getRoomDetail(Long room_idx){
-        return chatMessageRepository.findByRoomIdx(room_idx);
+        return chatMessageRepository.findByRoom_RoomIdx(room_idx);
     }
 
     public void deleteRoom(Long room_idx){

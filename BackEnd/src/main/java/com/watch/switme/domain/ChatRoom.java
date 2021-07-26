@@ -13,24 +13,24 @@ import java.util.List;
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long room_idx;
+    private Long roomIdx;
 
     //foreign key study
-    private Long study_idx;
+    private Long studyIdx;
 
     //foreign key user
-    private Long leader_idx;
+    private Long leaderIdx;
 
     //foreign key user
-    private Long inquire_idx;
+    private Long inquirerIdx;
 
     @OneToMany(mappedBy = "room")
     private List<ChatMessage> messageList;
 
     @Builder
-    public ChatRoom(Long study_idx, Long leader_idx, Long inquire_idx){
-        this.study_idx = study_idx;
-        this.leader_idx = leader_idx;
-        this.inquire_idx = inquire_idx;
+    public ChatRoom(Long study_idx, Long leader_idx, Long inquirer_idx){
+        this.studyIdx = study_idx;
+        this.leaderIdx = leader_idx;
+        this.inquirerIdx = inquirer_idx;
     }
 }

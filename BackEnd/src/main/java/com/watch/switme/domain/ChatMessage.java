@@ -14,16 +14,19 @@ import java.util.Date;
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long message_idx;
+    private Long messageIdx;
 
     private String message;
 
     private Date time;
 
     //foreign key user
-    private Long Sender_idx;
+    private Long senderIdx;
 
     @ManyToOne
-    @JoinColumn(name="room_idx")
+    @JoinColumn(name="roomIdx")
     private ChatRoom room;
+
+    @Column(columnDefinition = "TINYINT")
+    private int check;
 }

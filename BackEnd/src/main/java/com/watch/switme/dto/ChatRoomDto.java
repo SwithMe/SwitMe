@@ -23,7 +23,7 @@ public class ChatRoomDto {
         return ChatRoom.builder()
                 .study_idx(study_idx)
                 .leader_idx(leader_idx)
-                .inquire_idx(inquirer_idx)
+                .inquirer_idx(inquirer_idx)
                 .build();
     }
 }
