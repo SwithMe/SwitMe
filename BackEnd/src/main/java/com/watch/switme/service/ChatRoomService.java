@@ -3,11 +3,10 @@ package com.watch.switme.service;
 import com.watch.switme.domain.ChatMessage;
 import com.watch.switme.domain.ChatRoom;
 import com.watch.switme.dto.ChatRoomDto;
-import com.watch.switme.dto.MessageListResponseDto;
 import com.watch.switme.dto.RoomListResponseDto;
 import com.watch.switme.repository.ChatMessageRepository;
 import com.watch.switme.repository.ChatRoomRepository;
-import com.watch.switme.repository.JpaInterface.ChatMessageInterface;
+import com.watch.switme.dto.ChatMessageInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -72,5 +71,9 @@ public class ChatRoomService {
 
     public void deleteRoom(Long room_idx){
         chatRoomRepository.deleteById(room_idx);
+    }
+
+    public ChatRoom findRoom(Long room_idx){
+        return chatRoomRepository.findById(room_idx).get();
     }
 }

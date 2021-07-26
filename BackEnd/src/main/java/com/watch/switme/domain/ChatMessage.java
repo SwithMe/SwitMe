@@ -1,10 +1,13 @@
 package com.watch.switme.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ToString(exclude = "room")
@@ -18,7 +21,7 @@ public class ChatMessage {
 
     private String message;
 
-    private Date time;
+    private LocalDateTime time;
 
 //    @ManyToOne
 //    @JoinColumn(name="userIdx")
@@ -30,4 +33,17 @@ public class ChatMessage {
 
     @Column(columnDefinition = "TINYINT")
     private int check;
+
+    @Builder
+    public ChatMessage(String message, Long sender_idx, ChatRoom room){
+        this.message = message;
+        this.senderIdx = sender_idx;
+        this.room = room;
+        this.check = 0;
+    }
+
+    @PrePersist
+    public void chatTime(){
+        this.time = LocalDateTime.now();
+    }
 }

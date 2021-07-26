@@ -1,4 +1,4 @@
-package com.watch.switme.repository.JpaInterface;
+package com.watch.switme.dto;
 
 import lombok.Getter;
 

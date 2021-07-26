@@ -18,7 +18,7 @@ public class ChatRoomDto {
         this.leader_idx = leader_idx;
         this.inquirer_idx = inquirer_idx;
     }
-
+    // 다 수정..
     public ChatRoom toEntity(){
         return ChatRoom.builder()
                 .study_idx(study_idx)

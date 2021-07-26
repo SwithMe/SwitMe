@@ -1,7 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.dto.*;
-import com.watch.switme.repository.JpaInterface.ChatMessageInterface;
+import com.watch.switme.dto.ChatMessageInterface;
 import com.watch.switme.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class ChatRoomController {
         Long study_idx = makeRoomDto.getStudy_idx();
         Long inquirer_idx = makeRoomDto.getUser_idx();
 
-        //study idx로 leader_idx 검색
+        //study idx로 leader_idx 검색, Dto 자체가 달라질듯..
         Long leader_idx = (long)100;
         ChatRoomDto chatRoomDto = ChatRoomDto.builder().study_idx(study_idx).leader_idx(leader_idx).inquirer_idx(inquirer_idx).build();
         System.out.println(chatRoomDto);
@@ -29,13 +29,13 @@ public class ChatRoomController {
         return makeRoomResponseDto;
     }
 
-    @GetMapping("/room_list/{user_idx}")
+    @GetMapping("/room_list/{user_idx}") //이미지 추가.. user
     public List<RoomListResponseDto> roomList(@PathVariable("user_idx") long user_idx){
 
         return chatRoomService.getRoomList(user_idx);
     }
 
-    @GetMapping("/room/{room_idx}")
+    @GetMapping("/room/{room_idx}") //이미지 추가.. user
     public List<ChatMessageInterface> roomDetail(@PathVariable("room_idx") Long room_idx){
         return chatRoomService.getRoomDetail(room_idx);
     }
@@ -46,4 +46,4 @@ public class ChatRoomController {
     }
 }
 
-//오류 처리, @transaction, foreign key 연결, api test 및 소켓 테스트
+//외부 테이블 연결... user study

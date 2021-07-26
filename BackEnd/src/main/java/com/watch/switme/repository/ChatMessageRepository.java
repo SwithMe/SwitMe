@@ -1,10 +1,8 @@
 package com.watch.switme.repository;
 
 import com.watch.switme.domain.ChatMessage;
-import com.watch.switme.dto.MessageListResponseDto;
-import com.watch.switme.repository.JpaInterface.ChatMessageInterface;
+import com.watch.switme.dto.ChatMessageInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
