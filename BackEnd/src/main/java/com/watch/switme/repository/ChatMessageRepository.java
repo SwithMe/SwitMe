@@ -15,4 +15,6 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     ChatMessage findFirstByRoom_RoomIdxOrderByTimeDesc(Long room_idx);
 
     long countByCheckEquals(int num);
+
+    List<ChatMessage> findByRoom_RoomIdxIsAndUserIdxIsAndCheckEquals(Long room_idx, Long user_idx, int num);
 }

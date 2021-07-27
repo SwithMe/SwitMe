@@ -10,6 +10,7 @@ import com.watch.switme.dto.ChatMessageInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +20,12 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
 
+    @Transactional
     public Long save(ChatRoomDto chatRoomDto){
         return chatRoomRepository.save(chatRoomDto.toEntity()).getRoomIdx();
     }
 
+    @Transactional
     public List<RoomListResponseDto> getRoomList(Long user_idx){
         List<ChatRoom> chatRoomList = chatRoomRepository.findByInquirerIdx(user_idx);
         List<RoomListResponseDto> roomListResponseDtoList = new ArrayList<>();
@@ -64,15 +67,18 @@ public class ChatRoomService {
         return roomListResponseDtoList;
     }
 
+    @Transactional
     public List<ChatMessageInterface> getRoomDetail(Long room_idx){
 
         return chatMessageRepository.findByRoom_RoomIdx(room_idx);
     }
 
+    @Transactional
     public void deleteRoom(Long room_idx){
         chatRoomRepository.deleteById(room_idx);
     }
 
+    @Transactional
     public ChatRoom findRoom(Long room_idx){
         return chatRoomRepository.findById(room_idx).get();
     }

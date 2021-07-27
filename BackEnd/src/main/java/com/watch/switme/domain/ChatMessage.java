@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ public class ChatMessage {
 
     private String message;
 
+    @CreatedDate
     private LocalDateTime time;
 
 //    @ManyToOne
@@ -42,8 +44,12 @@ public class ChatMessage {
         this.check = 0;
     }
 
-    @PrePersist
-    public void chatTime(){
-        this.time = LocalDateTime.now();
+    public void checkUpdate(int check){
+        this.check = check;
     }
+
+//    @PrePersist
+//    public void chatTime(){
+//        this.time = LocalDateTime.now();
+//    }
 }
