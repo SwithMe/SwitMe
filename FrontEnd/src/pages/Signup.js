@@ -19,7 +19,7 @@ const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 50vh;
+  height: 500px;
 `;
 
 const TextBox = styled.div`
@@ -120,12 +120,7 @@ const Signup = () => {
               <div>개인 정보 수집 약관에 동의합니다.</div>
             </label>
           </TextBox>
-          <Button
-            type="submit"
-            name="회원가입"
-            width="29rem"
-            color="#56BE9C"
-          ></Button>
+          <Button type="submit" name="회원가입" width="29rem" color="#56BE9C" />
         </Items>
       </form>
     </Wrapper>

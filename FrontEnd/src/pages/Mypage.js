@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
@@ -6,6 +6,10 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
+
+//mypage백 연동을 위한 부분
+import { useDispatch } from "react-redux";
+import { userInfo, userStudyList, userWatchLog } from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,6 +73,24 @@ const Circle = styled.div`
 `;
 
 const Mypage = () => {
+  //mypage백 연동을 위한 부분 시작
+  const dispatch = useDispatch();
+
+  //useRef
+  const user_name = useRef("이름");
+  const is_ewha = useRef("학교 인증 완료");
+  const user_email = useRef("qwer1234@ewhain.net");
+  const temp = useRef("매너온도 60°C");
+
+  // const [users, setUsers] = useState([
+  //   {
+  //     user_name: "이름",
+  //     is_ewha: "학교 인증 완료",
+  //     user_email: "qwer1234@ewhain.net",
+  //     temp: "매너온도 60°C",
+  //   },
+  // ]);
+
   const [studies, setStudies] = useState([
     {
       studyprofile: "../assets/rectangle.png",
@@ -114,6 +136,35 @@ const Mypage = () => {
     },
   ]);
 
+  useEffect(() => {
+    // dispatch(userInfo(window.localStorage.getItem("id"))).then((response) => {
+    //   if (response.payload) {
+    //     user_name.current = response.payload;
+    //     is_ewha.current = response.payload;
+    //     user_email.current = response.payload;
+    //     temp.current = response.payload;
+    //   } else {
+    //     console.log("개인 정보 가져오기 에러");
+    //   }
+    // });
+    //   dispatch(userStudyList()).then((response) => {
+    //     if (response.payload) {
+    //       setStudies(response.payload);
+    //     } else {
+    //       console.log("스터디 리스트 가져오기 에러");
+    //     }
+    //   });
+    //   dispatch(userWatchLog()).then((response) => {
+    //     if (response.payload) {
+    //       setTimes(response.payload);
+    //     } else {
+    //       console.log("스톱워치 사용 기록 에러");
+    //     }
+    //   });
+  });
+
+  //mypage백 연동을 위한 부분 끝
+
   return (
     <Wrapper>
       <Header />
@@ -140,21 +191,40 @@ const Mypage = () => {
               />
             </Col>
             <Col style={{ width: "660px" }}>
-              <Title size="32" color="#064538">
-                이름
+              <Title size="32" color="#064538" marginBottom="15">
+                {user_name.current}
               </Title>
-              <br />
-              <Title size="24" weight="400" marginBottom="5">
-                학교 인증 완료
+              <Title size="24" weight="400" marginBottom="15">
+                {is_ewha.current}
               </Title>
+              <Title size="24" weight="400" marginBottom="15">
+                {user_email.current}
+              </Title>
+              <Title size="24" weight="400">
+                {temp.current}
+              </Title>
+              {/* {users.map((study, i) => {
+                if (i > 5) return false;
+                return (
+                  <Col key={i}>
+                    <Title size="32" color="#064538">
+                      {study.user_name}
+                    </Title>
+                    <br />
 
-              <Title size="24" weight="400" marginBottom="5">
-                qwer1234@ewhain.net
-              </Title>
+                    <Title size="24" weight="400" marginBottom="5">
+                      {study.is_ewha}
+                    </Title>
+                    <Title size="24" weight="400" marginBottom="5">
+                      {study.user_email}
+                    </Title>
 
-              <Title size="24" weight="400" marginBottom="5">
-                매너온도 60°C
-              </Title>
+                    <Title size="24" weight="400" marginBottom="5">
+                      {study.temp}
+                    </Title>
+                  </Col>
+                );
+              })} */}
             </Col>
           </Row>
           <Button
@@ -182,7 +252,7 @@ const Mypage = () => {
           <Row style={{ width: "739px", justifyContent: "space-between" }}>
             <Title>참여 스터디 목록</Title>
             <span style={{ float: "right" }}>
-              <span style={{}}>
+              <span style={{ marginRight: "15px" }}>
                 <Circle />
                 개인
               </span>

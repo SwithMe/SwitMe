@@ -2,6 +2,7 @@ import axios from "axios";
 import { USER_SERVER } from "../config";
 
 const LOGIN = "LOGIN";
+const FIND_PASSWORD = "FIND_PASSWORD";
 const SIGNUP = "SIGNUP";
 const GET_TOTAL_TIME = "GET_TOTAL_TIME";
 const GET_RANK = "GET_RANK";
@@ -11,6 +12,9 @@ const GET_STUDYDETAIL = "GET_STUDYDETAIL";
 const JOIN_STUDY = "JOIN_STUDY";
 const LEAVE_STUDY = "LEAVE_STUDY";
 const MAKE_STUDY = "MAKE_STUDY";
+const USER_INFO = "USER_INFO";
+const USER_STUDY_LIST = "USER_STUDY_LIST";
+const USER_WATCH_LOG = "USER_WATCH_LOG";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -19,6 +23,17 @@ export const login = (dataToSubmit) => {
     .catch((error) => {});
   return {
     type: LOGIN,
+    payload: request,
+  };
+};
+
+export const find_password = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/auth/find`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: FIND_PASSWORD,
     payload: request,
   };
 };
@@ -34,6 +49,32 @@ export const signup = (dataToSubmit) => {
   };
 };
 
+//mypage
+export const userInfo = (id) => {
+  const request = axios
+    .get(`${USER_SERVER}/mypage/user?user_idx=${id}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: USER_INFO, payload: request };
+};
+
+export const userStudyList = (id) => {
+  const request = axios
+    .get(`${USER_SERVER}/mypage/study_list?user_idx=${id}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: USER_STUDY_LIST, payload: request };
+};
+
+export const userWatchLog = (id) => {
+  const request = axios
+    .get(`${USER_SERVER}/mypage/watch_log?user_idx=${id}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: USER_WATCH_LOG, payload: request };
+};
+
+//mainpage
 export const getTotalTime = (id) => {
   const request = axios
     .get(`${USER_SERVER}/main/mytime?user_idx=${id}`)

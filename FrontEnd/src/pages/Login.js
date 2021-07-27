@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Input2 from "../components/Input2";
 import Button from "../components/Button";
-import Header from "../components/Header";
 import logo from "../assets/logo.png";
 import { login } from "../_actions/actions";
 import { useDispatch } from "react-redux";
@@ -20,7 +19,7 @@ const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 45vh;
+  height: 500px;
 `;
 
 const TextBox = styled.div`
@@ -60,7 +59,7 @@ const Login = () => {
     <Wrapper>
       <form onSubmit={formSubmit}>
         <Items>
-          <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
+          <img alt="로고" src={logo} style={{ marginBottom: "1rem" }} />
           <Input2
             name="useremail"
             placeholder="E-mail"
