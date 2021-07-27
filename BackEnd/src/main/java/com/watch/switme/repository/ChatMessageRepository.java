@@ -16,5 +16,5 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 
     long countByCheckEquals(int num);
 
-    List<ChatMessage> findByRoom_RoomIdxIsAndUserIdxIsAndCheckEquals(Long room_idx, Long user_idx, int num);
+    List<ChatMessage> findByRoom_RoomIdxIsAndSenderIdxIsAndCheckEquals(Long room_idx, Long user_idx, int num);
 }
