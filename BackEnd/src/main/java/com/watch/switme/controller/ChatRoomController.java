@@ -14,15 +14,27 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
-    @PostMapping("/makeroom")
+    @PostMapping("/makeroom/user")
     public MakeRoomResponseDto makeRoom(@RequestBody MakeRoomDto makeRoomDto){
         Long study_idx = makeRoomDto.getStudy_idx();
         Long inquirer_idx = makeRoomDto.getUser_idx();
+        Long leader_idx = makeRoomDto.getLeader_idx();
 
-        //study idx로 leader_idx 검색, Dto 자체가 달라질듯..
-        Long leader_idx = (long)100;
         ChatRoomDto chatRoomDto = ChatRoomDto.builder().study_idx(study_idx).leader_idx(leader_idx).inquirer_idx(inquirer_idx).build();
         System.out.println(chatRoomDto);
+        Long room_idx = chatRoomService.save(chatRoomDto);
+
+        MakeRoomResponseDto makeRoomResponseDto = new MakeRoomResponseDto(room_idx);
+        return makeRoomResponseDto;
+    }
+
+    @PostMapping("/makeroom/leader")
+    public MakeRoomResponseDto makeRoomLeader(@RequestBody MakeRoomLeaderDto makeRoomLeaderDto){
+        Long study_idx = makeRoomLeaderDto.getStudy_idx();
+        Long leader_idx = makeRoomLeaderDto.getLeader_idx();
+        Long inquirer_idx = makeRoomLeaderDto.getMember_idx();
+
+        ChatRoomDto chatRoomDto = ChatRoomDto.builder().study_idx(study_idx).leader_idx(leader_idx).inquirer_idx(inquirer_idx).build();
         Long room_idx = chatRoomService.save(chatRoomDto);
 
         MakeRoomResponseDto makeRoomResponseDto = new MakeRoomResponseDto(room_idx);
