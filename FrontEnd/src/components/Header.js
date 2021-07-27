@@ -15,11 +15,14 @@ const Wrapper = styled.div`
   width: 100%;
   height: 95px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+
+  .menu {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
-const Logo = styled.div`
-  background: url(${logo});
-  background-size: 100%;
+const Logo = styled.img`
   height: 37.5px;
   width: 150px;
   margin-right: 70px;
@@ -78,6 +81,8 @@ const Button = styled.img`
 
 function Header() {
   const history = useHistory();
+  const [status, setStatus] = useState(0);
+
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   //Chat_list
   const [modalOpen, setModalOpen] = useState(false);
@@ -89,13 +94,40 @@ function Header() {
     setModalOpen(false);
   };
 
+  //화면이동
+  const Main = () => {
+    setStatus(0);
+    history.push("/");
+  };
+  const StopWatch = () => {
+    setStatus(1);
+    history.push("/StopWatch");
+  };
+  const StudyList = () => {
+    setStatus(2);
+    history.push("/StudyList");
+  };
+
   return (
     <Wrapper>
-      <Logo></Logo>
+      <Logo src={logo}></Logo>
 
-      <Active onClick={() => history.push("/")}>홈</Active>
-      <Menu onClick={() => history.push("/stopwatch")}>스톱워치</Menu>
-      <Menu onClick={() => history.push("/studylist")}>스터디</Menu>
+      {status === 0 ? (
+        <div class="menu">
+          <Active>홈</Active>
+          <Menu onClick={StopWatch}>스톱워치</Menu>
+          <Menu>스터디</Menu>
+        </div>
+      ) : null}
+
+      {status === 1 ? (
+        <div class="menu">
+          <Menu onClick={Main}>홈</Menu>
+          <Active>스톱워치</Active>
+          <Menu>스터디</Menu>
+        </div>
+      ) : null}
+
       <Search>
         <Input type="text" placeholder="새로운 스터디를 찾아보세요"></Input>
         <img src={dot} style={{ width: "16px", height: "16px" }}></img>
