@@ -27,17 +27,17 @@ public class ChatMessageService {
         ChatRoom chatRoom = chatRoomRepository.findFirstByRoomIdx(room_idx);
         Long other_idx;
 
-        if(chatRoom.getInquirerIdx() == user_idx){
-            other_idx = chatRoom.getLeaderIdx();
+        if(chatRoom.getInquirer().getUser_idx() == user_idx){
+            other_idx = chatRoom.getLeader().getUser_idx();
         } else {
-            other_idx = chatRoom.getInquirerIdx();;
+            other_idx = chatRoom.getInquirer().getUser_idx();
         }
 
         List<ChatMessage> chatMessageList = chatMessageRepository
                 .findByRoom_RoomIdxIsAndSenderIdxIsAndCheckEquals(room_idx, other_idx, 0);
 
         for(ChatMessage chatMessage: chatMessageList){
-            chatMessage.setCheck(1);
+            chatMessage.checkUpdate(1);
         }
 
     }

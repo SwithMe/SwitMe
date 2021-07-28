@@ -9,28 +9,32 @@ import java.util.List;
 @ToString(exclude = "messageList")
 @Getter
 @NoArgsConstructor
+@Table(name="chat_room")
 @Entity
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomIdx;
 
-    //foreign key study
-    private Long studyIdx;
+    @ManyToOne
+    @JoinColumn(name="study_idx")
+    private Study study;
 
-    //foreign key user
-    private Long leaderIdx;
+    @ManyToOne
+    @JoinColumn(name="leader_idx")
+    private User leader;
 
-    //foreign key user
-    private Long inquirerIdx;
+    @ManyToOne
+    @JoinColumn(name="inquirer_idx")
+    private User inquirer;
 
     @OneToMany(mappedBy = "room")
     private List<ChatMessage> messageList;
 
     @Builder
-    public ChatRoom(Long study_idx, Long leader_idx, Long inquirer_idx){
-        this.studyIdx = study_idx;
-        this.leaderIdx = leader_idx;
-        this.inquirerIdx = inquirer_idx;
+    public ChatRoom(Study study, User leader, User inquirer){
+        this.study = study;
+        this.leader = leader;
+        this.inquirer = inquirer;
     }
 }

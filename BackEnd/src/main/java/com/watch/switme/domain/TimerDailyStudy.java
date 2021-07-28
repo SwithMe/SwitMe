@@ -22,6 +22,6 @@ public class TimerDailyStudy {
 
     @ManyToOne
     @JoinColumn(name="study_idx")
-    private StudyMain study;
+    private Study study;
 
 }
