@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import logo from "../assets/logo.png";
 import { login } from "../_actions/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,11 +34,9 @@ const TextBox = styled.div`
 
 const Login = () => {
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.actions.isAuth);
-  console.log("value", value);
   const [user, setUser] = useState({
-    id: "",
-    password: "",
+    useremail: "",
+    userpassword: "",
   });
 
   const onInputChange = (e) => {
@@ -60,19 +58,18 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Header />
       <form onSubmit={formSubmit}>
         <Items>
           <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
           <Input2
-            name="id"
+            name="useremail"
             placeholder="E-mail"
             width="29rem"
             value={user.id}
             onChange={onInputChange}
           ></Input2>
           <Input2
-            name="password"
+            name="userpassword"
             placeholder="비밀번호"
             width="29rem"
             value={user.password}

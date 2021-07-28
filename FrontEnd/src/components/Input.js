@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
   margin-top: ${(props) => props.marginTop || 0}px;
   border-radius: 10px;
   border: 1px solid #56be9c;
-  padding: 18px 0px 18px 31px;
+  justify-content: center;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17,6 +17,7 @@ const StyledDiv = styled.div`
 const StyledInput = styled.input`
   width: ${(props) => props.inputwidth || 480}px;
   border: none;
+  background-color: none;
   font-size: 20px;
   &::placeholder {
     font-family: "NotoSans";
@@ -50,7 +51,11 @@ const Input = ({
       {...rest}
     >
       {validinput === "true" ? (
-        <StyledInput placeholder={placeholder} inputwidth={inputwidth} />
+        <StyledInput
+          placeholder={placeholder}
+          inputwidth={inputwidth}
+          {...rest}
+        />
       ) : (
         <div></div>
       )}

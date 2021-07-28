@@ -9,8 +9,7 @@ import StudyList from "./pages/StudyList";
 import StopWatch from "./pages/StopWatch";
 import StudyDetail from "./pages/StudyDetail";
 import MemberList from "./pages/MemberList";
-import Online from "./pages/Online";
-import Offline from "./pages/Offline";
+import MakeStudy from "./pages/MakeStudy";
 import Mypage from "./pages/Mypage";
 import Modal from "./components/Modal";
 
@@ -25,10 +24,9 @@ function App() {
         <Route exact path="/findpassword" component={FindPassword} />
         <Route exact path="/studylist" component={StudyList} />
         <Route exact path="/stopwatch" component={StopWatch} />
-        <Route exact path="/studydetail" component={StudyDetail} />
+        <Route exact path="/studydetail/:study_id" component={StudyDetail} />
         <Route exact path="/memberlist" component={MemberList} />
-        <Route exact path="/online" component={Online} />
-        <Route exact path="/offline" component={Offline} />
+        <Route exact path="/makestudy" component={MakeStudy} />
         <Route exact path="/mypage" component={Mypage} />
         <Route exact path="/modal" component={Modal} />
       </Switch>

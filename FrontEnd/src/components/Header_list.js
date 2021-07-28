@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import message from "../assets/message.png";
 import dot from "../assets/search.png";
+import Chat_list from "./Chat_list";
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,8 +76,19 @@ const Button = styled.img`
   height: 65px;
 `;
 
-function Header() {
+function Header_list() {
   const history = useHistory();
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  //Chat_list
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Wrapper>
       <Logo></Logo>
@@ -88,10 +100,17 @@ function Header() {
         <img src={dot} style={{ width: "16px", height: "16px" }}></img>
       </Search>
       <Button
-        onClick={() => history.push("/")}
+        onClick={openModal}
         src={message}
         style={{ marginLeft: "61px" }}
       ></Button>
+      {/* Chat_list 시작 */}
+      <React.Fragment>
+        <Chat_list open={modalOpen} close={closeModal} header="">
+          {/* // Chat_list.js <main> {props.children} </main>에 내용이 입력됨. */}
+        </Chat_list>
+      </React.Fragment>
+      {/* Chat_list 끝*/}
       <Button
         onClick={() => history.push("/")}
         src={profile}
@@ -100,4 +119,4 @@ function Header() {
     </Wrapper>
   );
 }
-export default Header;
+export default Header_list;

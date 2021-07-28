@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
+import { getStudydetail, joinStudy, leaveStudy } from "../_actions/actions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
 const Fix = styled.div`
   min-height: 100vh;
@@ -45,31 +48,69 @@ const Lower = styled.div`
   justify-content: space-between;
 `;
 
-const StudyDetail = () => {
+const StudyDetail = ({ match }) => {
+  const study_id = match.params;
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [study, setStudy] = useState({
-    name: "스터디 이름 쓰는 칸",
+    title: "스터디 이름 쓰는 칸",
     outline:
       "스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개",
-    owner: "스터디장 이름",
+    leader: "스터디장 이름",
     temperature: "80",
-    state: "모집중",
+    state: "모집중", //추후 삭제 필요
     startdate: "2021-11-11",
     enddate: "2021-11-11",
-    onoff: "온라인",
+    type: "온라인",
     starttime: "AM 10:00",
     endtime: "AM 11:00",
     currentnum: 10,
-    maxnum: 20,
-    tags: ["태그 1", "태그 2", "태그 3"],
+    size: 20,
+    tags: "태그1, 태그2, 태그3",
     link: "https://www.naver.com/",
-    etc: "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
+    extra:
+      "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
   const [isMember, setIsMember] = useState(true);
-  const [member, setMemver] = useState({
+  const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
     warning: 0,
   });
+  useEffect(() => {
+    dispatch(getStudydetail(study_id)).then((response) => {
+      if (response.payload) {
+        setStudy(response.payload);
+      } else {
+        console.log("스터디 상세정보 가져오기 실패");
+      }
+    });
+  }, []);
+
+  const join = () => {
+    const user_id = window.localStorage.getItem("id");
+    dispatch(joinStudy(user_id, study_id)).then((response) => {
+      if (response.payload) {
+        alert("스터디에 가입되었습니다.");
+        window.location.replace(`/studydetail/${study.id}`);
+      } else {
+        console.log("스터디 가입 실패");
+      }
+    });
+  };
+
+  const leave = () => {
+    const user_id = window.localStorage.getItem("id");
+    dispatch(leaveStudy(user_id, study_id)).then((response) => {
+      if (response.payload) {
+        alert("스터디에서 탈퇴되었습니다.");
+        window.location.replace(`/studydetail/${study.id}`);
+      } else {
+        console.log("스터디 탈퇴 실패");
+      }
+    });
+  };
+
   return (
     <Fix>
       <Header />
@@ -83,7 +124,7 @@ const StudyDetail = () => {
         </div>
         <Detail>
           <Title size="32" color="#064538">
-            {study.name}
+            {study.title}
           </Title>
           <Title size="24" weight="400" marginTop="17">
             {study.outline}
@@ -102,7 +143,7 @@ const StudyDetail = () => {
             </div>
             <Content>
               <Title weight="400" size="20">
-                {study.owner}
+                {study.leader}
               </Title>
             </Content>
             <div style={{ width: "174px" }}>
@@ -138,7 +179,7 @@ const StudyDetail = () => {
             </div>
             <Content>
               <Title weight="400" size="20">
-                {study.onoff}
+                {study.type}
               </Title>
             </Content>
             <div style={{ width: "174px" }}>
@@ -156,18 +197,16 @@ const StudyDetail = () => {
             </div>
             <Content>
               <Title weight="400" size="20">
-                {study.currentnum} / {study.maxnum}명
+                {study.currentnum} / {study.size}명
               </Title>
             </Content>
             <div style={{ width: "174px" }}>
               <Title size="20">태그</Title>
             </div>
             <Content>
-              {study.tags.map((tag, i) => (
-                <Title weight="400" size="20">
-                  #{tag}&nbsp;
-                </Title>
-              ))}
+              <Title weight="400" size="20">
+                {study.tags}
+              </Title>
             </Content>
           </Row>
           <Row>
@@ -188,7 +227,7 @@ const StudyDetail = () => {
               <Title size="20">기타사항</Title>
             </div>
             <Title weight="400" size="20">
-              {study.etc}
+              {study.extra}
             </Title>
           </Row>
         </Detail>
@@ -205,7 +244,9 @@ const StudyDetail = () => {
             color: "#ffffff",
             fontWeight: "700",
             fontFamily: "NotoSans",
+            cursor: "pointer",
           }}
+          onClick={() => history.push("/studylist")}
         >
           목록으로
         </button>
@@ -279,7 +320,9 @@ const StudyDetail = () => {
               color: "#ffffff",
               fontWeight: "700",
               fontFamily: "NotoSans",
+              cursor: "pointer",
             }}
+            onClick={leave}
           >
             탈퇴하기
           </button>
@@ -295,7 +338,9 @@ const StudyDetail = () => {
               color: "#ffffff",
               fontWeight: "700",
               fontFamily: "NotoSans",
+              cursor: "pointer",
             }}
+            onClick={join}
           >
             가입 신청하기
           </button>
