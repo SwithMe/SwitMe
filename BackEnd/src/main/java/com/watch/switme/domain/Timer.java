@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +19,8 @@ public class Timer {
     @Column(name = "timer_name")
     private String name;
 
+    private Time duration;
+
     @ManyToOne
     @JoinColumn(name="user_idx")
     private User user;
@@ -27,9 +30,10 @@ public class Timer {
     private Study study;
 
     @Builder
-    public Timer(Long timer_idx, String name, User user, Study study) {
+    public Timer(Long timer_idx, String name, Time duration, User user, Study study) {
         this.timer_idx = timer_idx;
         this.name = name;
+        this.duration = duration;
         this.user = user;
         this.study = study;
     }

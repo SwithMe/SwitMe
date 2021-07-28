@@ -8,29 +8,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+
 @Data
 @NoArgsConstructor
-public class TimerDto {
+public class TimerListResDto {
     private Long timer_idx;
     private String name;
-    private User user;
-    private Study study;
+    private Time duration;
 
     public Timer toEntity(){
         Timer timer=Timer.builder()
                 .timer_idx(timer_idx)
                 .name(name)
-                .user(user)
-                .study(study)
+                .duration(duration)
                 .build();
         return timer;
     }
 
     @Builder
-    public TimerDto(Long timer_idx, String name, User user, Study study) {
+    public TimerListResDto(Long timer_idx, String name, Time duration) {
         this.timer_idx = timer_idx;
         this.name = name;
-        this.user = user;
-        this.study = study;
+        this.duration = duration;
     }
 }

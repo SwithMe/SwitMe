@@ -21,15 +21,14 @@ public class TimerDailyUser {
 
     private Time duration;
 
-    @ManyToOne
-    @JoinColumn(name="user_idx")
-    private User user;
+    //fk
+    private Long user_idx;
 
     @Builder
-    public TimerDailyUser(Long daily_user_idx, Date date, Time duration, User user) {
+    public TimerDailyUser(Long daily_user_idx, Date date, Time duration, Long user_idx) {
         this.daily_user_idx = daily_user_idx;
         this.date = date;
         this.duration = duration;
-        this.user = user;
+        this.user_idx = user_idx;
     }
 }

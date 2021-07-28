@@ -1,11 +1,7 @@
 package com.watch.switme.controller;
 
-import com.watch.switme.domain.Timer;
-import com.watch.switme.domain.User;
-import com.watch.switme.dto.TimerCreateRequestDto;
-import com.watch.switme.dto.TimerDto;
+import com.watch.switme.dto.TimerListResDto;
 import com.watch.switme.service.TimerService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +16,7 @@ public class TimerController {
 
     // 스톱워치 타이머 리스트
     @GetMapping("/timer/list/{user_idx}")
-    public List<TimerDto> timerList(@PathVariable("user_idx") long user_idx){
+    public List<TimerListResDto> timerList(@PathVariable("user_idx") long user_idx){
         return timerService.getTimerList(user_idx);
     }
 
