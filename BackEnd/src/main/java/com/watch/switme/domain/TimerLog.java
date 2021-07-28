@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@Table(name="Timer_log")
 @Entity
 public class TimerLog {
 

@@ -14,6 +14,7 @@ import java.util.List;
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="room_idx")
     private Long roomIdx;
 
     @ManyToOne
