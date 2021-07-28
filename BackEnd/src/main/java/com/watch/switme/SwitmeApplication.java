@@ -26,3 +26,4 @@ public class SwitmeApplication extends SpringBootServletInitializer {
     }
 
 }
+
