@@ -1,9 +1,14 @@
 package com.watch.switme.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class makeStudyDto {
     private Integer study_idx;
     private String title;
