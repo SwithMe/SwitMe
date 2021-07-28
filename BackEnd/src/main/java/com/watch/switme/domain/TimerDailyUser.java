@@ -19,13 +19,13 @@ public class TimerDailyUser {
 
     private Date date;
 
-    private Time duration;
+    private Long duration;
 
     //fk
     private Long user_idx;
 
     @Builder
-    public TimerDailyUser(Long daily_user_idx, Date date, Time duration, Long user_idx) {
+    public TimerDailyUser(Long daily_user_idx, Date date, Long duration, Long user_idx) {
         this.daily_user_idx = daily_user_idx;
         this.date = date;
         this.duration = duration;

@@ -11,10 +11,10 @@ import java.sql.Time;
 @Data
 @NoArgsConstructor
 public class CumulativeTimeDto {
-    private Time cumulative_time;
+    private Long cumulative_time;
 
     @Builder
-    public CumulativeTimeDto(Time cumulative_time) {
+    public CumulativeTimeDto(Long cumulative_time) {
         this.cumulative_time = cumulative_time;
     }
 }

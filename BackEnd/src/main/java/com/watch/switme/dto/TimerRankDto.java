@@ -10,10 +10,10 @@ import java.sql.Time;
 @NoArgsConstructor
 public class TimerRankDto {
     private String name;
-    private Time cumulative_time;
+    private Long cumulative_time;
 
     @Builder
-    public TimerRankDto(String name, Time cumulative_time) {
+    public TimerRankDto(String name, Long cumulative_time) {
         this.name = name;
         this.cumulative_time = cumulative_time;
     }

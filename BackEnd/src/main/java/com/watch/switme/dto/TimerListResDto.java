@@ -15,7 +15,7 @@ import java.sql.Time;
 public class TimerListResDto {
     private Long timer_idx;
     private String name;
-    private Time duration;
+    private Long duration;
 
     public Timer toEntity(){
         Timer timer=Timer.builder()
@@ -27,7 +27,7 @@ public class TimerListResDto {
     }
 
     @Builder
-    public TimerListResDto(Long timer_idx, String name, Time duration) {
+    public TimerListResDto(Long timer_idx, String name, Long duration) {
         this.timer_idx = timer_idx;
         this.name = name;
         this.duration = duration;

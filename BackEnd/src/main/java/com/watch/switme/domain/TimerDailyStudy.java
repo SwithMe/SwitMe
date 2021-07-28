@@ -19,7 +19,7 @@ public class TimerDailyStudy {
 
     private Date date;
 
-    private Time duration;
+    private Long duration;
 
     //fk
     private Long study_idx;
@@ -29,7 +29,7 @@ public class TimerDailyStudy {
 //    private Study study;
 
     @Builder
-    public TimerDailyStudy(Long daily_study_idx, Date date, Time duration, Long study_idx) {
+    public TimerDailyStudy(Long daily_study_idx, Date date, Long duration, Long study_idx) {
         this.daily_study_idx = daily_study_idx;
         this.date = date;
         this.duration = duration;

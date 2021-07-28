@@ -19,7 +19,7 @@ public class Timer {
     @Column(name = "timer_name")
     private String name;
 
-    private Time duration;
+    private Long duration;
 
     @ManyToOne
     @JoinColumn(name="user_idx")
@@ -30,7 +30,7 @@ public class Timer {
     private Study study;
 
     @Builder
-    public Timer(Long timer_idx, String name, Time duration, User user, Study study) {
+    public Timer(Long timer_idx, String name, Long duration, User user, Study study) {
         this.timer_idx = timer_idx;
         this.name = name;
         this.duration = duration;
