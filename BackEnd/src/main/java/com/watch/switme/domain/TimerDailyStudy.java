@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@Table(name="Timer_daily_study")
 @Entity
 public class TimerDailyStudy {
     @Id
@@ -22,6 +23,6 @@ public class TimerDailyStudy {
 
     @ManyToOne
     @JoinColumn(name="study_idx")
-    private StudyMain study;
+    private Study study;
 
 }

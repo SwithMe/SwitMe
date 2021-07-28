@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Table(name="Study_main")
 @Entity(name="study_main")
 public class Study {
     @Id

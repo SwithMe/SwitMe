@@ -1,6 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.ChatRoom;
+import com.watch.switme.domain.User;
 import com.watch.switme.dto.ChatMessageDto;
 import com.watch.switme.dto.DisconnectDto;
 import com.watch.switme.dto.SocketDto;
@@ -22,11 +23,18 @@ public class ChatController {
 
     @MessageMapping("/message")
     public void Message(SocketDto message){
-        //message 저장 user 가져오기..
+
         ChatRoom presentRoom = chatRoomService.findRoom(Long.parseLong(message.getRoom_idx()));
+        User sender;
+        if(Long.parseLong(message.getUser_idx()) == presentRoom.getInquirer().getUser_idx()){
+            sender = presentRoom.getInquirer();
+        } else{
+            sender = presentRoom.getLeader();
+        }
+
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
                 .message(message.getMessage())
-                .sender_idx(Long.parseLong(message.getUser_idx()))
+                .sender(sender)
                 .room(presentRoom).build();
         chatMessageService.save(chatMessageDto);
 
