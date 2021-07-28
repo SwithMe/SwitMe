@@ -42,4 +42,5 @@ public class UserService {
         return userRepository.findAll();
     }
     public Optional<User> findByEmail(final String email) {return userRepository.findByEmail(email);}
+
 }

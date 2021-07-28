@@ -1,6 +1,8 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.Timer;
+import com.watch.switme.domain.User;
+import com.watch.switme.dto.TimerCreateRequestDto;
 import com.watch.switme.dto.TimerDto;
 import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,21 @@ public class TimerController {
 
         return timerService.update(timer_idx, timer_name);
     }
+
+    //스톱워치 추가
+    @PostMapping("//timer/add/{user_idx}")
+    public Long create(@PathVariable("user_idx") long user_idx,@RequestBody Map<String, String> param) {
+
+        String timer_name=param.get("timer_name");
+
+        return timerService.create(user_idx, timer_name);
+    }
+
+
+    //스톱워치 삭제
+
+
+
+    //스톱워치 정지 후 저장
 
 }
