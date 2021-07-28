@@ -33,4 +33,8 @@ public class Timer {
         this.user = user;
         this.study = study;
     }
+
+    public void update(String timer_name){
+        this.name=timer_name;
+    }
 }

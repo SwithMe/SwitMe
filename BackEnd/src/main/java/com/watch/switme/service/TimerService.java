@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -32,6 +33,14 @@ public class TimerService {
         }
 
         return timerDtoList;
+    }
+
+    @Transactional
+    public Long update(Long timer_idx, String timer_name){
+        Timer timer=timerRepository.findById(timer_idx).get();
+        timer.update(timer_name);
+
+        return timer_idx;
     }
 
 }
