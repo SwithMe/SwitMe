@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudyService {
     private final StudyRepository studyRepository;
+
     public Study findByStudyIdx(Long study_idx){
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
+
 }
