@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "User_data")
+@Table(name = "user_data")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -31,8 +31,8 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @Setter
-    @Column(name="auth", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isEnable = true;
+    @Column(name="auth", nullable = true, columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean isEnable;
 
     @Setter
     @Column(name="UserName", nullable = true)

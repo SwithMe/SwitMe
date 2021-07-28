@@ -15,12 +15,7 @@ public class StudyController {
     StudyRepository studyRepository;
 
     //온/오프라인 스터디 개설하기
-    @PostMapping("/array/enroll")
-    public makeStudyDto enrollStudy(@RequestBody makeStudyDto makeStudydto) {
-        Integer study_idx = makeStudydto.getStudy_idx();
 
-
-    }
 
     //스터디 수정하기
     @PostMapping("/array/fix/{study_idx}")
