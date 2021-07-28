@@ -34,7 +34,7 @@ public class ChatMessageService {
         }
 
         List<ChatMessage> chatMessageList = chatMessageRepository
-                .findByRoom_RoomIdxIsAndSenderIdxIsAndCheckEquals(room_idx, other_idx, 0);
+                .findByRoom_RoomIdxIsAndSender_UserIdxIsAndCheckEquals(room_idx, other_idx, 0);
 
         for(ChatMessage chatMessage: chatMessageList){
             chatMessage.checkUpdate(1);
