@@ -1,15 +1,28 @@
-package com.watch.switme;
+package com.jwtappliedexample.example.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+
+@EnableSwagger2
 @SpringBootApplication
 @EnableJpaAuditing
-public class SwitmeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SwitmeApplication.class, args);
-	}
+public class SwitmeApplication extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+        return builder.sources(SwitmeApplication.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SwitmeApplication.class, args);
+    }
 
 }

@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-
 import Header from "../components/Header";
 import Input from "../components/Input";
-import Input2 from "../components/Input2";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { makestudy } from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,8 +78,42 @@ const RadioButton = styled.input`
   height: 41px;
 `;
 
-const Online = () => {
+const MakeStudy = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [study, setStudy] = useState({
+    title: "",
+    type: "online",
+    termstart: "",
+    termend: "",
+    timestart: "12:00",
+    timeend: "12:00",
+    size: 0,
+    tags: "",
+    location: "",
+    extra: "",
+    image: "", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
+    leader: window.localStorage.getItem("id"),
+    link: "",
+  });
+
+  const onFormSubmit = () => {
+    console.log(study);
+    dispatch(makestudy(study)).then((response) => {
+      if (response.payload) {
+        alert("스터디가 생성되었습니다..");
+        history.push(`/`);
+      } else {
+        console.log("스터디 생성 실패");
+      }
+    });
+  };
+
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setStudy({ ...study, [name]: value });
+  };
+
   return (
     <Wrapper>
       <Header />
@@ -113,11 +147,14 @@ const Online = () => {
             </Textbox>
             <Inputbox>
               <Input
+                name="title"
+                value={study.title}
                 placeholder="스터디의 이름을 작성해주세요"
                 width="1000"
-                inputwidth="300"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
+                onChange={onInputChange}
               ></Input>
             </Inputbox>
           </Row>
@@ -132,7 +169,7 @@ const Online = () => {
                     type="radio"
                     id="online"
                     name="onoff"
-                    onClick={() => history.push("/online")}
+                    onClick={() => setStudy({ ...study, type: "online" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -150,7 +187,7 @@ const Online = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
-                    onClick={() => history.push("/offline")}
+                    onClick={() => setStudy({ ...study, type: "offline" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -172,11 +209,14 @@ const Online = () => {
             </Textbox>
             <Inputbox>
               <Input
+                name="termstart"
+                value={study.termstart}
                 placeholder="날짜를 선택하세요"
                 width="300"
                 inputwidth="160"
                 marginTop="18"
                 validinput="true"
+                onChange={onInputChange}
               ></Input>
               <div style={{ margin: "15px", marginTop: "30px" }}>
                 <img
@@ -186,11 +226,14 @@ const Online = () => {
                 />
               </div>
               <Input
+                name="termend"
+                value={study.termend}
                 placeholder="날짜를 선택하세요"
                 width="300"
                 inputwidth="160"
                 marginTop="18"
                 validinput="true"
+                onChange={onInputChange}
               ></Input>
             </Inputbox>
           </Row>
@@ -210,7 +253,7 @@ const Online = () => {
               <Item>
                 <Input width="141" height="65">
                   <Title size="20" weight="400">
-                    22:00
+                    {study.timestart}
                   </Title>
                   <img
                     alt="dropdown"
@@ -219,22 +262,30 @@ const Online = () => {
                   />
                 </Input>
                 <ul>
-                  <li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "00:00" })}
+                  >
                     <Title size="20" weight="400">
                       00:00
                     </Title>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "01:00" })}
+                  >
                     <Title size="20" weight="400">
                       01:00
                     </Title>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "02:00" })}
+                  >
                     <Title size="20" weight="400">
                       02:00
                     </Title>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "03:00" })}
+                  >
                     <Title size="20" weight="400">
                       03:00
                     </Title>
@@ -251,7 +302,7 @@ const Online = () => {
               <Item>
                 <Input width="141" height="65">
                   <Title size="20" weight="400">
-                    23:00
+                    {study.timeend}
                   </Title>
                   <img
                     alt="dropdown"
@@ -260,22 +311,22 @@ const Online = () => {
                   />
                 </Input>
                 <ul>
-                  <li>
+                  <li onClick={() => setStudy({ ...study, timeend: "00:00" })}>
                     <Title size="20" weight="400">
                       00:00
                     </Title>
                   </li>
-                  <li>
+                  <li onClick={() => setStudy({ ...study, timeend: "01:00" })}>
                     <Title size="20" weight="400">
                       01:00
                     </Title>
                   </li>
-                  <li>
+                  <li onClick={() => setStudy({ ...study, timeend: "02:00" })}>
                     <Title size="20" weight="400">
                       02:00
                     </Title>
                   </li>
-                  <li>
+                  <li onClick={() => setStudy({ ...study, timeend: "03:00" })}>
                     <Title size="20" weight="400">
                       03:00
                     </Title>
@@ -284,73 +335,108 @@ const Online = () => {
               </Item>
             </Inputbox>
           </Row>
-
-          <Item style={{ alignItems: "center" }}>
+          <Row
+            style={{
+              alignItems: "center",
+            }}
+          >
             <Textbox>
               <Title>최대 모집 인원</Title>
             </Textbox>
             <Inputbox>
-              <Input width="141" height="65">
-                <Title size="20" weight="400">
-                  0
-                </Title>
-                <img
-                  alt="dropdown"
-                  src={require("../assets/dropdown.png").default}
-                  style={{ marginLeft: "60px" }}
-                />
-              </Input>
-              <ul>
-                <li>
+              <Item>
+                <Input width="141" height="65">
                   <Title size="20" weight="400">
-                    0
+                    {study.size}
                   </Title>
-                </li>
-                <li>
-                  <Title size="20" weight="400">
-                    1
-                  </Title>
-                </li>
-                <li>
-                  <Title size="20" weight="400">
-                    2
-                  </Title>
-                </li>
-                <li>
-                  <Title size="20" weight="400">
-                    3
-                  </Title>
-                </li>
-              </ul>
+                  <img
+                    alt="dropdown"
+                    src={require("../assets/dropdown.png").default}
+                    style={{ marginLeft: "21px" }}
+                  />
+                </Input>
+                <ul>
+                  <li onClick={() => setStudy({ ...study, size: 0 })}>
+                    <Title size="20" weight="400">
+                      0
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 1 })}>
+                    <Title size="20" weight="400">
+                      1
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 2 })}>
+                    <Title size="20" weight="400">
+                      2
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 3 })}>
+                    <Title size="20" weight="400">
+                      3
+                    </Title>
+                  </li>
+                </ul>
+              </Item>
             </Inputbox>
-          </Item>
+          </Row>
           <Row style={{ alignItems: "center" }}>
             <Textbox>
               <Title>태그</Title>
             </Textbox>
             <Inputbox>
               <Input
+                name="tags"
+                value={study.tags}
                 placeholder="태그를 입력하세요"
                 width="1000"
-                inputwidth="300"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
+                onChange={onInputChange}
               ></Input>
             </Inputbox>
           </Row>
           <Row style={{ alignItems: "center" }}>
-            <Textbox>
-              <Title>링크</Title>
-            </Textbox>
-            <Inputbox>
-              <Input
-                placeholder="사용하실 온라인 회의 링크를 입력하세요 (Zoom, Google Meet 등)"
-                width="1000"
-                inputwidth="600"
-                marginTop="18"
-                validinput="true"
-              ></Input>
-            </Inputbox>
+            {study.type === "online" ? (
+              <>
+                <Textbox>
+                  <Title>링크</Title>
+                </Textbox>
+                <Inputbox>
+                  <Input
+                    name="link"
+                    value={study.link}
+                    placeholder="사용하실 온라인 회의 링크를 입력하세요 (Zoom, Google Meet 등)"
+                    width="1000"
+                    inputwidth="950"
+                    marginTop="18"
+                    validinput="true"
+                    onChange={onInputChange}
+                  ></Input>
+                </Inputbox>
+              </>
+            ) : (
+              <>
+                <Textbox>
+                  <Title>장소</Title>
+                </Textbox>
+                <Inputbox>
+                  <Input
+                    placeholder="장소찾기"
+                    width="178"
+                    inputwidth="110"
+                    marginTop="18"
+                    validinput="true"
+                  >
+                    <img
+                      alt="dropdown"
+                      src={require("../assets/vector.png").default}
+                    />
+                  </Input>
+                </Inputbox>
+              </>
+            )}
           </Row>
           <Row style={{ alignItems: "center" }}>
             <Textbox>
@@ -358,11 +444,14 @@ const Online = () => {
             </Textbox>
             <Inputbox>
               <Input
+                name="extra"
+                value={study.extra}
                 placeholder="추가적인 사항을 기재해주세요 (조용한 정도, 타이핑/마우스 사용 여부 등)"
                 width="1000"
-                inputwidth="600"
+                inputwidth="950"
                 marginTop="18"
                 validinput="true"
+                onChange={onInputChange}
               ></Input>
             </Inputbox>
           </Row>
@@ -374,11 +463,11 @@ const Online = () => {
             }}
           >
             <Button
-              style={{ display: "flex" }}
               name="스터디 개설하기"
               width="220px"
               height="70px"
               color="#56BE9C"
+              onClick={onFormSubmit}
             ></Button>
           </Row>
         </Col>
@@ -387,4 +476,4 @@ const Online = () => {
   );
 };
 
-export default Online;
+export default MakeStudy;

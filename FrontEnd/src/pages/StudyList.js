@@ -245,39 +245,23 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "전체" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "전체" })}>
+              <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "모집중" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "모집중" })}>
+              <Title size="20" weight="400">
                 모집 중
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "활동중" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "활동중" })}>
+              <Title size="20" weight="400">
                 활동 중
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, state: "활동종료" })}
-              >
+            <li onClick={() => setSearch({ ...search, state: "활동종료" })}>
+              <Title size="20" weight="400">
                 활동 종료
               </Title>
             </li>
@@ -296,47 +280,22 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "전체" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "전체" })}>
+              <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "온라인" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "온라인" })}>
+              <Title size="20" weight="400">
                 온라인
               </Title>
             </li>
-            <li>
-              <Title
-                size="20"
-                weight="400"
-                onClick={() => setSearch({ ...search, type: "오프라인" })}
-              >
+            <li onClick={() => setSearch({ ...search, type: "오프라인" })}>
+              <Title size="20" weight="400">
                 오프라인
               </Title>
             </li>
           </ul>
-        </Item>
-        <Item>
-          <Title>매너온도</Title>
-          <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
-            <Title size="20" weight="400">
-              전체
-            </Title>
-            <img
-              alt="dropdown"
-              src={require("../assets/dropdown.png").default}
-              style={{ marginLeft: "21px" }}
-            />
-          </Input>
         </Item>
         <Item>
           <Title>최대인원</Title>
@@ -367,10 +326,10 @@ const StudyList = () => {
           <Input
             name="tags"
             placeholder="Search"
-            width="220"
+            width="372"
             marginTop="18"
             validinput="true"
-            inputwidth="170"
+            inputwidth="350"
             onChange={onInputChange}
           ></Input>
         </Item>
@@ -506,6 +465,9 @@ const StudyList = () => {
             fontWeight: "700",
             fontFamily: "NotoSans",
             marginLeft: "12px",
+          }}
+          onClick={() => {
+            history.push("/makestudy");
           }}
         >
           스터디 개설하기

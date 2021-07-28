@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header_watch from "../components/Header_watch";
+import Header from "../components/Header";
 import Watch from "../components/Watch";
 import TimerList from "../components/TimerList";
 import ModalTimer from "../components/ModalTimer";
-import Modal from "../components/Modal";
+import TimerListContent from "../components/TimerListContent";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,10 +34,10 @@ const StopWatch = () => {
         onInputChange={TimerList.onInputChange}
         onSubmit={TimerList.onSubmit}
       ></ModalTimer>
-      <Header_watch />
+      <Header></Header>
       <Wrapper>
         <TimerList openModal={openModal}></TimerList>
-        <Watch></Watch>
+        <Watch name={TimerListContent.name}></Watch>
       </Wrapper>
     </div>
   );
