@@ -8,15 +8,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @SpringBootApplication
-public class SpringbootApplication extends SpringBootServletInitializer {
+public class SwitmeApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
-        return builder.sources(SpringbootApplication.class);
+        return builder.sources(SwitmeApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootApplication.class, args);
+        SpringApplication.run(SwitmeApplication.class, args);
     }
 
 }
