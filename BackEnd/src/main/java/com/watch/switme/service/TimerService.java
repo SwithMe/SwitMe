@@ -61,4 +61,9 @@ public class TimerService {
         return timerRepository.save(timerCreateRequestDto.toEntity()).getTimer_idx();
     }
 
+    @Transactional
+    public void delete(Long timer_idx){
+        timerRepository.deleteById(timer_idx);
+    }
+
 }
