@@ -1,6 +1,5 @@
 package com.watch.switme.dto;
 
-import com.watch.switme.domain.Study;
 import lombok.Data;
 import java.sql.Timestamp;
 
@@ -40,7 +39,7 @@ public class makeStudyDto {
 
     }
 
-    public Study toEntity(){
+    /**public Study toEntity(){
         return Study.builder()
                 .study_idx(study_idx)
                 .title(title)
@@ -56,5 +55,5 @@ public class makeStudyDto {
                 .link(link)
                 .studyIntro(studyIntro);
 
-    }
+    }**/
 }
