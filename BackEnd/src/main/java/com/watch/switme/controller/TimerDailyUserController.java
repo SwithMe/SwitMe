@@ -2,6 +2,7 @@ package com.watch.switme.controller;
 
 import com.watch.switme.dto.CumulativeTimeDto;
 import com.watch.switme.dto.TimerListResDto;
+import com.watch.switme.dto.TimerRankDto;
 import com.watch.switme.service.TimerDailyUserService;
 import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,11 @@ public class TimerDailyUserController {
     @GetMapping("/main/mytime/{user_idx}")
     public CumulativeTimeDto timerList(@PathVariable("user_idx") long user_idx){
         return timerDailyUserService.getTime(user_idx);
+    }
+
+    //누적 공부 시간 랭킹 (개인)
+    @GetMapping("/main/rank/individual")
+    public List<TimerRankDto> getRank(){
+        return timerDailyUserService.getRank();
     }
 }
