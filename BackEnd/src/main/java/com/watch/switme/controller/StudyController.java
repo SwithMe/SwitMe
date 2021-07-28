@@ -1,12 +1,10 @@
 package com.watch.switme.controller;
 
-import com.watch.switme.dto.Study;
 import com.watch.switme.dto.StudyDTO;
 import com.watch.switme.repository.StudyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/list")
