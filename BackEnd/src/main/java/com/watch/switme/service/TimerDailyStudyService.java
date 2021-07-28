@@ -1,6 +1,7 @@
 package com.watch.switme.service;
 
 import com.watch.switme.domain.TimerDailyStudy;
+import com.watch.switme.domain.TimerDailyUser;
 import com.watch.switme.dto.TimerRankDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.TimerDailyStudyRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,6 +18,16 @@ import java.util.List;
 public class TimerDailyStudyService {
     private final TimerDailyStudyRepository timerDailyStudyRepository;
     private final StudyRepository studyRepository;
+
+    @Transactional
+    public TimerDailyStudy findTimerDailyStudy(int study_idx){
+        Date before = new Date(System.currentTimeMillis() - 30000L);
+        Date now = new Date();
+
+        TimerDailyStudy timerDailyStudy=timerDailyStudyRepository.findByStudyIdxAndDateBetween(study_idx, before,now);
+
+        return timerDailyStudy;
+    }
 
     @Transactional
     public List<TimerRankDto> getRank(){

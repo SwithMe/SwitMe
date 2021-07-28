@@ -31,4 +31,8 @@ public class TimerDailyUser {
         this.duration = duration;
         this.user_idx = user_idx;
     }
+
+    public void update(Long duration) {
+        this.duration=duration;
+    }
 }

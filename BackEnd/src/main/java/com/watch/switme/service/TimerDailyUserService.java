@@ -35,6 +35,16 @@ public class TimerDailyUserService {
         return cumulativeTimeDto;
     }
 
+    @Transactional
+    public TimerDailyUser findTimerDailyUser(Long user_idx){
+        Date before = new Date(System.currentTimeMillis() - 30000L);
+        Date now = new Date();
+
+        TimerDailyUser timerDailyUser=timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, before,now);
+
+        return timerDailyUser;
+    }
+
 
 
     @Transactional

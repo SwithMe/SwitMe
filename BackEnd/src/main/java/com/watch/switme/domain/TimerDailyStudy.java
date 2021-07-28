@@ -35,4 +35,8 @@ public class TimerDailyStudy {
         this.duration = duration;
         this.study_idx = study_idx;
     }
+
+    public void update(Long duration) {
+        this.duration=duration;
+    }
 }

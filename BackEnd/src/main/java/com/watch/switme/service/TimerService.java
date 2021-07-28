@@ -2,8 +2,10 @@ package com.watch.switme.service;
 
 import com.watch.switme.domain.Timer;
 import com.watch.switme.domain.User;
+import com.watch.switme.dto.ChatRoomDto;
 import com.watch.switme.dto.TimerCreateRequestDto;
 import com.watch.switme.dto.TimerListResDto;
+import com.watch.switme.dto.TimerSaveDto;
 import com.watch.switme.repository.TimerRepository;
 import com.watch.switme.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,16 @@ public class TimerService {
 
     private final TimerRepository timerRepository;
     private final UserRepository userRepository;
+
+
+    @Transactional
+    public Long save(TimerSaveDto timerSaveDto){
+        return timerRepository.save(timerSaveDto.toEntity()).getTimer_idx();
+    }
+
+
+    @Transactional
+    public Timer findTimer(Long timer_idx){return timerRepository.findById(timer_idx).get();}
 
     @Transactional
     public List<TimerListResDto> getTimerList(Long user_idx){
@@ -63,5 +75,7 @@ public class TimerService {
     public void delete(Long timer_idx){
         timerRepository.deleteById(timer_idx);
     }
+
+
 
 }
