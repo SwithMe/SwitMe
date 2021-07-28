@@ -1,5 +1,6 @@
 package com.watch.switme.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,11 @@ public class TimerDailyUser {
     @JoinColumn(name="user_idx")
     private User user;
 
+    @Builder
+    public TimerDailyUser(Long daily_user_idx, Date date, Time duration, User user) {
+        this.daily_user_idx = daily_user_idx;
+        this.date = date;
+        this.duration = duration;
+        this.user = user;
+    }
 }

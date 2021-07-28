@@ -1,5 +1,6 @@
 package com.watch.switme.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,13 @@ public class TimerDailyStudy {
 
     @ManyToOne
     @JoinColumn(name="study_idx")
-    private StudyMain study;
+    private Study study;
 
+    @Builder
+    public TimerDailyStudy(Long daily_study_idx, Date date, Time duration, Study study) {
+        this.daily_study_idx = daily_study_idx;
+        this.date = date;
+        this.duration = duration;
+        this.study = study;
+    }
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "User_data_change")
+@Table(name = "User_data")
 @Getter
 @Builder
 @AllArgsConstructor

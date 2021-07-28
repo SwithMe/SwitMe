@@ -1,5 +1,6 @@
 package com.watch.switme.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,13 @@ public class Timer {
 
     @ManyToOne
     @JoinColumn(name="study_idx")
-    private StudyMain study;
+    private Study study;
 
+    @Builder
+    public Timer(Long timer_idx, String name, User user, Study study) {
+        this.timer_idx = timer_idx;
+        this.name = name;
+        this.user = user;
+        this.study = study;
+    }
 }
