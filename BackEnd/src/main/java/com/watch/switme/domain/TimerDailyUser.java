@@ -22,6 +22,6 @@ public class TimerDailyUser {
 
     @ManyToOne
     @JoinColumn(name="user_idx")
-    private UserData user;
+    private User user;
 
 }
