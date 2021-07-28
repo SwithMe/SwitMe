@@ -1,4 +1,4 @@
-package com.watch.switme.dto;
+package com.watch.switme.domain;
 
 
 import lombok.*;
