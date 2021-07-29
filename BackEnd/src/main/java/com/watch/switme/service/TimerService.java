@@ -35,7 +35,10 @@ public class TimerService {
 
     @Transactional
     public List<TimerListResDto> getTimerList(Long user_idx){
-        List <Timer> timerList=timerRepository.findByUserIdx(user_idx);
+
+        User user=userRepository.findById(user_idx).get();
+
+        List <Timer> timerList=timerRepository.findByUser(user);
         List <TimerListResDto> timerListResDtoList =new ArrayList<>();
 
         for(Timer timer:timerList){

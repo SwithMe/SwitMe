@@ -36,7 +36,7 @@ public class TimerDailyStudyService {
 
         for(TimerDailyStudy timerDailyStudy:timerDailyStudyList){
             TimerRankDto timerRankDto = TimerRankDto.builder()
-                    .name(studyRepository.findById(timerDailyStudy.getStudy_idx()).get().getTitle())
+                    .name(studyRepository.findById(timerDailyStudy.getStudyIdx()).get().getTitle())
                     .cumulative_time(timerDailyStudy.getDuration())
                     .build();
 

@@ -21,6 +21,10 @@ public class TimerController {
     private final TimerDailyUserService timerDailyUserService;
     private final TimerDailyStudyService timerDailyStudyService;
 
+    @GetMapping("timer/test")
+    public int test(){
+        return 11;
+    }
 
     // 스톱워치 타이머 리스트
     @GetMapping("/timer/list/{user_idx}")
@@ -62,10 +66,6 @@ public class TimerController {
         Date start_time=saveTimerRequestDto.getStart_time();
         Date end_time=saveTimerRequestDto.getEnd_time();
 
-        //1. Timer 객체 timer_idx로 찾아내기
-        //   - user_idx 찾기
-        //   - study가 null인지 알아내야 함.
-        //      - not null일 경우, study_idx 알아내기
 
         Timer timer=timerService.findTimer(timer_idx);
         Long user_idx=timer.getUser().getUser_idx();
@@ -75,11 +75,9 @@ public class TimerController {
             int study_idx=study.getStudy_idx();
         }
 
-        //2. (Timer) duration 업데이트
-        //  - 원래꺼 가져와서 합치기
+
         Long duration=timer.getDuration();
-        Long new_duration=duration+timer_duration; //합쳐진 거
-        //이렇게 넣어도 되나..? 업데이트가 되남. 테스트
+        Long new_duration=duration+timer_duration;
         TimerSaveDto timerSaveDto=TimerSaveDto.builder()
                 .timer_idx(timer_idx)
                 .name(timer.getName())
@@ -93,7 +91,6 @@ public class TimerController {
 
         Long saved_timer_idx=timerService.save(timerSaveDto);
 
-        //3. (Timer_log)
         TimerLogSaveDto timerLogSaveDto=TimerLogSaveDto.builder()
                 .start_time(start_time)
                 .end_time(end_time)
@@ -103,26 +100,15 @@ public class TimerController {
         System.out.println("==save timerLog entity==");
         System.out.println(timerLogSaveDto);
         Long saved_timerLog_idx=timerLogService.save(timerLogSaveDto);
-
-
-        //4. (Timer_daily_user)
-        //  - user_idx와 date로 찾은 개체에
-        //  - duration 업데이트
         TimerDailyUser timerDailyUser=timerDailyUserService.findTimerDailyUser(timer.getUser().getUser_idx());
         timerDailyUser.update(new_duration);
 
 
-        //5. (Timer_daily_study)
-        // - study가 not null일 경우
-        // - study_idx와 date로 찾은 개체에
-        // -duration 업데이트
-
         if(study!=null){
             TimerDailyStudy timerDailyStudy=timerDailyStudyService.findTimerDailyStudy(timer.getStudy().getStudy_idx());
             timerDailyStudy.update(new_duration);
-
         }
+
+        return saved_timer_idx;
     }
-
-
 }

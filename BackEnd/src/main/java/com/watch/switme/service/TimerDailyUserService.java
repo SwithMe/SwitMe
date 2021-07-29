@@ -55,7 +55,7 @@ public class TimerDailyUserService {
 
         for(TimerDailyUser timerDailyUser:timerDailyUserList){
             TimerRankDto timerRankDto =TimerRankDto.builder()
-                    .name(userRepository.findById(timerDailyUser.getUser_idx()).get().getRealname())
+                    .name(userRepository.findById(timerDailyUser.getUserIdx()).get().getRealname())
                     .cumulative_time(timerDailyUser.getDuration())
                     .build();
 

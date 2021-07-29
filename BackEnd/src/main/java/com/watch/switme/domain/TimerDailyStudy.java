@@ -24,18 +24,19 @@ public class TimerDailyStudy {
 
 
     //fk
-    private Long study_idx;
+    @Column(name="study_idx")
+    private Long studyIdx;
 
 //    @ManyToOne
 //    @JoinColumn(name="study_idx")
 //    private Study study;
 
     @Builder
-    public TimerDailyStudy(Long daily_study_idx, Date date, Long duration, Long study_idx) {
+    public TimerDailyStudy(Long daily_study_idx, Date date, Long duration, Long studyIdx) {
         this.daily_study_idx = daily_study_idx;
         this.date = date;
         this.duration = duration;
-        this.study_idx = study_idx;
+        this.studyIdx = studyIdx;
     }
 
     public void update(Long duration) {
