@@ -16,6 +16,7 @@ public interface TimerLogRepository extends JpaRepository<TimerLog, Long> {
 
 //    TimerLog findByTimerIdx(Long timer_idx);
 
+
     @Query(value = "select new com.watch.switme.dto.UserTimerLogResponseDto(" +
             "l.log_idx, " +
             "l.start_time, " +
@@ -25,4 +26,5 @@ public interface TimerLogRepository extends JpaRepository<TimerLog, Long> {
             "where t.user_idx = ?1 " +
             "order by l.start_time desc limit 20", nativeQuery = true)
     List<UserTimerLogResponseDto> findTop20ByUserIdx(Long user_idx);
+  
 }
