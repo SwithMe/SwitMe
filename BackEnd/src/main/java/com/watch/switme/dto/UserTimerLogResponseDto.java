@@ -13,10 +13,10 @@ public class UserTimerLogResponseDto {
     private Long log_idx;
     private LocalDateTime start_time;
     private LocalDateTime end_time;
-    private LocalDateTime duration;
+    private Long duration;
 
     @Builder
-    public UserTimerLogResponseDto(Long log_idx, LocalDateTime start_time, LocalDateTime end_time, LocalDateTime duration){
+    public UserTimerLogResponseDto(Long log_idx, LocalDateTime start_time, LocalDateTime end_time, Long duration){
         this.log_idx = log_idx;
         this.start_time = start_time;
         this.end_time = end_time;

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @NoArgsConstructor
 @Data
@@ -13,14 +14,14 @@ public class UserStudyListResponseDto {
     private Long study_idx;
     private String study_title;
     private String study_image;
-    private LocalDateTime start_date;
-    private LocalDateTime end_date;
+    private Date start_date;
+    private Date end_date;
     private int warning;
-    private String activate;
+    private String activate;    //check type
 
     @Builder
     public UserStudyListResponseDto(Long study_idx, String study_title, String study_image,
-                                    LocalDateTime start_date, LocalDateTime end_date, int warning, String activate){
+                                    Date start_date, Date end_date, int warning, String activate){
         this.study_idx = study_idx;
         this.study_title = study_title;
         this.study_image = study_image;
