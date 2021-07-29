@@ -16,14 +16,17 @@ public class UserStudyListResponseDto {
     private LocalDateTime start_date;
     private LocalDateTime end_date;
     private int warning;
+    private String activate;
 
     @Builder
-    public UserStudyListResponseDto(Integer study_idx, String study_title, String study_image, LocalDateTime start_date, LocalDateTime end_date, int warning){
+    public UserStudyListResponseDto(Integer study_idx, String study_title, String study_image,
+                                    LocalDateTime start_date, LocalDateTime end_date, int warning, String activate){
         this.study_idx = study_idx;
         this.study_title = study_title;
         this.study_image = study_image;
         this.start_date = start_date;
         this.end_date = end_date;
         this.warning = warning;
+        this.activate = activate;
     }
 }

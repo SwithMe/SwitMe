@@ -31,6 +31,7 @@ public class MyPageService {
                     .start_date(LocalDateTime.now()) //study.getStudy().getTermstart()
                     .end_date(LocalDateTime.now()) //study.getStudy().getTermend()
                     .warning(study.getWarning())
+                    .activate(study.getStudy().getActivate())
                     .build();
 
             userStudyListResponseDtoList.add(userStudyListResponseDto);
