@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -18,7 +19,7 @@ public class TimerDailyStudy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long daily_study_idx;
 
-    private Date date;
+    private LocalDate date;
 
     private Long duration;
 
@@ -32,7 +33,7 @@ public class TimerDailyStudy {
 //    private Study study;
 
     @Builder
-    public TimerDailyStudy(Long daily_study_idx, Date date, Long duration, Long studyIdx) {
+    public TimerDailyStudy(Long daily_study_idx, LocalDate date, Long duration, Long studyIdx) {
         this.daily_study_idx = daily_study_idx;
         this.date = date;
         this.duration = duration;

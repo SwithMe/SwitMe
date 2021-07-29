@@ -2,7 +2,9 @@ package com.watch.switme.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -15,6 +17,10 @@ public class SaveTimerRequestDto {
 
     private long timer_idx;
     private long timer_duration;
-    private Date start_time;
-    private Date end_time;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd`T`HH:mm:ss")
+    private LocalDateTime start_time;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd`T`HH:mm:ss")
+    private LocalDateTime end_time;
 }

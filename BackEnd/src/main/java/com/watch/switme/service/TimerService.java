@@ -75,6 +75,7 @@ public class TimerService {
         TimerCreateRequestDto timerCreateRequestDto=TimerCreateRequestDto.builder()
                 .name(timer_name)
                 .user(user)
+                .duration(0L)
                 .build();
 
         return timerRepository.save(timerCreateRequestDto.toEntity()).getTimer_idx();
@@ -84,7 +85,5 @@ public class TimerService {
     public void delete(Long timer_idx){
         timerRepository.deleteById(timer_idx);
     }
-
-
 
 }

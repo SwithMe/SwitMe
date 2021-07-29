@@ -9,6 +9,8 @@ import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,8 +65,8 @@ public class TimerController {
 
         Long timer_idx=saveTimerRequestDto.getTimer_idx();
         Long timer_duration=saveTimerRequestDto.getTimer_duration();
-        Date start_time=saveTimerRequestDto.getStart_time();
-        Date end_time=saveTimerRequestDto.getEnd_time();
+        LocalDateTime start_time=saveTimerRequestDto.getStart_time();
+        LocalDateTime end_time=saveTimerRequestDto.getEnd_time();
 
 
         Timer timer=timerService.findTimer(timer_idx);
@@ -76,8 +78,11 @@ public class TimerController {
         }
 
 
-        Long duration=timer.getDuration();
-        Long new_duration=duration+timer_duration;
+        //Long duration=timer.getDuration();
+        //Long new_duration=duration+timer_duration;
+
+        /*
+        //1. Timer save
         TimerSaveDto timerSaveDto=TimerSaveDto.builder()
                 .timer_idx(timer_idx)
                 .name(timer.getName())
@@ -90,25 +95,59 @@ public class TimerController {
         System.out.println(timerSaveDto);
 
         Long saved_timer_idx=timerService.save(timerSaveDto);
+         */
 
+
+        //2. TimerLog save
         TimerLogSaveDto timerLogSaveDto=TimerLogSaveDto.builder()
                 .start_time(start_time)
                 .end_time(end_time)
-                .duration(duration)
+                .duration(timer_duration)
                 .timer(timer)
                 .build();
         System.out.println("==save timerLog entity==");
         System.out.println(timerLogSaveDto);
         Long saved_timerLog_idx=timerLogService.save(timerLogSaveDto);
+
+
+        //3. TimerDailyUser save
         TimerDailyUser timerDailyUser=timerDailyUserService.findTimerDailyUser(timer.getUser().getUser_idx());
-        timerDailyUser.update(new_duration);
+
+        if(timerDailyUser==null){
+            LocalDate currentDate =LocalDate.now();
+            TimerDailyUserSaveDto timerDailyUserSaveDto=TimerDailyUserSaveDto.builder()
+                    .user_idx(timer.getUser().getUser_idx())
+                    .date(currentDate)
+                    .duration(timer_duration)
+                    .build();
+            Long saved_timerDailyUser_idx=timerDailyUserService.save(timerDailyUserSaveDto);
+        }else{
+            Long new_duration=timerDailyUser.getDuration();
+            timerDailyUserService.update(timerDailyUser.getDaily_user_idx(),new_duration+timer_duration);
+        }
 
 
         if(study!=null){
+
             TimerDailyStudy timerDailyStudy=timerDailyStudyService.findTimerDailyStudy(timer.getStudy().getStudy_idx());
-            timerDailyStudy.update(new_duration);
+
+            if(timerDailyStudy==null){
+                LocalDate currentDate =LocalDate.now();
+                TimerDailyStudySaveDto timerDailyStudySaveDto=TimerDailyStudySaveDto.builder()
+                        .study_idx(study.getStudy_idx())
+                        .date(currentDate)
+                        .duration(timer_duration)
+                        .build();
+                Long saved_timerDailyStudy_idx=timerDailyStudyService.save(timerDailyStudySaveDto);
+            }else{
+                Long new_duration=timerDailyStudy.getDuration();
+                timerDailyStudyService.update(timerDailyStudy.getStudyIdx(), new_duration+timer_duration);
+
+            }
+
         }
 
-        return saved_timer_idx;
+
+        return saved_timerLog_idx;
     }
 }

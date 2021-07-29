@@ -2,6 +2,8 @@ package com.watch.switme.service;
 
 import com.watch.switme.domain.TimerDailyStudy;
 import com.watch.switme.domain.TimerDailyUser;
+import com.watch.switme.dto.TimerDailyStudySaveDto;
+import com.watch.switme.dto.TimerDailyUserSaveDto;
 import com.watch.switme.dto.TimerRankDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.TimerDailyStudyRepository;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +23,21 @@ public class TimerDailyStudyService {
     private final StudyRepository studyRepository;
 
     @Transactional
+    public Long update(Long timerDailyStudyIdx, Long duration){
+        TimerDailyStudy timerDailyStudy=timerDailyStudyRepository.findById(timerDailyStudyIdx).get();
+        timerDailyStudy.update(duration);
+        return timerDailyStudyIdx;
+    }
+
+    @Transactional
+    public Long save(TimerDailyStudySaveDto timerDailyStudySaveDto){
+        return timerDailyStudyRepository.save(timerDailyStudySaveDto.toEntity()).getDaily_study_idx();
+    }
+
+    @Transactional
     public TimerDailyStudy findTimerDailyStudy(int study_idx){
-        Date before = new Date(System.currentTimeMillis() - 30000L);
-        Date now = new Date();
+        LocalDate before = LocalDate.now().minusDays(1);
+        LocalDate now = LocalDate.now();
 
         TimerDailyStudy timerDailyStudy=timerDailyStudyRepository.findByStudyIdxAndDateBetween(study_idx, before,now);
 
