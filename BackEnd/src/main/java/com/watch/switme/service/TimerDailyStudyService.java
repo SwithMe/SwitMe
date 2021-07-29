@@ -46,7 +46,11 @@ public class TimerDailyStudyService {
 
     @Transactional
     public List<TimerRankDto> getRank(){
-        List<TimerDailyStudy> timerDailyStudyList = timerDailyStudyRepository.findTop5ByOrderByDurationDesc();
+
+        LocalDate before = LocalDate.now().minusDays(1);
+        LocalDate now = LocalDate.now();
+
+        List<TimerDailyStudy> timerDailyStudyList = timerDailyStudyRepository.findTop5ByDateBetweenOrderByDurationDesc( before,  now);
 
         List <TimerRankDto> timerRankDtoList=new ArrayList<>();
 

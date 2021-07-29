@@ -1,11 +1,10 @@
 package com.watch.switme.service;
 
+import com.watch.switme.domain.Study;
 import com.watch.switme.domain.Timer;
 import com.watch.switme.domain.User;
-import com.watch.switme.dto.ChatRoomDto;
-import com.watch.switme.dto.TimerCreateRequestDto;
-import com.watch.switme.dto.TimerListResDto;
-import com.watch.switme.dto.TimerSaveDto;
+import com.watch.switme.dto.*;
+import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.TimerRepository;
 import com.watch.switme.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class TimerService {
 
     private final TimerRepository timerRepository;
     private final UserRepository userRepository;
-
+    private final StudyRepository studyRepository;
 
     @Transactional
     public Long save(TimerSaveDto timerSaveDto){
@@ -80,6 +79,23 @@ public class TimerService {
 
         return timerRepository.save(timerCreateRequestDto.toEntity()).getTimer_idx();
     }
+
+    @Transactional
+    public Long createStudytimer(Long user_idx, Long study_idx, String timer_name){
+        User user=userRepository.findById(user_idx).get();
+        Study study=studyRepository.findById(study_idx).get();
+
+        TimerStudyCreateRequestDto timerStudyCreateRequestDto=TimerStudyCreateRequestDto.builder()
+                .name(timer_name)
+                .user(user)
+                .study(study)
+                .duration(0L)
+                .build();
+
+        return timerRepository.save(timerStudyCreateRequestDto.toEntity()).getTimer_idx();
+
+    }
+
 
     @Transactional
     public void delete(Long timer_idx){

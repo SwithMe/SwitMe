@@ -47,6 +47,14 @@ public class TimerController {
         return timerService.create(user_idx, timer_name);
     }
 
+    // 스터디 가입시 스톱워치 추가
+    @PostMapping("/timer/add/{user_idx}/{study_idx}")
+    public Long studyTimerCreate(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") long study_idx,@RequestBody Map<String, String> param) {
+
+        String timer_name=param.get("timer_name");
+        return timerService.createStudytimer(user_idx, study_idx, timer_name);
+    }
+
     //스톱워치 삭제
     @DeleteMapping("/timer/delete/{timer_idx}")
     public void timerDelete(@PathVariable("timer_idx") long timer_idx){
