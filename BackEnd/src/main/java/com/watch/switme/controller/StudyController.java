@@ -1,12 +1,9 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.Study;
-import com.watch.switme.dto.makeStudyDto;
-import com.watch.switme.repository.ChatRoomRepository;
 import com.watch.switme.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -50,13 +47,13 @@ public class StudyController {
         return studyRepository.findByTitle(title);
     }
 
-    //스터디 탈퇴하기
+    //스터디 탈퇴하기 //User_study 이용하기
     @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
     public void LeaveStudy(@PathVariable int user_udx, @PathVariable int study_idx){
 
     }
 
-    //스터디 가입하기
+    //스터디 가입하기 //User_study 이용하기
     @PutMapping("/array/join/{user_idx}/{study_idx}")
     public void JoinStudy(@PathVariable int user_udx, @PathVariable int study_idx){
 
