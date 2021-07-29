@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserStudyRepository extends JpaRepository<UserStudy, Long> {
+public interface
+UserStudyRepository extends JpaRepository<UserStudy, Long> {
 
     @Query(value = "select * from User_study u where u.user_idx = ?1", nativeQuery = true)
     List<UserStudy> findByUserIdx(Long user_idx);

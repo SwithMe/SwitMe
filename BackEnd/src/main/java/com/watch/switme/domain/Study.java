@@ -21,7 +21,7 @@ public class Study {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable=false, unique=true)
-    private Integer study_idx;
+    private Long study_idx;
 
     @Column(nullable=false, unique=true, length=45)
     private String title;
@@ -90,7 +90,7 @@ public class Study {
     private Integer avgMannerTemperature;
 
     @Builder
-    public void StudyEntity(Integer study_idx, String title, String type, Date termstart, Date termend, Time timestart, Date timeend, Integer size, String tags, String location, String extra, String image, Integer leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
+    public void StudyEntity(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Date timeend, Integer size, String tags, String location, String extra, String image, Integer leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
     {
         this.study_idx = study_idx;
         this.title = title;
