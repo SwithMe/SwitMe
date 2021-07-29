@@ -1,7 +1,9 @@
 package com.watch.switme.service;
 
 import com.watch.switme.domain.User;
+import com.watch.switme.domain.UserDataExtra;
 import com.watch.switme.dto.SignUpDTO;
+import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.domain.UserRole;
 import com.watch.switme.domain.UserYesOrNo;
@@ -20,6 +22,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    private final UserDataExtraRepository userDataExtraRepository;
 
     @Transactional
     public User signUp(final SignUpDTO signUpDTO) {
@@ -46,6 +50,10 @@ public class UserService {
 
     public User findByUserIdx(Long user_idx){
         return userRepository.findFirstByUserIdx(user_idx);
+    }
+
+    public UserDataExtra findExtraByUserIdx(Long user_idx){
+        return userDataExtraRepository.findFirstByUserIdx(user_idx);
     }
 
 }
