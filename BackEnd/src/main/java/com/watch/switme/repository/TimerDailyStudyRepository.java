@@ -13,7 +13,7 @@ import java.util.List;
 public interface TimerDailyStudyRepository extends JpaRepository<TimerDailyStudy, Long> {
 
 
-    TimerDailyStudy findByStudyIdxAndDateBetween(Integer study_idx, LocalDate start, LocalDate end);
+    TimerDailyStudy findByStudyIdxAndDateBetween(Long study_idx, LocalDate start, LocalDate end);
 
     List<TimerDailyStudy> findTop5ByOrderByDurationDesc(); //Time형식은 ordering이 잘 될까..?
 }

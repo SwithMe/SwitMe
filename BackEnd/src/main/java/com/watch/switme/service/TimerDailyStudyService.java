@@ -35,7 +35,7 @@ public class TimerDailyStudyService {
     }
 
     @Transactional
-    public TimerDailyStudy findTimerDailyStudy(int study_idx){
+    public TimerDailyStudy findTimerDailyStudy(Long study_idx){
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 

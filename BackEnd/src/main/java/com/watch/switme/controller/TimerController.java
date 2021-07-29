@@ -69,7 +69,7 @@ public class TimerController {
         Study study=timer.getStudy();
 
         if(study!=null){
-            int study_idx=study.getStudy_idx();
+            Long study_idx=study.getStudy_idx();
         }
 
 

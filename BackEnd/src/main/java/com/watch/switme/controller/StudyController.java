@@ -39,10 +39,10 @@ public class StudyController {
     }
 
     //스터디 수정하기
-    @PutMapping("/array/fix/{study_idx}")
-    public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
-        studyRepository.findAllByStudy_idx(study_idx);
-    }
+  //  @PutMapping("/array/fix/{study_idx}")
+  //  public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
+       // studyRepository.findAllByStudy_idx(study_idx);
+   // }
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
     @PostMapping("/array/study/{study_idx}")
