@@ -23,11 +23,6 @@ public class TimerController {
     private final TimerDailyUserService timerDailyUserService;
     private final TimerDailyStudyService timerDailyStudyService;
 
-    @GetMapping("timer/test")
-    public int test(){
-        return 11;
-    }
-
     // 스톱워치 타이머 리스트
     @GetMapping("/timer/list/{user_idx}")
     public List<TimerListResDto> timerList(@PathVariable("user_idx") long user_idx){

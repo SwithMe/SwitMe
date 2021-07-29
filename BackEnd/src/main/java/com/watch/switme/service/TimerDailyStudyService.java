@@ -47,9 +47,11 @@ public class TimerDailyStudyService {
     @Transactional
     public List<TimerRankDto> getRank(){
         List<TimerDailyStudy> timerDailyStudyList = timerDailyStudyRepository.findTop5ByOrderByDurationDesc();
+
         List <TimerRankDto> timerRankDtoList=new ArrayList<>();
 
-        for(TimerDailyStudy timerDailyStudy:timerDailyStudyList){
+
+            for(TimerDailyStudy timerDailyStudy:timerDailyStudyList){
             TimerRankDto timerRankDto = TimerRankDto.builder()
                     .name(studyRepository.findById(timerDailyStudy.getStudyIdx()).get().getTitle())
                     .cumulative_time(timerDailyStudy.getDuration())

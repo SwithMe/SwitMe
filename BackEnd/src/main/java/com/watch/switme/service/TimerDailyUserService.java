@@ -30,15 +30,6 @@ public class TimerDailyUserService {
         return timerDailyUserRepository.save(timerDailyUserSaveDto.toEntity()).getDaily_user_idx();
     }
 
-    /*
-        @Transactional
-    public Long update(Long timer_idx, String timer_name){
-        Timer timer=timerRepository.findById(timer_idx).get();
-        timer.update(timer_name);
-
-        return timer_idx;
-    }
-     */
     @Transactional
     public Long update(Long timerDailyUserIdx, Long duration){
         TimerDailyUser timerDailyUser=timerDailyUserRepository.findById(timerDailyUserIdx).get();
@@ -53,9 +44,6 @@ public class TimerDailyUserService {
 
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
-//        Date before = new Date(System.currentTimeMillis() - 30000L);
-//        Date now = new Date();
-
 
         TimerDailyUser timerDailyUser = timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, before, now);
 
@@ -63,6 +51,7 @@ public class TimerDailyUserService {
                 .cumulative_time(timerDailyUser.getDuration())
                 .build();
 
+        System.out.println("🐱cumulativeTimeDto\n"+cumulativeTimeDto);
         return cumulativeTimeDto;
     }
 
@@ -70,15 +59,6 @@ public class TimerDailyUserService {
     public TimerDailyUser findTimerDailyUser(Long user_idx){
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
-
-        /*
-        Date before = new Date(System.currentTimeMillis() - 30000L);
-        Date now = new Date();*/
-
-        System.out.println("🐭before");
-        System.out.println(before);
-        System.out.println("🐭now");
-        System.out.println(now);
 
         TimerDailyUser timerDailyUser=timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, before,now);
 
@@ -102,6 +82,7 @@ public class TimerDailyUserService {
             timerRankDtoList.add(timerRankDto);
         }
 
+        System.out.println("🐱timerRankDtoList\n"+timerRankDtoList);
         return timerRankDtoList;
 
     }
