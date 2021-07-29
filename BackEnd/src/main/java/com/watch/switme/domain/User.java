@@ -31,8 +31,8 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @Setter
-    @Column(name="auth", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isEnable = true;
+    @Column(name="auth", nullable = true, columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean isEnable;
 
     @Setter
     @Column(name="UserName", nullable = true)

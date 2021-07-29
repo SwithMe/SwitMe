@@ -29,6 +29,7 @@ public class Timer {
     @JoinColumn(name="study_idx")
     private Study study;
 
+
     @Builder
     public Timer(Long timer_idx, String name, Long duration, User user, Study study) {
         this.timer_idx = timer_idx;
@@ -41,4 +42,5 @@ public class Timer {
     public void update(String timer_name){
         this.name=timer_name;
     }
+
 }

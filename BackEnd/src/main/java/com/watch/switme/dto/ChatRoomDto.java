@@ -1,6 +1,8 @@
 package com.watch.switme.dto;
 
 import com.watch.switme.domain.ChatRoom;
+import com.watch.switme.domain.Study;
+import com.watch.switme.domain.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,22 +10,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ChatRoomDto {
-    private Long study_idx;
-    private Long leader_idx;
-    private Long inquirer_idx;
+    private Study study;
+    private User leader;
+    private User inquirer;
 
     @Builder
-    public ChatRoomDto(Long study_idx, Long leader_idx, Long inquirer_idx){
-        this.study_idx = study_idx;
-        this.leader_idx = leader_idx;
-        this.inquirer_idx = inquirer_idx;
+    public ChatRoomDto(Study study, User leader, User inquirer){
+        this.study = study;
+        this.leader = leader;
+        this.inquirer = inquirer;
     }
     // 다 수정..
     public ChatRoom toEntity(){
         return ChatRoom.builder()
-                .study_idx(study_idx)
-                .leader_idx(leader_idx)
-                .inquirer_idx(inquirer_idx)
+                .study(study)
+                .leader(leader)
+                .inquirer(inquirer)
                 .build();
     }
 }

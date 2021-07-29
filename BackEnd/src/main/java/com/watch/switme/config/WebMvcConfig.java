@@ -21,7 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public FilterRegistrationBean<HeaderFilter> getFilterRegistrationBean() {
         FilterRegistrationBean<HeaderFilter> registrationBean = new FilterRegistrationBean<>(createHeaderFilter());
         registrationBean.setOrder(Integer.MIN_VALUE);
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.addUrlPatterns("/**");
         return registrationBean;
     }
 

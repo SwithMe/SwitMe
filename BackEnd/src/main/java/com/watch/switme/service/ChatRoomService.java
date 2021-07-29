@@ -7,6 +7,7 @@ import com.watch.switme.dto.RoomListResponseDto;
 import com.watch.switme.repository.ChatMessageRepository;
 import com.watch.switme.repository.ChatRoomRepository;
 import com.watch.switme.dto.ChatMessageInterface;
+import com.watch.switme.repository.UserDataExtraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final UserDataExtraRepository userDataExtraRepository;
 
     @Transactional
     public Long save(ChatRoomDto chatRoomDto){
@@ -27,7 +29,7 @@ public class ChatRoomService {
 
     @Transactional
     public List<RoomListResponseDto> getRoomList(Long user_idx){
-        List<ChatRoom> chatRoomList = chatRoomRepository.findByInquirerIdx(user_idx);
+        List<ChatRoom> chatRoomList = chatRoomRepository.findByInquirer_UserIdx(user_idx);
         List<RoomListResponseDto> roomListResponseDtoList = new ArrayList<>();
 
         for(ChatRoom room : chatRoomList){
@@ -41,22 +43,24 @@ public class ChatRoomService {
             }
             System.out.println(message);
 
-            //room_name에 스터디 이름으로 넣기
-            String room_name = "이름";
+            String room_name = room.getStudy().getTitle();
+            Long other_idx;
             String other_user;
 
-            if(room.getInquirerIdx() == user_idx){
-                other_user = "리더";
-                // 이름 얻기 room.getLeaderIdx();
+            if(room.getInquirer().getUser_idx() == user_idx){
+                other_idx = room.getLeader().getUser_idx();
+                other_user = room.getLeader().getRealname();
+
             } else{
-                other_user = "질문";
-                // 이름 얻기 room.getInquirerIdx();
+                other_idx = room.getInquirer().getUser_idx();
+                other_user = room.getInquirer().getRealname();
             }
 
             RoomListResponseDto roomListResponseDto = RoomListResponseDto.builder()
                     .room_idx(room.getRoomIdx())
                     .room_name(room_name)
                     .other_user(other_user)
+                    .user_image(userDataExtraRepository.findFirstByUserIdx(other_idx).getSelfImage())
                     .message(message)
                     .notification(chatMessageRepository.countByCheckEquals(0))
                     .build();

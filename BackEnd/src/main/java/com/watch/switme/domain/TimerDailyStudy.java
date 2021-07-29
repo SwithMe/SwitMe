@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@Table(name="Timer_daily_study")
 @Entity
 public class TimerDailyStudy {
     @Id
@@ -20,6 +21,7 @@ public class TimerDailyStudy {
     private Date date;
 
     private Long duration;
+
 
     //fk
     private Long study_idx;
