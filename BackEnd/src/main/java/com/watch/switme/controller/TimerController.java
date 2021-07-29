@@ -9,7 +9,8 @@ import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -54,17 +55,13 @@ public class TimerController {
 
     //스톱워치 정지 후 저장
     @PostMapping("/timer/save")
-    public void timerSave(@RequestBody SaveTimerRequestDto saveTimerRequestDto){
+    public Long timerSave(@RequestBody SaveTimerRequestDto saveTimerRequestDto){
 
         Long timer_idx=saveTimerRequestDto.getTimer_idx();
         Long timer_duration=saveTimerRequestDto.getTimer_duration();
-        Date start_time=saveTimerRequestDto.getStart_time();
-        Date end_time=saveTimerRequestDto.getEnd_time();
+        LocalDateTime start_time=saveTimerRequestDto.getStart_time();
+        LocalDateTime end_time=saveTimerRequestDto.getEnd_time();
 
-        //1. Timer 객체 timer_idx로 찾아내기
-        //   - user_idx 찾기
-        //   - study가 null인지 알아내야 함.
-        //      - not null일 경우, study_idx 알아내기
 
         Timer timer=timerService.findTimer(timer_idx);
         Long user_idx=timer.getUser().getUser_idx();
@@ -74,29 +71,27 @@ public class TimerController {
             int study_idx=study.getStudy_idx();
         }
 
-        //2. (Timer) duration 업데이트
-        //  - 원래꺼 가져와서 합치기
-        Long duration=timer.getDuration();
-        Long new_duration=duration+timer_duration; //합쳐진 거
-        //이렇게 넣어도 되나..? 업데이트가 되남. 테스트
+
+
+        //1. Timer save
+        Long origin_duration=timer.getDuration();
         TimerSaveDto timerSaveDto=TimerSaveDto.builder()
                 .timer_idx(timer_idx)
                 .name(timer.getName())
-                .duration(new_duration)
+                .duration(origin_duration+timer_duration)
                 .user(timer.getUser())
                 .study(timer.getStudy())
                 .build();
 
-        System.out.println("==save timer entity==");
-        System.out.println(timerSaveDto);
-
         Long saved_timer_idx=timerService.save(timerSaveDto);
 
-        //3. (Timer_log)
+
+
+        //2. TimerLog save
         TimerLogSaveDto timerLogSaveDto=TimerLogSaveDto.builder()
                 .start_time(start_time)
                 .end_time(end_time)
-                .duration(duration)
+                .duration(timer_duration)
                 .timer(timer)
                 .build();
         System.out.println("==save timerLog entity==");
@@ -104,23 +99,43 @@ public class TimerController {
         Long saved_timerLog_idx=timerLogService.save(timerLogSaveDto);
 
 
-        //4. (Timer_daily_user)
-        //  - user_idx와 date로 찾은 개체에
-        //  - duration 업데이트
+        //3. TimerDailyUser save
         TimerDailyUser timerDailyUser=timerDailyUserService.findTimerDailyUser(timer.getUser().getUser_idx());
-        timerDailyUser.update(new_duration);
 
+        if(timerDailyUser==null){
+            LocalDate currentDate =LocalDate.now();
+            TimerDailyUserSaveDto timerDailyUserSaveDto=TimerDailyUserSaveDto.builder()
+                    .user_idx(timer.getUser().getUser_idx())
+                    .date(currentDate)
+                    .duration(timer_duration)
+                    .build();
+            Long saved_timerDailyUser_idx=timerDailyUserService.save(timerDailyUserSaveDto);
+        }else{
+            Long new_duration=timerDailyUser.getDuration();
+            timerDailyUserService.update(timerDailyUser.getDaily_user_idx(),new_duration+timer_duration);
+        }
 
-        //5. (Timer_daily_study)
-        // - study가 not null일 경우
-        // - study_idx와 date로 찾은 개체에
-        // -duration 업데이트
 
         if(study!=null){
+
             TimerDailyStudy timerDailyStudy=timerDailyStudyService.findTimerDailyStudy(timer.getStudy().getStudy_idx());
-            timerDailyStudy.update(new_duration);
+
+            if(timerDailyStudy==null){
+                LocalDate currentDate =LocalDate.now();
+                TimerDailyStudySaveDto timerDailyStudySaveDto=TimerDailyStudySaveDto.builder()
+                        .study_idx(study.getStudy_idx())
+                        .date(currentDate)
+                        .duration(timer_duration)
+                        .build();
+                Long saved_timerDailyStudy_idx=timerDailyStudyService.save(timerDailyStudySaveDto);
+            }else{
+                Long new_duration=timerDailyStudy.getDuration();
+                timerDailyStudyService.update(timerDailyStudy.getStudyIdx(), new_duration+timer_duration);
+
+            }
 
         }
-    }
 
+        return saved_timerLog_idx;
+    }
 }

@@ -14,17 +14,20 @@ public class TimerCreateRequestDto {
 
     private String name;
     private User user;
+    private Long duration;
 
     @Builder
-    public TimerCreateRequestDto(String name, User user) {
+    public TimerCreateRequestDto(String name, User user, Long duration) {
         this.name = name;
         this.user=user;
+        this.duration=duration;
     }
 
     public Timer toEntity(){
         return Timer.builder()
                 .name(name)
                 .user(user)
+                .duration(duration)
                 .build();
     }
 

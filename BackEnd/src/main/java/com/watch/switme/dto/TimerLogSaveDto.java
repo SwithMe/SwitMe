@@ -6,7 +6,9 @@ import com.watch.switme.domain.TimerLog;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -14,13 +16,15 @@ import java.util.Date;
 @NoArgsConstructor
 public class TimerLogSaveDto {
 
-    private Date start_time;
-    private Date end_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime start_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime end_time;
     private Long duration;
     private Timer timer;
 
     @Builder
-    public TimerLogSaveDto(Date start_time, Date end_time, Long duration, Timer timer) {
+    public TimerLogSaveDto(LocalDateTime start_time, LocalDateTime end_time, Long duration, Timer timer) {
         this.start_time = start_time;
         this.end_time = end_time;
         this.duration = duration;
