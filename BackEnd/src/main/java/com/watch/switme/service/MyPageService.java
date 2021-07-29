@@ -60,8 +60,6 @@ public class MyPageService {
         Long user_idx = userUpdateDto.getUser_idx();
         User user = userRepository.findFirstByUserIdx(user_idx);
         UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(user_idx);
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(new File("").getAbsolutePath());
 
         if(userUpdateDto.getPassword() != null){
             String new_password = bCryptPasswordEncoder.encode(userUpdateDto.getPassword());
@@ -73,14 +71,27 @@ public class MyPageService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String current_date = simpleDateFormat.format(System.currentTimeMillis());
             String file_name = current_date+file.getOriginalFilename();;
-            String path = "src/main/resources/static/img/user/";
+            String absolute_path = System.getProperty("user.dir")+"\\";
+            String path = "src/main/resources/static/img/user";
 
-            File new_file = new File(path+file_name);
+            File directory = new File(path);
+            if(!directory.exists()){
+                directory.mkdirs();
+            }
+
+            File new_file = new File(absolute_path+path+"/"+file_name);
             file.transferTo(new_file);
 
-            userDataExtra.updateUserImage("static/img/user/"+file_name);
-        }
+            if(userDataExtra == null){
+                userDataExtraRepository.save(UserDataExtra.builder()
+                        .userIdx(user_idx)
+                        .selfImage("static/img/user/"+file_name)
+                        .build());
+            } else {
+                userDataExtra.updateUserImage("static/img/user/"+file_name);
+            }
 
+        }
     }
 
 }

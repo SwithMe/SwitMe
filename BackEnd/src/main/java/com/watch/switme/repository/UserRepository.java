@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository <User, Long> {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 
-    @Query(value = "select u from User_data u where u.user_idx = ?1", nativeQuery = true)
+    @Query(value = "select * from User_data u where u.user_idx = ?1", nativeQuery = true)
     User findFirstByUserIdx(Long user_idx);
 
 

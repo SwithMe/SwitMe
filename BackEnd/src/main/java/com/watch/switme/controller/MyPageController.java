@@ -47,7 +47,7 @@ public class MyPageController {
     }
 
     @PostMapping("/user_update")
-    public void userUpdate(@RequestBody UserUpdateDto userUpdateDto){
+    public void userUpdate(UserUpdateDto userUpdateDto){
         try{
             myPageService.updateUser(userUpdateDto);
         }catch (Exception e){
