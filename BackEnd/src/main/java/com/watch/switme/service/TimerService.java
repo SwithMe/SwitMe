@@ -39,6 +39,12 @@ public class TimerService {
         User user=userRepository.findById(user_idx).get();
 
         List <Timer> timerList=timerRepository.findByUser(user);
+
+
+
+        System.out.println("==timerList==");
+        System.out.println(timerList);
+
         List <TimerListResDto> timerListResDtoList =new ArrayList<>();
 
         for(Timer timer:timerList){
