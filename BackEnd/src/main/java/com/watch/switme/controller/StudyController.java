@@ -1,6 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.dto.makeStudyDto;
+import com.watch.switme.repository.ChatRoomRepository;
 import com.watch.switme.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,10 @@ public class StudyController {
     StudyRepository studyRepository;
 
     //온/오프라인 스터디 개설하기
+    @PostMapping("/array/enroll")
+    public void enrollStudy(){
 
+    }
 
     //스터디 수정하기
     @PostMapping("/array/fix/{study_idx}")
