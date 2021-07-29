@@ -1,7 +1,5 @@
 package com.watch.switme.domain;
 
-import com.watch.switme.domain.UserRole;
-import com.watch.switme.domain.UserYesOrNo;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
