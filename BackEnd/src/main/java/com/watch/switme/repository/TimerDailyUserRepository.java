@@ -15,5 +15,5 @@ public interface TimerDailyUserRepository extends JpaRepository<TimerDailyUser,L
     TimerDailyUser findByUserIdxAndDateBetween(Long user_idx, LocalDate start, LocalDate end);
 
 
-    List<TimerDailyUser> findTop5ByOrderByDurationDesc(); //Time형식은 ordering이 잘 될까..?
+    List<TimerDailyUser> findTop5ByDateBetweenOrderByDurationDesc(LocalDate start, LocalDate end); //Time형식은 ordering이 잘 될까..?
 }

@@ -43,4 +43,6 @@ public class Timer {
         this.name=timer_name;
     }
 
+    public void durationInitialize(Long duration){this.duration=duration;}
+
 }

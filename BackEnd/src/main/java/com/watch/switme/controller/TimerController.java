@@ -7,6 +7,7 @@ import com.watch.switme.service.TimerDailyUserService;
 import com.watch.switme.service.TimerLogService;
 import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -46,12 +47,29 @@ public class TimerController {
         return timerService.create(user_idx, timer_name);
     }
 
+    // 스터디 가입시 스톱워치 추가
+    @PostMapping("/timer/add/{user_idx}/{study_idx}")
+    public Long studyTimerCreate(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") long study_idx,@RequestBody Map<String, String> param) {
+
+        String timer_name=param.get("timer_name");
+        return timerService.createStudytimer(user_idx, study_idx, timer_name);
+    }
+
     //스톱워치 삭제
     @DeleteMapping("/timer/delete/{timer_idx}")
     public void timerDelete(@PathVariable("timer_idx") long timer_idx){
         timerService.delete(timer_idx);
     }
 
+    /*
+    매일 23시59분59초에 duration 0으로 초기화
+    쿼츠 크론 식 : 59 59 23 * * ?
+     */
+    @Scheduled(cron="59 59 23 * * ?")
+    public void timerDuraionInitialize(){
+        timerService.durationInitialize();
+        //System.out.println("✨스톱워치 duration 초기화");
+    }
 
     //스톱워치 정지 후 저장
     @PostMapping("/timer/save")
@@ -68,7 +86,7 @@ public class TimerController {
         Study study=timer.getStudy();
 
         if(study!=null){
-            int study_idx=study.getStudy_idx();
+            Long study_idx=study.getStudy_idx();
         }
 
 
