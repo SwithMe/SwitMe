@@ -5,14 +5,13 @@ import com.watch.switme.domain.UserDataExtra;
 import com.watch.switme.dto.UserInfoResponseDto;
 import com.watch.switme.dto.UserStudyListResponseDto;
 import com.watch.switme.dto.UserTimerLogResponseDto;
+import com.watch.switme.dto.UserUpdateDto;
 import com.watch.switme.service.MyPageService;
 import com.watch.switme.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,5 +44,13 @@ public class MyPageController {
     @GetMapping("/timer_log/{user_idx}")
     public List<UserTimerLogResponseDto> getTimerLog(@PathVariable("user_idx") Long user_idx){
         return myPageService.getUserTimerLog(user_idx);
+    }
+
+    @PostMapping("/user_update")
+    public void userUpdate(@RequestBody UserUpdateDto userUpdateDto){
+        try{
+            myPageService.updateUser(userUpdateDto);
+        }catch (Exception e){
+        }
     }
 }

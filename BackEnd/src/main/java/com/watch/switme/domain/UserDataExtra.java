@@ -27,4 +27,8 @@ public class UserDataExtra {
         this.selfImage = selfImage;
         this.userIdx = userIdx;
     }
+
+    public void updateUserImage(String image){
+        this.selfImage = image;
+    }
 }

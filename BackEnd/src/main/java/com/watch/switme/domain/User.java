@@ -56,4 +56,9 @@ public class User implements Serializable {
     @Column(nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    public void updateUserPassword(String pw){
+        this.pw = pw;
+    }
+
 }
