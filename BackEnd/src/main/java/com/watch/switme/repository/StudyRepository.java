@@ -21,5 +21,7 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     @Query(value = "select * from Study_main u where u.title=:title", nativeQuery=true)
     List <Study> findByTitle(@Param("title")String title);
 
+    List<Study> findAllByleader(int leader);
+
     //public void createStudy(Study study);
 }

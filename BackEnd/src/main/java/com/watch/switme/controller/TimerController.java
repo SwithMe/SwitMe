@@ -54,7 +54,7 @@ public class TimerController {
 
     //스톱워치 정지 후 저장
     @PostMapping("/timer/save")
-    public Long timerSave(@RequestBody SaveTimerRequestDto saveTimerRequestDto){
+    public void timerSave(@RequestBody SaveTimerRequestDto saveTimerRequestDto){
 
         Long timer_idx=saveTimerRequestDto.getTimer_idx();
         Long timer_duration=saveTimerRequestDto.getTimer_duration();
@@ -122,6 +122,5 @@ public class TimerController {
 
         }
     }
-
 
 }
