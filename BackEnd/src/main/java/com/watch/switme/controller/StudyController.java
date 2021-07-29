@@ -64,7 +64,7 @@ public class StudyController {
     }*/
 
     //스터디 가입하기 //User_study 이용하기
-    @PutMapping("/array/join/{user_idx}/{study_idx}")
+    @PostMapping("/array/join/{user_idx}/{study_idx}")
     public Iterable<UserStudy> Join(@PathVariable Long user_idx, @PathVariable Long study_idx, @RequestBody UserStudy userstudy){
 
         return userStudyRepository.findByUserIdx(user_idx);
