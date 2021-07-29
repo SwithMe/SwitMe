@@ -7,6 +7,7 @@ import com.watch.switme.service.TimerDailyUserService;
 import com.watch.switme.service.TimerLogService;
 import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -61,6 +62,15 @@ public class TimerController {
         timerService.delete(timer_idx);
     }
 
+    /*
+    매일 23시59분59초에 duration 0으로 초기화
+    쿼츠 크론 식 : 59 59 23 * * ?
+     */
+    @Scheduled(cron="59 59 23 * * ?")
+    public void timerDuraionInitialize(){
+        timerService.durationInitialize();
+        //System.out.println("✨스톱워치 duration 초기화");
+    }
 
     //스톱워치 정지 후 저장
     @PostMapping("/timer/save")

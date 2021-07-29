@@ -102,4 +102,14 @@ public class TimerService {
         timerRepository.deleteById(timer_idx);
     }
 
+    @Transactional
+    public void durationInitialize(){
+        List <Timer> timerList=timerRepository.findAll();
+
+        for(Timer timer:timerList){
+            timer.durationInitialize(0L);
+        }
+
+    }
+
 }
