@@ -3,9 +3,11 @@ package com.watch.switme.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -19,9 +21,11 @@ public class TimerLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long log_idx;
 
-    private Date start_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime start_time;
 
-    private Date end_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime end_time;
 
     private Long duration;
 
@@ -30,7 +34,7 @@ public class TimerLog {
     private Timer timer;
 
     @Builder
-    public TimerLog(Long log_idx, Date start_time, Date end_time, Long duration, Timer timer) {
+    public TimerLog(Long log_idx, LocalDateTime start_time, LocalDateTime end_time, Long duration, Timer timer) {
         this.log_idx = log_idx;
         this.start_time = start_time;
         this.end_time = end_time;

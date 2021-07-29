@@ -35,7 +35,16 @@ public class TimerService {
 
     @Transactional
     public List<TimerListResDto> getTimerList(Long user_idx){
-        List <Timer> timerList=timerRepository.findByUserIdx(user_idx);
+
+        User user=userRepository.findById(user_idx).get();
+
+        List <Timer> timerList=timerRepository.findByUser(user);
+
+
+
+        System.out.println("==timerList==");
+        System.out.println(timerList);
+
         List <TimerListResDto> timerListResDtoList =new ArrayList<>();
 
         for(Timer timer:timerList){
@@ -66,6 +75,7 @@ public class TimerService {
         TimerCreateRequestDto timerCreateRequestDto=TimerCreateRequestDto.builder()
                 .name(timer_name)
                 .user(user)
+                .duration(0L)
                 .build();
 
         return timerRepository.save(timerCreateRequestDto.toEntity()).getTimer_idx();
@@ -75,7 +85,5 @@ public class TimerService {
     public void delete(Long timer_idx){
         timerRepository.deleteById(timer_idx);
     }
-
-
 
 }
