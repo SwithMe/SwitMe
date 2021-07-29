@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class UserStudyListResponseDto {
-    private Integer study_idx;
+    private Long study_idx;
     private String study_title;
     private String study_image;
     private LocalDateTime start_date;
@@ -19,7 +19,7 @@ public class UserStudyListResponseDto {
     private String activate;
 
     @Builder
-    public UserStudyListResponseDto(Integer study_idx, String study_title, String study_image,
+    public UserStudyListResponseDto(Long study_idx, String study_title, String study_image,
                                     LocalDateTime start_date, LocalDateTime end_date, int warning, String activate){
         this.study_idx = study_idx;
         this.study_title = study_title;
