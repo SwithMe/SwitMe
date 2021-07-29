@@ -78,24 +78,19 @@ public class TimerController {
         }
 
 
-        //Long duration=timer.getDuration();
-        //Long new_duration=duration+timer_duration;
 
-        /*
         //1. Timer save
+        Long origin_duration=timer.getDuration();
         TimerSaveDto timerSaveDto=TimerSaveDto.builder()
                 .timer_idx(timer_idx)
                 .name(timer.getName())
-                .duration(new_duration)
+                .duration(origin_duration+timer_duration)
                 .user(timer.getUser())
                 .study(timer.getStudy())
                 .build();
 
-        System.out.println("==save timer entity==");
-        System.out.println(timerSaveDto);
-
         Long saved_timer_idx=timerService.save(timerSaveDto);
-         */
+
 
 
         //2. TimerLog save
@@ -146,7 +141,6 @@ public class TimerController {
             }
 
         }
-
 
         return saved_timerLog_idx;
     }
