@@ -15,5 +15,5 @@ public interface TimerDailyStudyRepository extends JpaRepository<TimerDailyStudy
 
     TimerDailyStudy findByStudyIdxAndDateBetween(Long study_idx, LocalDate start, LocalDate end);
 
-    List<TimerDailyStudy> findTop5ByOrderByDurationDesc(); //Time형식은 ordering이 잘 될까..?
+    List<TimerDailyStudy> findTop5ByDateBetweenOrderByDurationDesc(LocalDate start, LocalDate end); //Time형식은 ordering이 잘 될까..?
 }
