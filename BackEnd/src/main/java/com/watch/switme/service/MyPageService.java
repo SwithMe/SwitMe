@@ -59,14 +59,17 @@ public class MyPageService {
     public void updateUser(UserUpdateDto userUpdateDto) throws Exception{
         Long user_idx = userUpdateDto.getUser_idx();
         User user = userRepository.findFirstByUserIdx(user_idx);
-        UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(user_idx);
 
         if(userUpdateDto.getPassword() != null){
             String new_password = bCryptPasswordEncoder.encode(userUpdateDto.getPassword());
-            user.updateUserPassword(new_password);
+            System.out.println(new_password);
+            user.setPw(new_password);
+            System.out.println("hello..");
+            userRepository.save(user);
         }
 
-        if(!userUpdateDto.getFile().isEmpty()){
+        if(userUpdateDto.getFile() != null){
+            UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(user_idx);
             MultipartFile file = userUpdateDto.getFile();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String current_date = simpleDateFormat.format(System.currentTimeMillis());
@@ -92,6 +95,7 @@ public class MyPageService {
             }
 
         }
+
     }
 
 }

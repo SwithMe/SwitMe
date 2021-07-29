@@ -51,6 +51,7 @@ public class MyPageController {
         try{
             myPageService.updateUser(userUpdateDto);
         }catch (Exception e){
+            System.out.println(e);
         }
     }
 }
