@@ -2,10 +2,7 @@ package com.watch.switme.controller;
 
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserDataExtra;
-import com.watch.switme.dto.UserInfoResponseDto;
-import com.watch.switme.dto.UserStudyListResponseDto;
-import com.watch.switme.dto.UserTimerLogResponseDto;
-import com.watch.switme.dto.UserUpdateDto;
+import com.watch.switme.dto.*;
 import com.watch.switme.service.MyPageService;
 import com.watch.switme.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +23,18 @@ public class MyPageController {
         User user = userService.findByUserIdx(user_idx);
         UserDataExtra userDataExtra = userService.findExtraByUserIdx(user_idx);
 
+        String selfImage;
+        if(userDataExtra == null){
+            selfImage = null;
+        } else{
+            selfImage = userDataExtra.getSelfImage();;
+        }
+
         UserInfoResponseDto userInfoResponseDto = UserInfoResponseDto.builder()
                 .user_idx(user_idx)
                 .user_name(user.getRealname())
                 .user_email(user.getEmail())
-                .user_image(userDataExtra.getSelfImage())
+                .user_image(selfImage)
                 .build();
 
         return userInfoResponseDto;
@@ -47,11 +51,14 @@ public class MyPageController {
     }
 
     @PostMapping("/user_update")
-    public void userUpdate(UserUpdateDto userUpdateDto){
+    public SuccessResponseDto userUpdate(UserUpdateDto userUpdateDto){
         try{
             myPageService.updateUser(userUpdateDto);
         }catch (Exception e){
             System.out.println(e);
+            return SuccessResponseDto.builder().success(false).build();
         }
+
+        return SuccessResponseDto.builder().success(true).build();
     }
 }

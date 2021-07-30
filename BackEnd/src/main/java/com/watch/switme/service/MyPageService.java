@@ -1,5 +1,6 @@
 package com.watch.switme.service;
 
+import com.watch.switme.domain.TimerLog;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserDataExtra;
 import com.watch.switme.domain.UserStudy;
@@ -52,7 +53,21 @@ public class MyPageService {
 
     @Transactional
     public List<UserTimerLogResponseDto> getUserTimerLog(Long user_idx){
-        return timerLogRepository.findTop20ByUserIdx(user_idx);
+        List<UserTimerLogResponseDto> userTimerLogResponseDtoList = new ArrayList<>();
+        List<TimerLog> timerLogList = timerLogRepository.findTop20ByUserIdx(user_idx);
+
+        for(TimerLog timerLog: timerLogList){
+            UserTimerLogResponseDto userTimerLogResponseDto = UserTimerLogResponseDto.builder()
+                    .log_idx(timerLog.getLog_idx())
+                    .start_time(timerLog.getStart_time())
+                    .end_time(timerLog.getEnd_time())
+                    .duration(timerLog.getDuration())
+                    .build();
+
+            userTimerLogResponseDtoList.add(userTimerLogResponseDto);
+        }
+
+        return userTimerLogResponseDtoList;
     }
 
     @Transactional
@@ -88,10 +103,10 @@ public class MyPageService {
             if(userDataExtra == null){
                 userDataExtraRepository.save(UserDataExtra.builder()
                         .userIdx(user_idx)
-                        .selfImage("static/img/user/"+file_name)
+                        .selfImage("img/user/"+file_name) //without static
                         .build());
             } else {
-                userDataExtra.updateUserImage("static/img/user/"+file_name);
+                userDataExtra.updateUserImage("img/user/"+file_name);
             }
 
         }

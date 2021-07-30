@@ -5,8 +5,10 @@ import lombok.Getter;
 import java.util.Date;
 
 public interface ChatMessageInterface {
-    Long getRoom_RoomIdx();
-    Long getSenderIdx(); //Sender_UserIdx
+    Long getRoom_idx();
+    Long getSender_idx();
+    String getUserName();
+    String getSelf_image();
     String getMessage();
     Date getTime();
 }
