@@ -18,6 +18,10 @@ public class StudyService {
     @Transactional
     public Study findByStudyIdx(Long study_idx){
         return studyRepository.findFirstByStudyIdx(study_idx);
+  
+    public void leaveStudy(Long study_idx){
+        studyRepository.deleteById(study_idx);
+
     }
 
     //스터디 추가..?
