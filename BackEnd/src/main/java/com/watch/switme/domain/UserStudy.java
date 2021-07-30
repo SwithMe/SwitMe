@@ -1,8 +1,10 @@
 package com.watch.switme.domain;
 
+import jdk.jfr.Timestamp;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,6 +34,7 @@ public class UserStudy {
     @Column(name = "warning", nullable = false)
     private Integer warning;
 
+    @CreationTimestamp
     @Column(name="join_date", nullable = false)
     private LocalDateTime joinDate;
 

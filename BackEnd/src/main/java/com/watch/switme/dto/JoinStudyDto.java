@@ -15,7 +15,7 @@ public class JoinStudyDto {
     private Long userStudyIdx;
     private Long studyIdx;
     private Long userIdx;
-    private String amLeader;
+    private String amLeader; // 만든사람이 리더
     private Integer warning;
     private LocalDateTime joinDate;
     private UserYesOrNo activate;

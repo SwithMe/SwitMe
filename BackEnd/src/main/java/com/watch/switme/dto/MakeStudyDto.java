@@ -1,16 +1,9 @@
 package com.watch.switme.dto;
 
-<<<<<<< Updated upstream
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-
-@Getter
-@Setter
-@NoArgsConstructor
-=======
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +12,11 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Data
->>>>>>> Stashed changes
-public class makeStudyDto {
+public class MakeStudyDto {
     private Long study_idx;
     private String title;
     private String type;
@@ -40,7 +34,7 @@ public class makeStudyDto {
     private String studyIntro;
 
     @Builder
-    public makeStudyDto(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
+    public MakeStudyDto(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
                         String tags, String location, String extra, String image, Long leader, String link, String studyIntro){
         this.study_idx = study_idx;
         this.title = title;
@@ -60,21 +54,4 @@ public class makeStudyDto {
 
     }
 
-    /**public Study toEntity(){
-        return Study.builder()
-                .study_idx(study_idx)
-                .title(title)
-                .type(type)
-                .termstart(termstart)
-                .termend(termend)
-                .size(size)
-                .tags(tags)
-                .location(location)
-                .extra(extra)
-                .image(image)
-                .leader(leader)
-                .link(link)
-                .studyIntro(studyIntro);
-
-    }**/
 }

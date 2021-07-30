@@ -26,8 +26,7 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
 
     //public void createStudy(Study study);
 
-    List<Study> findByStudyIdx(int study_idx);
+    //List<Study> findByStudy_idx(Long study_idx);
 
-    @Query(value = "select s from Study_main s where s.study_idx = ?1", nativeQuery = true)
-    Study findFirstByStudyIdx(Long study_idx);
+
 }

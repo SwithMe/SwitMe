@@ -4,16 +4,14 @@ import com.watch.switme.domain.Study;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserStudy;
 import com.watch.switme.dto.JoinStudyDto;
-import com.watch.switme.dto.makeStudyDto;
-import com.watch.switme.domain.UserStudy;
+import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserService;
-import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -33,7 +31,6 @@ public class StudyController {
     private StudyService studyService;
     private UserService userService;
 
-    @Autowired
     StudyRepository studyRepository;
     UserStudyRepository userStudyRepository;
 
@@ -55,17 +52,19 @@ public class StudyController {
         // 사진 넣는 거 바꾸기
         // resources save /server 주소 /폴더 위치
         studyRepository.save(study);
-
     }
+
+    // 스터디 개설
+    //
 
     //스터디 만들기2 (테스트 필요)
     @GetMapping("/array/enroll")
-    public makeStudyDto enrollStudy(){
+    public MakeStudyDto enrollStudy(){
         Study study = studyService.findByStudyIdx(enrollStudy().getStudy_idx());
         //Long UserId
         String userImage = study.getImage();
 
-        makeStudyDto makestudyDto = makeStudyDto.builder()
+        MakeStudyDto makestudyDto = MakeStudyDto.builder()
                 .study_idx(study.getStudy_idx())
                 .studyIntro(study.getStudyIntro())
                 .image(userImage)
@@ -99,50 +98,41 @@ public class StudyController {
     //}
 
     //스터디 가입하기1 //User_study 이용하기
+    // 1. 가입하려는 사람의 user_idx 로 가입하려는 사람을 확인
+    // 2. study idx 를 받아서 어디에 가입하려는지 확인
     @PostMapping("/array/join/{user_idx}/{study_idx}")
-    public JoinStudyDto Join(@PathVariable Long user_idx, @PathVariable Long study_idx, @RequestBody UserStudy userstudy){
-        System.out.println(user_idx);
-        System.out.println(study_idx);
-        User user = userService.findByUserIdx(user_idx);
-        Study study =studyService.findByStudyIdx(study_idx);
+    public JoinStudyDto JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
+
+        //User user = userService.findByUserIdx(user_idx);
+        //Study study =studyService.findByStudyIdx(study_idx);
 
         JoinStudyDto joinStudyDto = JoinStudyDto.builder()
+                .amLeader("N")
                 .studyIdx(study_idx)
                 .userIdx(user_idx) //t수정수정수정
+                .warning(0)
                 .build();
-
         return joinStudyDto;
     }
 
+    /* 삭제 예정 .
     //스터디 가입하기2
     @PutMapping("/array/join/{user_idx}/{study_idx}")
-    public void JoinStudy(@PathVariable Long user_udx, @PathVariable Long study_idx){
-
+    public void JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
         return userStudyRepository.findByUserIdx(user_idx);
-    }
+    }*/
 
     //스터디 탈퇴하기 //User_study 이용하기 (테스트 필요함)
-    @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
-    public void LeaveStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
-        System.out.println(study_idx);
-        System.out.println(user_idx);
-        userStudyRepository.deleteById(study_idx);
-
+    @DeleteMapping("/array/leave/{user_study_idx}")
+    public void LeaveStudy(@PathVariable Long user_study_idx){
+        userStudyRepository.deleteById(user_study_idx);
     }
-
-    //스터디 탈퇴하기
-    /*@PostMapping("/array/{title}")
-    public Iterable<Study> showStudyDetail(@PathVariable String title){
-        System.out.println(title);
-        return studyRepository.findByTitle(title);
-    }*/
 
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
-    @PostMapping("/array/study/{study_idx}")
-    public Iterable<Study> showStudyDetail(@PathVariable Long study_idx){
-        System.out.println(study_idx);
-        return studyRepository.findAllByStudy_idx(study_idx);
+    @GetMapping("/array/study/{study_idx}")
+    public Study showStudyDetail(@PathVariable Long study_idx){
+        return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
     /* 스터디 검색/리스트 관련 */
