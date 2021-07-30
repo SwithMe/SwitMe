@@ -4,20 +4,23 @@ import com.watch.switme.domain.Study;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserStudy;
 import com.watch.switme.domain.UserYesOrNo;
+import com.watch.switme.repository.JoinStudyRepository;
 import com.watch.switme.dto.JoinStudyDto;
 import com.watch.switme.dto.MakeStudyDto;
-import com.watch.switme.repository.JoinStudyRepository;
+import com.watch.switme.dto.SearchResultDto;
+import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.naming.directory.SearchResult;
+import java.util.List;
 
 /*
 * 1. 스터디 개설하기 테스트
@@ -102,20 +105,18 @@ public class StudyController {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
-    /* 스터디 검색/리스트 관련 */
 
-    //스터디 세부사항 보여주기 (검색과 구현동일)
-    @PostMapping("/array/{title}")
-    public Iterable<Study> showStudyDetail(@PathVariable String title){
-        System.out.println(title);
-        return studyRepository.findByTitle(title);
-    }
 
-    //스터디 세부사항 보여주기 (검색과 구현동일) ..long=>??
-    @PostMapping("/array/{leader}")
-    public Iterable<Study> getStudyByLeader(@PathVariable int leader){
-        //System.out.println(leader);
-        return studyRepository.findAllByleader(leader);
+    @PostMapping("/array")
+    public List<Study> example(@RequestBody SearchStudyDto searchStudyDto){
+        return studyRepository.getQuery
+                (
+                searchStudyDto.getLeader(),
+                searchStudyDto.getTitle(),
+                searchStudyDto.getSize(),
+                searchStudyDto.getType(),
+                searchStudyDto.getActivate()
+                );
     }
 
 }

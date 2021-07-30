@@ -1,5 +1,6 @@
 package com.watch.switme.controller;
 
+import com.watch.switme.config.WebSecurityConfig;
 import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.dto.UserListResponseDTO;
@@ -17,8 +18,6 @@ public class UserController {
     private final UserService userService;
 
     //회원가입
-    //localhost:8080/auth/signUp
-    //회원가입시 이메일 @ 형식, ewhain.net 인지 판단하는것 프론트에서 가능한지 물어보기.
     @PostMapping(value = "/signup")
     public ResponseEntity<String> signUp(@RequestBody final SignUpDTO signUpDTO) {
         return userService.isEmailDuplicated(signUpDTO.getEmail())
@@ -33,7 +32,4 @@ public class UserController {
                 .userList(userService.findAll()).build();
         return ResponseEntity.ok(userListResponseDTO);
     }
-
-
-
 }

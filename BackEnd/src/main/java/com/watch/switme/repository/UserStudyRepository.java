@@ -25,4 +25,8 @@ UserStudyRepository extends JpaRepository<UserStudy, Long> {
 
 
 
+
+
+
+
 }
