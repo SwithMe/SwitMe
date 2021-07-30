@@ -15,16 +15,8 @@ public class ExceptionController {
     public ResponseEntity<Object> handleNoResultFromDBException(final NoResultFromDBException e) {
 
         log.info("No result found on DB [" + e.getMessage() + "]");
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NO_CONTENT);
 
-        //return new ResponseEntity<>(e.getMessage(), HttpStatus.NO_CONTENT);
-
-
-        //return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
-
-//        log.info(e.getClass().getName());
-//        log.error("error", e);
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NO_CONTENT);
 
     }
 

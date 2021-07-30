@@ -16,6 +16,7 @@ public class RecomStudyResDto {
     private Integer participant;
     private Integer avgMannerTemperature;
     private String tags;
+    private String image;
 
     public Study toEntity(){
         Study study=Study.builder()
@@ -25,19 +26,20 @@ public class RecomStudyResDto {
                 .participant(participant)
                 .avgMannerTemperature(avgMannerTemperature)
                 .tags(tags)
+                .image(image)
                 .build();
         return study;
     }
 
     @Builder
-    public RecomStudyResDto(Long study_idx, String type, String title, Integer participant, Integer avgMannerTemperature, String tags) {
+
+    public RecomStudyResDto(Long study_idx, String type, String title, Integer participant, Integer avgMannerTemperature, String tags, String image) {
         this.study_idx = study_idx;
         this.type = type;
         this.title = title;
         this.participant = participant;
         this.avgMannerTemperature = avgMannerTemperature;
         this.tags = tags;
+        this.image = image;
     }
-
-
 }
