@@ -43,7 +43,7 @@ public class Study {
 
     // 스터디 종료시간
     @Column(nullable=false)
-    private Date timeend;
+    private Time timeend;
 
     // 모집 인원
     @Column(nullable=false)
@@ -67,7 +67,7 @@ public class Study {
 
     // 스터디장
     @Column
-    private Integer leader;
+    private Long leader;
 
     // 링크
     @Column
@@ -90,7 +90,7 @@ public class Study {
     private Integer avgMannerTemperature;
 
     @Builder
-    public void StudyEntity(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Date timeend, Integer size, String tags, String location, String extra, String image, Integer leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
+    public void StudyEntity(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
     {
         this.study_idx = study_idx;
         this.title = title;
