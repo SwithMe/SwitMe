@@ -84,30 +84,14 @@ const EditStudy = ({ match }) => {
   const { study_id } = match.params;
   const history = useHistory();
   const dispatch = useDispatch();
-  const [study, setStudy] = useState({
-    study_idx: 1,
-    title: "Title 1",
-    type: "Type 1",
-    termstart: "2021-07-25",
-    termend: "2021-07-25",
-    timestart: "10:02",
-    timeend: "10:02",
-    size: 1,
-    tags: "Tags 1",
-    location: "Location 1",
-    extra: "Extra 1",
-    image: "image 1", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
-    leader: 1,
-    // leader: window.localStorage.getItem("id"),
-    link: "Link 1",
-    activate: "N",
-    study_intro: "study_intro 1",
-  });
+  const [isSet, setIsSet] = useState();
+  const [study, setStudy] = useState();
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
         setStudy(response.payload);
+        setIsSet(true);
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
       }
@@ -131,7 +115,7 @@ const EditStudy = ({ match }) => {
     setStudy({ ...study, [name]: value });
   };
 
-  return (
+  return isSet ? (
     <Wrapper>
       <Header page="3" />
       <Row style={{ marginTop: "40px" }}>
@@ -270,7 +254,7 @@ const EditStudy = ({ match }) => {
               <Item>
                 <Input width="141" height="65">
                   <Title size="20" weight="400">
-                    {study.timestart}
+                    {study.timestart.slice(0, 5)}
                   </Title>
                   <img
                     alt="dropdown"
@@ -382,7 +366,7 @@ const EditStudy = ({ match }) => {
               <Item>
                 <Input width="141" height="65">
                   <Title size="20" weight="400">
-                    {study.timeend}
+                    {study.timeend.slice(0, 5)}
                   </Title>
                   <img
                     alt="dropdown"
@@ -634,6 +618,8 @@ const EditStudy = ({ match }) => {
         </Col>
       </Row>
     </Wrapper>
+  ) : (
+    <></>
   );
 };
 
