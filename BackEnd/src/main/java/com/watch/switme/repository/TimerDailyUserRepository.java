@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TimerDailyUserRepository extends JpaRepository<TimerDailyUser,Long>{
 
-    TimerDailyUser findByUserIdxAndDateBetween(Long user_idx, LocalDate start, LocalDate end);
+    Optional<TimerDailyUser> findByUserIdxAndDateBetween(Long user_idx, LocalDate start, LocalDate end);
 
 
     List<TimerDailyUser> findTop5ByDateBetweenOrderByDurationDesc(LocalDate start, LocalDate end); //Time형식은 ordering이 잘 될까..?

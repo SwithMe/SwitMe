@@ -7,6 +7,7 @@ import com.watch.switme.service.TimerDailyUserService;
 import com.watch.switme.service.TimerLogService;
 import com.watch.switme.service.TimerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +24,10 @@ public class TimerController {
     private final TimerDailyUserService timerDailyUserService;
     private final TimerDailyStudyService timerDailyStudyService;
 
-    // 스톱워치 타이머 리스트
+
     @GetMapping("/timer/list/{user_idx}")
-    public List<TimerListResDto> timerList(@PathVariable("user_idx") long user_idx){
-        return timerService.getTimerList(user_idx);
+    public ResponseEntity timerList(@PathVariable("user_idx") long user_idx){
+        return ResponseEntity.ok().body(timerService.getTimerList(user_idx));
     }
 
 

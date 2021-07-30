@@ -3,8 +3,8 @@ package com.watch.switme.service;
 import com.watch.switme.domain.TimerDailyUser;
 import com.watch.switme.dto.CumulativeTimeDto;
 import com.watch.switme.dto.TimerDailyUserSaveDto;
-import com.watch.switme.dto.TimerLogSaveDto;
 import com.watch.switme.dto.TimerRankDto;
+import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.TimerDailyUserRepository;
 import com.watch.switme.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,7 +42,7 @@ public class TimerDailyUserService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        TimerDailyUser timerDailyUser = timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, before, now);
+        TimerDailyUser timerDailyUser = timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, now, now).orElseThrow(()-> new NoResultFromDBException("데이터가 존재하지 않습니다."));
 
         CumulativeTimeDto cumulativeTimeDto= CumulativeTimeDto.builder()
                 .cumulative_time(timerDailyUser.getDuration())
@@ -60,7 +57,8 @@ public class TimerDailyUserService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        TimerDailyUser timerDailyUser=timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, before,now);
+        //여기도 수정?
+        TimerDailyUser timerDailyUser=timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, now,now).get();
 
         return timerDailyUser;
     }
@@ -73,7 +71,9 @@ public class TimerDailyUserService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        List<TimerDailyUser> timerDailyUserList = timerDailyUserRepository.findTop5ByDateBetweenOrderByDurationDesc(before, now);
+        List<TimerDailyUser> timerDailyUserList = timerDailyUserRepository.findTop5ByDateBetweenOrderByDurationDesc(now, now);
+
+        if(timerDailyUserList.isEmpty()) throw new NoResultFromDBException("데이터가 존재하지 않습니다.");
 
         List <TimerRankDto> timerRankDtoList=new ArrayList<>();
 
