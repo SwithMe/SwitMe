@@ -104,7 +104,7 @@ const MainPage = () => {
   const [studyRanking, setStudyRanking] = useState([]);
   const [studies, setStudies] = useState([]);
   const move = useRef(0);
-  const move_max = useRef((studies.length - 6) * 260);
+  const move_max = useRef(0);
 
   const slideRef = useRef();
 
@@ -130,15 +130,15 @@ const MainPage = () => {
     });
     dispatch(getRankingstudy()).then((response) => {
       if (response.payload) {
-        console.log(response.payload);
         setStudyRanking(response.payload);
       } else {
-        console.log("스터디 랭킹 가져오기 에러");
+        console.log(response);
       }
     });
     dispatch(recommendedStudy()).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
+        move_max.current = studies.length >= 6 ? (studies.length - 6) * 260 : 0;
       } else {
         console.log("추천 스터디 가져오기 에러");
       }
@@ -365,7 +365,7 @@ const MainPage = () => {
                     >
                       <Image
                         alt="스터디 이미지"
-                        src={study.study_profile}
+                        src={study.image}
                         height="190"
                       />
                       <Title lineHeight="34.75" size="24" marginTop="11">
