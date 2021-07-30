@@ -54,37 +54,6 @@ public class StudyController {
         studyRepository.save(study);
     }
 
-    // 스터디 개설
-    //
-
-    //스터디 만들기2 (테스트 필요)
-    @GetMapping("/array/enroll")
-    public MakeStudyDto enrollStudy(){
-        Study study = studyService.findByStudyIdx(enrollStudy().getStudy_idx());
-        //Long UserId
-        String userImage = study.getImage();
-
-        MakeStudyDto makestudyDto = MakeStudyDto.builder()
-                .study_idx(study.getStudy_idx())
-                .studyIntro(study.getStudyIntro())
-                .image(userImage)
-                .extra(study.getExtra())
-                .link(study.getLink())
-                .location(study.getLocation())
-                .size(study.getSize())
-                .tags(study.getTags())
-             //   .leader(UserId)
-                .leader(study.getLeader())
-                .termend(study.getTermend())
-                .termstart(study.getTermstart())
-                .timeend(study.getTimeend())
-                .timestart(study.getTimestart())
-                .title(study.getTitle())
-                .type(study.getType())
-                .build();
-        return makestudyDto;
-    }
-
 
     //전체 스터디 리스트 가져오기.
     @GetMapping("/alllist")
