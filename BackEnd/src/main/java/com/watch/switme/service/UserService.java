@@ -34,6 +34,7 @@ public class UserService {
                 .manner_temperature(70)
                 .UserAgree(UserYesOrNo.Y)
                 .realname(signUpDTO.getRealname())
+                .isEnable(true)
                 .build();
 
         return userRepository.save(user);
