@@ -11,7 +11,12 @@ import java.util.List;
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
 
-    @Query(value = "select * from chat_message c where c.room_idx = ?1", nativeQuery = true)
+    @Query(value = "select * from chat_message c " +
+            "inner join ( " +
+            "select u.user_idx, u.UserName, e.self_image from User_data u " +
+            "left join User_data_extra e on u.user_idx = e.user_idx " +
+            ") ue on c.sender_idx = ue.user_idx " +
+            "where c.room_idx = ?1 ", nativeQuery = true)
     List<ChatMessageInterface> findByRoom_RoomIdx(Long room_idx);
 
     ChatMessage findFirstByRoom_RoomIdxOrderByTimeDesc(Long room_idx);

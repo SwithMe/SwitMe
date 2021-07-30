@@ -57,8 +57,8 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public void updateUserPassword(String pw){
-        this.pw = pw;
-    }
+//    public void updateUserPassword(String pw){
+//        this.pw = pw;
+//    }
 
 }

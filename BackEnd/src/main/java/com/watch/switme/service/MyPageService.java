@@ -1,5 +1,6 @@
 package com.watch.switme.service;
 
+import com.watch.switme.domain.TimerLog;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserDataExtra;
 import com.watch.switme.domain.UserStudy;
@@ -52,33 +53,62 @@ public class MyPageService {
 
     @Transactional
     public List<UserTimerLogResponseDto> getUserTimerLog(Long user_idx){
-        return timerLogRepository.findTop20ByUserIdx(user_idx);
+        List<UserTimerLogResponseDto> userTimerLogResponseDtoList = new ArrayList<>();
+        List<TimerLog> timerLogList = timerLogRepository.findTop20ByUserIdx(user_idx);
+
+        for(TimerLog timerLog: timerLogList){
+            UserTimerLogResponseDto userTimerLogResponseDto = UserTimerLogResponseDto.builder()
+                    .log_idx(timerLog.getLog_idx())
+                    .start_time(timerLog.getStart_time())
+                    .end_time(timerLog.getEnd_time())
+                    .duration(timerLog.getDuration())
+                    .build();
+
+            userTimerLogResponseDtoList.add(userTimerLogResponseDto);
+        }
+
+        return userTimerLogResponseDtoList;
     }
 
     @Transactional
     public void updateUser(UserUpdateDto userUpdateDto) throws Exception{
         Long user_idx = userUpdateDto.getUser_idx();
         User user = userRepository.findFirstByUserIdx(user_idx);
-        UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(user_idx);
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(new File("").getAbsolutePath());
 
         if(userUpdateDto.getPassword() != null){
             String new_password = bCryptPasswordEncoder.encode(userUpdateDto.getPassword());
-            user.updateUserPassword(new_password);
+            System.out.println(new_password);
+            user.setPw(new_password);
+            System.out.println("hello..");
+            userRepository.save(user);
         }
 
-        if(!userUpdateDto.getFile().isEmpty()){
+        if(userUpdateDto.getFile() != null){
+            UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(user_idx);
             MultipartFile file = userUpdateDto.getFile();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String current_date = simpleDateFormat.format(System.currentTimeMillis());
             String file_name = current_date+file.getOriginalFilename();;
-            String path = "src/main/resources/static/img/user/";
+            String absolute_path = System.getProperty("user.dir")+"\\";
+            String path = "src/main/resources/static/img/user";
 
-            File new_file = new File(path+file_name);
+            File directory = new File(path);
+            if(!directory.exists()){
+                directory.mkdirs();
+            }
+
+            File new_file = new File(absolute_path+path+"/"+file_name);
             file.transferTo(new_file);
 
-            userDataExtra.updateUserImage("static/img/user/"+file_name);
+            if(userDataExtra == null){
+                userDataExtraRepository.save(UserDataExtra.builder()
+                        .userIdx(user_idx)
+                        .selfImage("img/user/"+file_name) //without static
+                        .build());
+            } else {
+                userDataExtra.updateUserImage("img/user/"+file_name);
+            }
+
         }
 
     }
