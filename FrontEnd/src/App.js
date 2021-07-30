@@ -11,6 +11,7 @@ import StudyDetail from "./pages/StudyDetail";
 import MemberList from "./pages/MemberList";
 import MakeStudy from "./pages/MakeStudy";
 import Mypage from "./pages/Mypage";
+import EditStudy from "./pages/EditStudy";
 import Modal from "./components/Modal";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/memberlist" component={MemberList} />
         <Route exact path="/makestudy" component={MakeStudy} />
         <Route exact path="/mypage" component={Mypage} />
+        <Route exact path="/editstudy" component={EditStudy} />
         <Route exact path="/modal" component={Modal} />
       </Switch>
     </Router>

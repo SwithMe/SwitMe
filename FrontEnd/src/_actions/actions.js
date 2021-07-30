@@ -17,6 +17,7 @@ const GET_CHATLIST = "GET_CHATLIST";
 const GET_USER_INFO = "GET_USER_INFO";
 const GET_USER_STUDY = "GET_USER_STUDY";
 const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
+const EDIT_STUDY = "EDIT_STUDY";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -155,6 +156,17 @@ export const getUserStopwatch = (user_idx) => {
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_USER_STOPWATCH, payload: request };
+};
+
+export const editstudy = (study_id) => {
+  const request = axios
+    .get(`${USER_SERVER}/list/array/fix?study_idx=${study_id}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_STUDY,
+    payload: request,
+  };
 };
 
 const actions = (state = {}, action) => {
