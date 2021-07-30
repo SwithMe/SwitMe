@@ -54,6 +54,8 @@ const ListBox = styled.div`
   padding: 25px;
   width: 739px;
   height: 441px;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const Study = styled.div`
@@ -62,7 +64,7 @@ const Study = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 739px;
-  height: 441px;
+  margin-top: 20px;
 `;
 
 const Circle = styled.div`
@@ -77,6 +79,7 @@ const Circle = styled.div`
 const Mypage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [studytoggle, setStudyToggle] = useState(1);
   const [user, setUser] = useState({
     user_idx: "",
     user_name: "이름",
@@ -84,55 +87,13 @@ const Mypage = () => {
     user_image: "",
     user_manner: 50,
   });
-  const [studies, setStudies] = useState([
-    {
-      studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
-      date: "2021-11-11 ㅡ 2021-11-11",
-      warning: "누적 경고 0회",
-    },
-    {
-      studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
-      date: "2021-11-11 ㅡ 2021-11-11",
-      warning: "누적 경고 0회",
-    },
-    {
-      studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
-      date: "2021-11-11 ㅡ 2021-11-11",
-      warning: "누적 경고 0회",
-    },
-    {
-      studyprofile: "../assets/rectangle.png",
-      name: "스터디명",
-      date: "2021-11-11 ㅡ 2021-11-11",
-      warning: "누적 경고 0회",
-    },
-  ]);
+  const [studies, setStudies] = useState([]);
 
-  const [times, setTimes] = useState([
-    {
-      day: "2021-11-13",
-      time: "11:22:33 ㅡ 12:22:33",
-      total: "12:34:56",
-    },
-    {
-      day: "2021-11-13",
-      time: "11:22:33 ㅡ 12:22:33",
-      total: "12:34:56",
-    },
-    {
-      day: "2021-11-13",
-      time: "11:22:33 ㅡ 12:22:33",
-      total: "12:34:56",
-    },
-  ]);
+  const [times, setTimes] = useState([]);
   useEffect(() => {
     const user_id = window.localStorage.getItem("id");
     dispatch(getUserInfo(user_id)).then((response) => {
       if (response.payload) {
-        console.log(response.payload);
         setUser(response.payload);
       } else {
         console.log("회원정보 가져오기 에러");
@@ -140,7 +101,6 @@ const Mypage = () => {
     });
     dispatch(getUserStudy(user_id)).then((response) => {
       if (response.payload) {
-        console.log(response.payload);
         setStudies(response.payload);
       } else {
         console.log("스터디 목록 가져오기 에러");
@@ -148,7 +108,25 @@ const Mypage = () => {
     });
     dispatch(getUserStopwatch(user_id)).then((response) => {
       if (response.payload) {
-        setTimes(response.payload);
+        let arr = [];
+        response.payload?.map((log, i) => {
+          const start_date = log.start_time.slice(0, 10);
+          const end_date = log.end_time.slice(0, 10);
+          const start_time = log.start_time.slice(11);
+          const end_time = log.end_time.slice(11);
+          const hour = Math.floor(log.duration / 360);
+          const minute = Math.floor(log.duration / 60);
+          const second = log.duration % 60;
+          arr.push({
+            start_date: start_date,
+            end_date: end_date,
+            start_time: start_time,
+            end_time: end_time,
+            total:
+              String(hour) + " : " + String(minute) + " : " + String(second),
+          });
+        });
+        setTimes(arr);
       } else {
         console.log("스톱워치 목록 가져오기 에러");
       }
@@ -181,14 +159,14 @@ const Mypage = () => {
             <Col>
               <Image
                 alt="profile"
-                src={require("../assets/profile.png").default}
+                src={user.user_image}
                 width="124"
                 height="124"
               />
             </Col>
             <Col style={{ width: "660px" }}>
               <Title size="32" color="#064538">
-                이름
+                {user.user_name}
               </Title>
               <br />
               <Title size="24" weight="400" marginBottom="5">
@@ -196,11 +174,11 @@ const Mypage = () => {
               </Title>
 
               <Title size="24" weight="400" marginBottom="5">
-                qwer1234@ewhain.net
+                {user.user_email}
               </Title>
 
               <Title size="24" weight="400" marginBottom="5">
-                매너온도 60°C
+                매너온도 {user.user_manner}°C
               </Title>
             </Col>
           </Row>
@@ -229,16 +207,45 @@ const Mypage = () => {
         >
           <Row style={{ width: "739px", justifyContent: "space-between" }}>
             <Title>참여 스터디 목록</Title>
-            <span style={{ float: "right" }}>
-              <span style={{}}>
-                <Circle />
-                개인
+            {studytoggle === 1 ? (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{ marginRight: "31px", cursor: "pointer" }}
+                  onClick={() => setStudyToggle(1)}
+                >
+                  <Circle />
+                  활동중
+                </span>
+                <span
+                  style={{ color: "#cccccc", cursor: "pointer" }}
+                  onClick={() => setStudyToggle(2)}
+                >
+                  <Circle color="#cccccc" />
+                  종료
+                </span>
               </span>
-              <span style={{ color: "#cccccc" }}>
-                <Circle color="#cccccc" />
-                스터디
+            ) : (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{
+                    marginRight: "31px",
+                    color: "#cccccc",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setStudyToggle(1)}
+                >
+                  <Circle color="#cccccc" />
+                  활동중
+                </span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setStudyToggle(2)}
+                >
+                  <Circle />
+                  종료
+                </span>
               </span>
-            </span>
+            )}
           </Row>
           <Row style={{ width: "739px", justifyContent: "flex-start" }}>
             <Title>스톱워치 사용 기록</Title>
@@ -246,49 +253,105 @@ const Mypage = () => {
         </Row>
         <Row>
           <ListBox style={{ marginRight: "40px" }}>
-            {studies.map((study, i) => {
-              if (i > 4) return false;
-              return (
-                <Study key={i}>
-                  <img
-                    alt="study profile"
-                    src={require("../assets/rectangle.png").default}
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      marginLeft: "58px",
-                    }}
-                  />
-                  <Col style={{ width: "350px" }}>
-                    <div style={{ width: "97px" }}>
-                      <Title size="20" weight="400">
-                        {study.name}
-                      </Title>
-                    </div>
-                    <div style={{ width: "270px" }}>{study.date}</div>
-                  </Col>
-                  <div style={{ width: "152px", marginRight: "58px" }}>
-                    <Title size="20" weight="400" color="#56BE9C">
-                      {study.warning}
-                    </Title>
-                  </div>
-                </Study>
-              );
-            })}
+            {studytoggle === 1
+              ? studies.map((study, i) => {
+                  if (study.activate === "N") return false;
+                  return (
+                    <Study key={i}>
+                      <img
+                        alt="study profile"
+                        src={study.study_image}
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          marginLeft: "58px",
+                        }}
+                      />
+                      <Col
+                        style={{ width: "350px", cursor: "pointer" }}
+                        onClick={() =>
+                          history.push(`studydetail/${study.study_idx}`)
+                        }
+                      >
+                        <div style={{ width: "97px" }}>
+                          <Title width="150" size="20" weight="700">
+                            {study.study_title}
+                          </Title>
+                        </div>
+                        <div style={{ width: "270px" }}>
+                          <Title size="18" color="#CCCCCC" weight="400">
+                            {study.start_date} - {study.end_date}
+                          </Title>
+                        </div>
+                      </Col>
+                      <div style={{ width: "152px", marginRight: "58px" }}>
+                        <Title size="24" weight="400" color="#56BE9C">
+                          누적 경고 {study.warning}회
+                        </Title>
+                      </div>
+                    </Study>
+                  );
+                })
+              : studies.map((study, i) => {
+                  if (study.activate === "Y") return false;
+                  return (
+                    <Study
+                      key={i}
+                      onClick={() =>
+                        history.push(`studydetail/${study.study_idx}`)
+                      }
+                    >
+                      <img
+                        alt="study profile"
+                        src={study.study_image}
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          marginLeft: "58px",
+                        }}
+                      />
+                      <Col
+                        style={{ width: "350px", cursor: "pointer" }}
+                        onClick={() =>
+                          history.push(`studydetail/${study.study_idx}`)
+                        }
+                      >
+                        <div style={{ width: "97px" }}>
+                          <Title width="150" size="20" weight="700">
+                            {study.study_title}
+                          </Title>
+                        </div>
+                        <div style={{ width: "270px" }}>
+                          <Title size="18" color="#CCCCCC" weight="400">
+                            {study.start_date} - {study.end_date}
+                          </Title>
+                        </div>
+                      </Col>
+                      <div style={{ width: "152px", marginRight: "58px" }}>
+                        <Title size="24" weight="400" color="#56BE9C">
+                          누적 경고 {study.warning}회
+                        </Title>
+                      </div>
+                    </Study>
+                  );
+                })}
           </ListBox>
           <ListBox>
             {times.map((study, i) => {
-              if (i > 3) return false;
               return (
                 <Study key={i}>
                   <Col style={{ marginLeft: "58px" }}>
                     <div style={{ width: "141px" }}>
                       <Title size="20" weight="400">
-                        {study.day}
+                        {study.start_date === study.end_date
+                          ? study.start_date
+                          : String(study.start_date) +
+                            " - " +
+                            String(study.end_date)}
                       </Title>
                     </div>
                     <div style={{ width: "270px", marginLeft: "50px" }}>
-                      {study.time}
+                      {study.start_time} - {study.end_time}
                     </div>
                   </Col>
                   <div style={{ width: "152px", marginRight: "58px" }}>
