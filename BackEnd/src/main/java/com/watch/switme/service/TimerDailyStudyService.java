@@ -5,6 +5,7 @@ import com.watch.switme.domain.TimerDailyUser;
 import com.watch.switme.dto.TimerDailyStudySaveDto;
 import com.watch.switme.dto.TimerDailyUserSaveDto;
 import com.watch.switme.dto.TimerRankDto;
+import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.TimerDailyStudyRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class TimerDailyStudyService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        TimerDailyStudy timerDailyStudy=timerDailyStudyRepository.findByStudyIdxAndDateBetween(study_idx, before,now);
+        TimerDailyStudy timerDailyStudy=timerDailyStudyRepository.findByStudyIdxAndDateBetween(study_idx, now,now);
 
         return timerDailyStudy;
     }
@@ -50,8 +51,9 @@ public class TimerDailyStudyService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        List<TimerDailyStudy> timerDailyStudyList = timerDailyStudyRepository.findTop5ByDateBetweenOrderByDurationDesc( before,  now);
+        List<TimerDailyStudy> timerDailyStudyList = timerDailyStudyRepository.findTop5ByDateBetweenOrderByDurationDesc( now,  now);
 
+        if(timerDailyStudyList.isEmpty()) throw new NoResultFromDBException("데이터가 존재하지 않습니다.");
         List <TimerRankDto> timerRankDtoList=new ArrayList<>();
 
 
