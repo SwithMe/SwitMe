@@ -61,7 +61,10 @@ const Signup = () => {
   const formSubmit = async (evt) => {
     evt.preventDefault();
     if (user.useragree !== "Y") alert("개인 정보 수집 약관에 동의해야합니다.");
-    else if (user.pw !== user.pw2)
+    else if (user.email.slice(-11) !== "@ewhain.net") {
+      console.log(user.email.slice(-11));
+      alert("@ewhain.net 계정으로 가입해주세요");
+    } else if (user.pw !== user.pw2)
       alert("비밀번호와 비밀번호 확인이 동일하지 않습니다.");
     else {
       const submitUser = {
