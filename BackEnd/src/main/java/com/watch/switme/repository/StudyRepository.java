@@ -24,6 +24,8 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
 
     List<Study> findAllByleader(int leader);
 
+    List<Study> findTop12ByTypeOrderByAvgMannerTemperatureDesc(String type);
+
     //public void createStudy(Study study);
 
     //List<Study> findByStudy_idx(Long study_idx);

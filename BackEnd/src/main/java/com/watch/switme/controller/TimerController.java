@@ -2,10 +2,7 @@ package com.watch.switme.controller;
 
 import com.watch.switme.domain.*;
 import com.watch.switme.dto.*;
-import com.watch.switme.service.TimerDailyStudyService;
-import com.watch.switme.service.TimerDailyUserService;
-import com.watch.switme.service.TimerLogService;
-import com.watch.switme.service.TimerService;
+import com.watch.switme.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +20,7 @@ public class TimerController {
     private final TimerLogService timerLogService;
     private final TimerDailyUserService timerDailyUserService;
     private final TimerDailyStudyService timerDailyStudyService;
+    private final StudyService studyService;
 
 
     @GetMapping("/timer/list/{user_idx}")
@@ -156,5 +154,13 @@ public class TimerController {
         }
 
         return saved_timerLog_idx;
+    }
+
+
+    //추천 스터디
+    @GetMapping("/main/recomstudy")
+    public ResponseEntity recomStudy(){
+
+        return ResponseEntity.ok().body(studyService.getRecomStudyList());
     }
 }
