@@ -93,7 +93,6 @@ const MakeStudy = () => {
     location: "",
     extra: "",
     image: "", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
-    leader: window.localStorage.getItem("id"),
     link: "",
   });
 
