@@ -11,6 +11,7 @@ const GET_STUDYDETAIL = "GET_STUDYDETAIL";
 const JOIN_STUDY = "JOIN_STUDY";
 const LEAVE_STUDY = "LEAVE_STUDY";
 const MAKE_STUDY = "MAKE_STUDY";
+const EDIT_STUDY = "EDIT_STUDY";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -99,6 +100,17 @@ export const makestudy = (dataToSubmit) => {
     .catch((error) => {});
   return {
     type: MAKE_STUDY,
+    payload: request,
+  };
+};
+
+export const editstudy = (study_id) => {
+  const request = axios
+    .get(`${USER_SERVER}/list/array/fix?study_idx=${study_id}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_STUDY,
     payload: request,
   };
 };
