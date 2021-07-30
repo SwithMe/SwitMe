@@ -75,6 +75,7 @@ public class StudyService {
                     .participant(study.getParticipant())
                     .avgMannerTemperature(study.getAvgMannerTemperature())
                     .tags(study.getTags())
+                    .image(study.getImage())
                     .build();
 
             recomStudyResDtoList.add(recomStudyResDto);
@@ -88,6 +89,7 @@ public class StudyService {
                     .participant(study.getParticipant())
                     .avgMannerTemperature(study.getAvgMannerTemperature())
                     .tags(study.getTags())
+                    .image(study.getImage())
                     .build();
 
             recomStudyResDtoList.add(recomStudyResDto);
