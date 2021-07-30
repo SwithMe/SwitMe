@@ -132,6 +132,7 @@ const Mypage = () => {
     const user_id = window.localStorage.getItem("id");
     dispatch(getUserInfo(user_id)).then((response) => {
       if (response.payload) {
+        console.log(response.payload);
         setUser(response.payload);
       } else {
         console.log("회원정보 가져오기 에러");
@@ -139,6 +140,7 @@ const Mypage = () => {
     });
     dispatch(getUserStudy(user_id)).then((response) => {
       if (response.payload) {
+        console.log(response.payload);
         setStudies(response.payload);
       } else {
         console.log("스터디 목록 가져오기 에러");
@@ -146,6 +148,7 @@ const Mypage = () => {
     });
     dispatch(getUserStopwatch(user_id)).then((response) => {
       if (response.payload) {
+        console.log(response.payload);
         setTimes(response.payload);
       } else {
         console.log("스톱워치 목록 가져오기 에러");

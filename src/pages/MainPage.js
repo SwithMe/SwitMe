@@ -95,9 +95,7 @@ const Study = styled.div`
 const MainPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const hour = useRef(0);
-  const minute = useRef(0);
-  const second = useRef(0);
+  const cumulative_time = useRef(0);
   const [ranktoggle, setRankToggle] = useState(1);
   const [ranking, setRanking] = useState([]);
   const [studyRanking, setStudyRanking] = useState([]);
@@ -193,9 +191,8 @@ const MainPage = () => {
     dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
       (response) => {
         if (response.payload) {
-          hour.current = response.payload;
-          minute.current = response.payload;
-          second.current = response.payload;
+          console.log(response.payload);
+          cumulative_time.current = response.payload.cumulative_time;
         } else {
           console.log("공부 시간 가져오기 에러");
         }
@@ -245,7 +242,8 @@ const MainPage = () => {
             <div></div>
             <Timer>
               <Time>
-                {hour.current} : {minute.current} : {second.current}
+                {cumulative_time.current} : {cumulative_time.current} :
+                {cumulative_time.current}
               </Time>
             </Timer>
           </div>

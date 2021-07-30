@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Header from "../components/Header";
@@ -7,7 +7,7 @@ import Title from "../components/Title";
 import Button from "../components/Button";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { editstudy } from "../_actions/actions";
+import { editstudy, getStudydetail } from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -80,7 +80,8 @@ const RadioButton = styled.input`
   height: 41px;
 `;
 
-const EditStudy = () => {
+const EditStudy = ({ match }) => {
+  const { study_id } = match.params;
   const history = useHistory();
   const dispatch = useDispatch();
   const [study, setStudy] = useState({
@@ -103,9 +104,19 @@ const EditStudy = () => {
     study_intro: "study_intro 1",
   });
 
+  useEffect(() => {
+    dispatch(getStudydetail(study_id)).then((response) => {
+      if (response.payload) {
+        setStudy(response.payload);
+      } else {
+        console.log("기존 스터디 정보 가져오기 실패");
+      }
+    });
+  });
+
   const onFormSubmit = () => {
     console.log(study);
-    dispatch(editstudy(study)).then((response) => {
+    dispatch(editstudy(study_id, study)).then((response) => {
       if (response.payload) {
         alert("스터디가 수정되었습니다..");
         history.push(`/`);
@@ -122,7 +133,7 @@ const EditStudy = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="3" />
       <Row style={{ marginTop: "40px" }}>
         <Col>
           <div style={{ marginLeft: "10px" }}>
@@ -613,7 +624,7 @@ const EditStudy = () => {
               onClick={() => history.push("/studylist")}
             ></Button>
             <Button
-              name="스터디 개설하기"
+              name="스터디 수정하기"
               width="220px"
               height="70px"
               color="#56BE9C"
