@@ -16,11 +16,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    //존재하지 않는 이메일이면..
     @Override
     public MyUserDetails loadUserByUsername(String email) {
         return userRepository.findByEmail(email)
                 .map(u -> new MyUserDetails(u, Collections.singleton(new SimpleGrantedAuthority(u.getRole().getValue()))))
-                .orElseThrow(() -> new UserNotFoundException(email+"=>존재하지 않음."));
+                .orElseThrow(() -> new UserNotFoundException(email+"은 존재하지 않습니다."));
     }
+
 
 }

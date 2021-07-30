@@ -1,5 +1,6 @@
 package com.watch.switme.controller;
 
+import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.dto.UserListResponseDTO;
 import com.watch.switme.service.UserService;
@@ -32,6 +33,7 @@ public class UserController {
                 .userList(userService.findAll()).build();
         return ResponseEntity.ok(userListResponseDTO);
     }
+
 
 
 }

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
-
+import { useDispatch } from "react-redux";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
+import { getUserInfo } from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,6 +70,14 @@ const Circle = styled.div`
 `;
 
 const Mypage = () => {
+  const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    user_idx: "",
+    user_name: "이름",
+    user_email: "abc@ewhain.net",
+    user_image: "",
+    user_manner: 50,
+  });
   const [studies, setStudies] = useState([
     {
       studyprofile: "../assets/rectangle.png",
@@ -113,10 +122,20 @@ const Mypage = () => {
       total: "12:34:56",
     },
   ]);
+  useEffect(() => {
+    const user_id = window.localStorage.getItem("id");
+    dispatch(getUserInfo(user_id)).then((response) => {
+      if (response.payload) {
+        setUser(response.payload);
+      } else {
+        console.log("회원정보 가져오기 에러");
+      }
+    });
+  }, []);
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="3" />
 
       <Col>
         <Row
