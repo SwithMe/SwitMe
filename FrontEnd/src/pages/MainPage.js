@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import {
   getTotalTime,
   getRanking,
+  getRankingstudy,
   recommendedStudy,
 } from "../_actions/actions";
 
@@ -97,13 +98,9 @@ const MainPage = () => {
   const hour = useRef(0);
   const minute = useRef(0);
   const second = useRef(0);
-  const [ranking, setRanking] = useState([
-    { name: "김김김", time: "00:00:00" },
-    { name: "김김김", time: "00:00:00" },
-    { name: "김김김", time: "00:00:00" },
-    { name: "김김김", time: "00:00:00" },
-    { name: "김김김", time: "00:00:00" },
-  ]);
+  const [ranktoggle, setRankToggle] = useState(1);
+  const [ranking, setRanking] = useState([]);
+  const [studyRanking, setStudyRanking] = useState([]);
   const [studies, setStudies] = useState([
     {
       study_idx: 1,
@@ -211,6 +208,13 @@ const MainPage = () => {
         console.log("랭킹 가져오기 에러");
       }
     });
+    dispatch(getRankingstudy()).then((response) => {
+      if (response.payload) {
+        setStudyRanking(response.payload);
+      } else {
+        console.log("스터디 랭킹 가져오기 에러");
+      }
+    });
     dispatch(recommendedStudy()).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
@@ -247,47 +251,113 @@ const MainPage = () => {
           </div>
           <div>
             <Title>누적 공부 시간 랭킹</Title>
-            <span style={{ float: "right" }}>
-              <span style={{ marginRight: "31px" }}>
-                <Circle />
-                개인
+            {ranktoggle === 1 ? (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{ marginRight: "31px", cursor: "pointer" }}
+                  onClick={() => setRankToggle(1)}
+                >
+                  <Circle />
+                  개인
+                </span>
+                <span
+                  style={{ color: "#cccccc", cursor: "pointer" }}
+                  onClick={() => setRankToggle(2)}
+                >
+                  <Circle color="#cccccc" />
+                  스터디
+                </span>
               </span>
-              <span style={{ color: "#cccccc" }}>
-                <Circle color="#cccccc" />
-                스터디
+            ) : (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{
+                    marginRight: "31px",
+                    color: "#cccccc",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setRankToggle(1)}
+                >
+                  <Circle color="#cccccc" />
+                  개인
+                </span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setRankToggle(2)}
+                >
+                  <Circle />
+                  스터디
+                </span>
               </span>
-            </span>
+            )}
             <Rank>
-              {ranking.map((person, i) => {
-                return (
-                  <div key={i} style={{ marginBottom: "16px", height: "43px" }}>
-                    <Title
-                      weight="400"
-                      size="24"
-                      lineHeight="34.75"
-                      marginLeft="24"
-                    >
-                      {i + 1}위
-                    </Title>
-                    <Title
-                      weight="400"
-                      size="24"
-                      lineHeight="34.75"
-                      marginLeft="114"
-                    >
-                      {person.name}
-                    </Title>
-                    <Title
-                      weight="700"
-                      size="24"
-                      lineHeight="34.75"
-                      color="#56BE9C"
-                    >
-                      {person.time}
-                    </Title>
-                  </div>
-                );
-              })}
+              {ranktoggle === 1
+                ? ranking?.map((person, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{ marginBottom: "16px", height: "43px" }}
+                      >
+                        <Title
+                          weight="400"
+                          size="24"
+                          lineHeight="34.75"
+                          marginLeft="24"
+                        >
+                          {i + 1}위
+                        </Title>
+                        <Title
+                          weight="400"
+                          size="24"
+                          lineHeight="34.75"
+                          marginLeft="114"
+                        >
+                          {person.name}
+                        </Title>
+                        <Title
+                          weight="700"
+                          size="24"
+                          lineHeight="34.75"
+                          color="#56BE9C"
+                        >
+                          {person.time}
+                        </Title>
+                      </div>
+                    );
+                  })
+                : studyRanking?.map((person, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{ marginBottom: "16px", height: "43px" }}
+                      >
+                        <Title
+                          weight="400"
+                          size="24"
+                          lineHeight="34.75"
+                          marginLeft="24"
+                        >
+                          {i + 1}위
+                        </Title>
+                        <Title
+                          weight="400"
+                          size="24"
+                          lineHeight="34.75"
+                          marginLeft="114"
+                        >
+                          {person.name}
+                        </Title>
+                        <Title
+                          weight="700"
+                          size="24"
+                          lineHeight="34.75"
+                          color="#56BE9C"
+                        >
+                          {person.time}
+                        </Title>
+                      </div>
+                    );
+                  })}
             </Rank>
           </div>
         </Upper>

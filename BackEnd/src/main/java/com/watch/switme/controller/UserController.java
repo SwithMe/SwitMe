@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping(value = "/auth")
 public class UserController {
 
@@ -25,11 +24,6 @@ public class UserController {
         return userService.isEmailDuplicated(signUpDTO.getEmail())
                 ? ResponseEntity.badRequest().build()
                 : ResponseEntity.ok(TokenUtils.generateJwtToken(userService.signUp(signUpDTO)));
-    }
-
-    @PostMapping(value="/login")
-    public ResponseEntity<String> login(@RequestBody final LoginDto loginDto){
-        return ResponseEntity.ok("");
     }
 
     //회원정보 리스트 반환
