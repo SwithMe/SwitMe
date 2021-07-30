@@ -11,6 +11,7 @@ const StyledTitle = styled.p`
   margin-right: ${(props) => props.marginLeft || 0}px;
   margin-bottom: ${(props) => props.marginBottom || 0}px;
   margin-top: ${(props) => props.marginTop || 0}px;
+  width: ${(props) => props.width || "auto"}px;
 `;
 const TitleDiv = styled.div`
   display: inline-block;
@@ -25,6 +26,7 @@ const Title = ({
   marginLeft,
   marginBottom,
   marginTop,
+  width,
   ...rest
 }) => {
   return (
@@ -37,6 +39,7 @@ const Title = ({
         marginLeft={marginLeft}
         marginBottom={marginBottom}
         marginTop={marginTop}
+        width={width}
       >
         {children}
       </StyledTitle>

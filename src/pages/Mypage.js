@@ -148,7 +148,6 @@ const Mypage = () => {
     });
     dispatch(getUserStopwatch(user_id)).then((response) => {
       if (response.payload) {
-        console.log(response.payload);
         setTimes(response.payload);
       } else {
         console.log("스톱워치 목록 가져오기 에러");

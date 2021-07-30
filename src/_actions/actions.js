@@ -200,7 +200,9 @@ export const warnMember = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/api/study/members/warning`, dataToSubmit)
     .then((response) => response.payload)
-    .catch((error) => {});
+    .catch((error) => {
+      console.log("error");
+    });
   return {
     type: WARN_MEMBER,
     payload: request,
