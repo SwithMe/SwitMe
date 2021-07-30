@@ -4,6 +4,7 @@ import com.watch.switme.domain.Study;
 import com.watch.switme.domain.Timer;
 import com.watch.switme.domain.User;
 import com.watch.switme.dto.*;
+import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.TimerRepository;
 import com.watch.switme.repository.UserRepository;
@@ -35,7 +36,7 @@ public class TimerService {
     @Transactional
     public List<TimerListResDto> getTimerList(Long user_idx){
 
-        User user=userRepository.findById(user_idx).get();
+        User user=userRepository.findById(user_idx).orElseThrow(()-> new NoResultFromDBException("데이터가 존재하지 않습니다."));;
 
         List <Timer> timerList=timerRepository.findByUser(user);
 
