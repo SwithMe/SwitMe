@@ -29,7 +29,7 @@ public class ChatRoomService {
 
     @Transactional
     public List<RoomListResponseDto> getRoomList(Long user_idx){
-        List<ChatRoom> chatRoomList = chatRoomRepository.findByInquirer_UserIdx(user_idx);
+        List<ChatRoom> chatRoomList = chatRoomRepository.findByUserIdx(user_idx);
         List<RoomListResponseDto> roomListResponseDtoList = new ArrayList<>();
 
         for(ChatRoom room : chatRoomList){
