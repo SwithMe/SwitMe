@@ -105,8 +105,6 @@ public class StudyController {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
-
-
     @PostMapping("/array")
     public List<Study> example(@RequestBody SearchStudyDto searchStudyDto){
         return studyRepository.getQuery
