@@ -95,7 +95,9 @@ const Study = styled.div`
 const MainPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const cumulative_time = useRef(0);
+  const hour = useRef(0);
+  const minute = useRef(0);
+  const second = useRef(0);
   const [ranktoggle, setRankToggle] = useState(1);
   const [ranking, setRanking] = useState([]);
   const [studyRanking, setStudyRanking] = useState([]);
@@ -191,8 +193,10 @@ const MainPage = () => {
     dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
       (response) => {
         if (response.payload) {
-          console.log(response.payload);
-          cumulative_time.current = response.payload.cumulative_time;
+          const time = response.payload.cumulative_time;
+          second.current = time % 60;
+          minute.current = Math.floor(time / 60);
+          hour.current = Math.floor(time / 360);
         } else {
           console.log("공부 시간 가져오기 에러");
         }
@@ -207,6 +211,7 @@ const MainPage = () => {
     });
     dispatch(getRankingstudy()).then((response) => {
       if (response.payload) {
+        console.log(response.payload);
         setStudyRanking(response.payload);
       } else {
         console.log("스터디 랭킹 가져오기 에러");
@@ -242,8 +247,14 @@ const MainPage = () => {
             <div></div>
             <Timer>
               <Time>
-                {cumulative_time.current} : {cumulative_time.current} :
-                {cumulative_time.current}
+                {hour.current} :{" "}
+                {minute.current < 10
+                  ? "0" + minute.current.toString()
+                  : minute.current}{" "}
+                :{" "}
+                {second.current < 10
+                  ? "0" + second.current.toString()
+                  : second.current}
               </Time>
             </Timer>
           </div>
@@ -296,29 +307,24 @@ const MainPage = () => {
                         key={i}
                         style={{ marginBottom: "16px", height: "43px" }}
                       >
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="24"
-                        >
+                        <Title width="60" weight="400" size="24">
                           {i + 1}위
                         </Title>
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="114"
-                        >
+                        <Title width="140" weight="400" size="24">
                           {person.name}
                         </Title>
                         <Title
+                          width="150"
                           weight="700"
                           size="24"
-                          lineHeight="34.75"
                           color="#56BE9C"
                         >
-                          {person.time}
+                          {Math.floor(person.cumulative_time / 360)} :{" "}
+                          {Math.floor(person.cumulative_time / 60) < 10
+                            ? "0" +
+                              Math.floor(person.cumulative_time / 60).toString()
+                            : Math.floor(person.cumulative_time / 60)}{" "}
+                          : {person.cumulative_time % 60}
                         </Title>
                       </div>
                     );
@@ -329,29 +335,24 @@ const MainPage = () => {
                         key={i}
                         style={{ marginBottom: "16px", height: "43px" }}
                       >
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="24"
-                        >
+                        <Title width="60" weight="400" size="24">
                           {i + 1}위
                         </Title>
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="114"
-                        >
+                        <Title weight="400" size="24" width="140">
                           {person.name}
                         </Title>
                         <Title
                           weight="700"
                           size="24"
-                          lineHeight="34.75"
+                          width="150"
                           color="#56BE9C"
                         >
-                          {person.time}
+                          {Math.floor(person.cumulative_time / 360)} :{" "}
+                          {Math.floor(person.cumulative_time / 60) < 10
+                            ? "0" +
+                              Math.floor(person.cumulative_time / 60).toString()
+                            : Math.floor(person.cumulative_time / 60)}{" "}
+                          : {person.cumulative_time % 60}
                         </Title>
                       </div>
                     );

@@ -121,7 +121,7 @@ const MemberList = ({ match }) => {
         console.log("스터디 멤버 정보 가져오기 실패");
       }
     });
-  });
+  }, []);
   const warn = (user_idx) => {
     const data = {
       study_idx: study_id,
