@@ -29,6 +29,14 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
 
     List<Study> findAllByTitleAndActivateAndLeaderAndParticipantAndSize(String title, String activate, Long leader, int participant, int size);
 
+    List<Study> findAllByleader(int leader);
+
+    List<Study> findTop12ByTypeOrderByAvgMannerTemperatureDesc(String type);
+
+    //public void createStudy(Study study);
+
+    //List<Study> findByStudy_idx(Long study_idx);
+
     List<Study> findAllByLeader(@Param("leader")Long leader);
 
     //DB 검색 추가조건 수정
