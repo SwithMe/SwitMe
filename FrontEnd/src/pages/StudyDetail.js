@@ -50,14 +50,13 @@ const Lower = styled.div`
 
 const StudyDetail = ({ match }) => {
   const study_id = match.params;
-  console.log(study_id);
   const dispatch = useDispatch();
   const history = useHistory();
   const [study, setStudy] = useState({
     title: "스터디 이름 쓰는 칸",
     outline:
       "스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개",
-    leader: "스터디장 이름",
+    leader: 1,
     temperature: "80",
     state: "모집중", //추후 삭제 필요
     startdate: "2021-11-11",
@@ -72,7 +71,8 @@ const StudyDetail = ({ match }) => {
     extra:
       "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
-  const [isMember, setIsMember] = useState(true);
+  const [isLeader, setIsLeader] = useState(true);
+  const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
@@ -251,7 +251,25 @@ const StudyDetail = ({ match }) => {
         >
           목록으로
         </button>
-        {isMember ? (
+        {isLeader ? (
+          <button
+            style={{
+              width: "282px",
+              height: "70px",
+              background: "#56Be9c",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "24px",
+              color: "#ffffff",
+              fontWeight: "700",
+              fontFamily: "NotoSans",
+              cursor: "pointer",
+            }}
+            onClick={() => console.log("수정")}
+          >
+            스터디 수정하기
+          </button>
+        ) : isMember ? (
           <div
             style={{
               background: "#56BE9C",
@@ -309,7 +327,9 @@ const StudyDetail = ({ match }) => {
         ) : (
           <div></div>
         )}
-        {isMember ? (
+        {isLeader ? (
+          <></>
+        ) : isMember ? (
           <button
             style={{
               width: "282px",
@@ -328,23 +348,43 @@ const StudyDetail = ({ match }) => {
             탈퇴하기
           </button>
         ) : (
-          <button
-            style={{
-              width: "282px",
-              height: "70px",
-              background: "#56Be9c",
-              border: "none",
-              borderRadius: "10px",
-              fontSize: "24px",
-              color: "#ffffff",
-              fontWeight: "700",
-              fontFamily: "NotoSans",
-              cursor: "pointer",
-            }}
-            onClick={join}
-          >
-            가입 신청하기
-          </button>
+          <div>
+            <button
+              style={{
+                width: "180px",
+                height: "70px",
+                background: "#FFFFFF",
+                border: "1px solid #56Be9c",
+                borderRadius: "10px",
+                fontSize: "24px",
+                color: "#56Be9c",
+                fontWeight: "700",
+                fontFamily: "NotoSans",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => console.log("채팅 열기")}
+            >
+              문의하기
+            </button>
+            <button
+              style={{
+                width: "282px",
+                height: "70px",
+                background: "#56Be9c",
+                border: "none",
+                borderRadius: "10px",
+                fontSize: "24px",
+                color: "#ffffff",
+                fontWeight: "700",
+                fontFamily: "NotoSans",
+                cursor: "pointer",
+              }}
+              onClick={join}
+            >
+              가입 신청하기
+            </button>
+          </div>
         )}
       </Lower>
     </Fix>
