@@ -22,6 +22,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
+
         response.sendRedirect("/error/unauthorized");
         return false;
     }

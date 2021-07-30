@@ -4,6 +4,7 @@ import Input2 from "../components/Input2";
 import Button from "../components/Button";
 import logo from "../assets/logo.png";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { signup } from "../_actions/actions";
 
 const Wrapper = styled.div`
@@ -43,12 +44,12 @@ const Checkbox = styled.input`
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({
-    username: "",
-    useremail: "",
-    userpassword: "",
-    userpassword2: "",
-    useragree: "N",
+    realname: "",
+    email: "",
+    pw: "",
+    pw2: "",
   });
 
   const onInputChange = (e) => {
@@ -60,23 +61,24 @@ const Signup = () => {
   const formSubmit = async (evt) => {
     evt.preventDefault();
     if (user.useragree !== "Y") alert("개인 정보 수집 약관에 동의해야합니다.");
-    else if (user.userpassword !== user.userpassword2)
+    else if (user.pw !== user.pw2)
       alert("비밀번호와 비밀번호 확인이 동일하지 않습니다.");
     else {
       const submitUser = {
-        username: user.username,
-        useremail: user.useremail,
-        userpassword: user.userpassword,
-        useragree: user.useragree,
+        realname: user.realname,
+        email: user.email,
+        pw: user.pw,
       };
-      // dispatch(signup(submitUser)).then((response) => {
-      //   console.log(response);
-      //   if (response.payload) {
-      //     console.log("회원가입 성공");
-      //   } else {
-      //     alert("회원가입 오류");
-      //   }
-      // });
+      console.log(submitUser);
+      dispatch(signup(submitUser)).then((response) => {
+        console.log(response);
+        if (response.payload) {
+          console.log("회원가입 성공");
+          history.push("/login");
+        } else {
+          alert("회원가입 오류");
+        }
+      });
     }
   };
 
@@ -84,27 +86,34 @@ const Signup = () => {
     <Wrapper>
       <form onSubmit={formSubmit}>
         <Items>
-          <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
+          <img
+            alt="로고"
+            src={logo}
+            style={{ marginBottom: "1rem", cursor: "pointer" }}
+            onClick={() => history.push("/")}
+          ></img>
           <Input2
-            name="username"
+            name="realname"
             placeholder="이름"
             width="29rem"
             onChange={onInputChange}
           ></Input2>
           <Input2
-            name="useremail"
+            name="email"
             placeholder="ewhain 이메일 주소"
             width="29rem"
             onChange={onInputChange}
           ></Input2>
           <Input2
-            name="userpassword"
+            name="pw"
+            type="password"
             placeholder="비밀번호(영문, 숫자, 특수기호 포함 8~16자)"
             width="29rem"
             onChange={onInputChange}
           ></Input2>
           <Input2
-            name="userpassword2"
+            name="pw2"
+            type="password"
             placeholder="비밀번호 확인"
             width="29rem"
             onChange={onInputChange}

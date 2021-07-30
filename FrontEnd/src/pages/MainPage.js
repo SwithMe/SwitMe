@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Title from "../components/Title";
 import Image from "../components/Image";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import {
   getTotalTime,
   getRanking,
@@ -92,6 +93,7 @@ const Study = styled.div`
 
 const MainPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const hour = useRef(0);
   const minute = useRef(0);
   const second = useRef(0);
@@ -104,74 +106,85 @@ const MainPage = () => {
   ]);
   const [studies, setStudies] = useState([
     {
+      study_idx: 1,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 2,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 3,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 4,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 5,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 6,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 7,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 8,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
     {
+      study_idx: 9,
+      type: "online",
       src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      src: "../assets/books",
-      name: "스터디명",
-      people: 0,
-      temperature: "0",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      study_name: "스터디명",
+      member_cnt: 0,
+      manner_temperature: "0",
+      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
     },
   ]);
   const move = useRef(0);
@@ -180,31 +193,31 @@ const MainPage = () => {
   const slideRef = useRef();
 
   useEffect(() => {
-    // dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
-    //   (response) => {
-    //     if (response.payload) {
-    //       hour.current = response.payload;
-    //       minute.current = response.payload;
-    //       second.current = response.payload;
-    //     } else {
-    //       console.log("공부 시간 가져오기 에러");
-    //     }
-    //   }
-    // );
-    // dispatch(getRanking()).then((response) => {
-    //   if (response.payload) {
-    //     setRanking(response.payload);
-    //   } else {
-    //     console.log("랭킹 가져오기 에러");
-    //   }
-    // });
-    // dispatch(recommendedStudy()).then((response) => {
-    //   if (response.payload) {
-    //     setStudies(response.payload);
-    //   } else {
-    //     console.log("추천 스터디 가져오기 에러");
-    //   }
-    // });
+    dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
+      (response) => {
+        if (response.payload) {
+          hour.current = response.payload;
+          minute.current = response.payload;
+          second.current = response.payload;
+        } else {
+          console.log("공부 시간 가져오기 에러");
+        }
+      }
+    );
+    dispatch(getRanking()).then((response) => {
+      if (response.payload) {
+        setRanking(response.payload);
+      } else {
+        console.log("랭킹 가져오기 에러");
+      }
+    });
+    dispatch(recommendedStudy()).then((response) => {
+      if (response.payload) {
+        setStudies(response.payload);
+      } else {
+        console.log("추천 스터디 가져오기 에러");
+      }
+    });
     slideRef.current.style.transform = `translateX(-0%)`;
   }, []);
 
@@ -220,7 +233,7 @@ const MainPage = () => {
 
   return (
     <Fix>
-      <Header />
+      <Header page="0" />
       <Wrapper>
         <Upper>
           <div>
@@ -324,7 +337,12 @@ const MainPage = () => {
               <Slider ref={slideRef}>
                 {studies.map((study, i) => {
                   return (
-                    <Study key={i}>
+                    <Study
+                      key={i}
+                      onClick={() =>
+                        history.push(`/studydetail/${study.study_idx}`)
+                      }
+                    >
                       <Image
                         alt="스터디 이미지"
                         src={require("../assets/books.jpg").default}
@@ -334,16 +352,13 @@ const MainPage = () => {
                         스터디명
                       </Title>
                       <Title size="18" weight="400" lineHeight="26.06">
-                        {study.people}명 / 매너온도 {study.temperature}°C
+                        {study.member_cnt}명 / 매너온도{" "}
+                        {study.manner_temperature}°C
                       </Title>
                       <div>
-                        {study.tags.map((tag, i) => {
-                          return (
-                            <span style={{ size: "18px", color: "#CCCCCC" }}>
-                              #{tag}{" "}
-                            </span>
-                          );
-                        })}
+                        <span style={{ size: "18px", color: "#CCCCCC" }}>
+                          {study.hashtag}
+                        </span>
                       </div>
                     </Study>
                   );
