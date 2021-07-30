@@ -50,4 +50,8 @@ public class UserStudy {
         this.joinDate = joinDate;
         this.activate = activate;
     }
+
+    public void updateWarning(Integer warning){
+        this.warning = warning;
+    }
 }
