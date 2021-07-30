@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
@@ -79,13 +79,19 @@ const Button = styled.img`
   height: 65px;
 `;
 
-function Header() {
+function Header({ page }) {
   const history = useHistory();
-  const [status, setStatus] = useState(0);
-
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   //Chat_list
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState([]);
+  const [rerender, setRerender] = useState(false);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("isAuth") === null) {
+      window.localStorage.setItem("isAuth", "false");
+    }
+  }, [modalOpen, rerender]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -94,37 +100,68 @@ function Header() {
     setModalOpen(false);
   };
 
+  const openModal2 = (idx) => {
+    let arr = modalOpen2;
+    arr.splice(idx, 1, true);
+    setModalOpen2(arr);
+    setRerender(!rerender);
+  };
+  const closeModal2 = (idx) => {
+    let arr = modalOpen2;
+    arr.splice(idx, 1, false);
+
+    setModalOpen2(arr);
+    setRerender(!rerender);
+  };
+
   //화면이동
   const Main = () => {
-    setStatus(0);
     history.push("/");
   };
   const StopWatch = () => {
-    setStatus(1);
     history.push("/StopWatch");
   };
   const StudyList = () => {
-    setStatus(2);
     history.push("/StudyList");
   };
 
   return (
     <Wrapper>
-      <Logo src={logo}></Logo>
+      <Logo
+        src={logo}
+        style={{ cursor: "pointer" }}
+        onClick={() => history.push("/")}
+      ></Logo>
 
-      {status === 0 ? (
+      {page === "0" ? (
         <div class="menu">
           <Active>홈</Active>
           <Menu onClick={StopWatch}>스톱워치</Menu>
-          <Menu>스터디</Menu>
+          <Menu onClick={StudyList}>스터디</Menu>
         </div>
       ) : null}
 
-      {status === 1 ? (
+      {page === "1" ? (
         <div class="menu">
           <Menu onClick={Main}>홈</Menu>
           <Active>스톱워치</Active>
-          <Menu>스터디</Menu>
+          <Menu onClick={StudyList}>스터디</Menu>
+        </div>
+      ) : null}
+
+      {page === "2" ? (
+        <div class="menu">
+          <Menu onClick={Main}>홈</Menu>
+          <Menu onClick={StopWatch}>스톱워치</Menu>
+          <Active>스터디</Active>
+        </div>
+      ) : null}
+
+      {page === "3" ? (
+        <div class="menu">
+          <Menu onClick={Main}>홈</Menu>
+          <Menu onClick={StopWatch}>스톱워치</Menu>
+          <Menu onClick={StudyList}>스터디</Menu>
         </div>
       ) : null}
 
@@ -139,13 +176,25 @@ function Header() {
       ></Button>
       {/* Chat_list 시작 */}
       <React.Fragment>
-        <Chat_list open={modalOpen} close={closeModal} header="">
+        <Chat_list
+          setinitial={setModalOpen2}
+          open={modalOpen}
+          close={closeModal}
+          openstate2={modalOpen2}
+          open2={openModal2}
+          close2={closeModal2}
+          header=""
+        >
           {/* // Chat_list.js <main> {props.children} </main>에 내용이 입력됨. */}
         </Chat_list>
       </React.Fragment>
       {/* Chat_list 끝*/}
       <Button
-        onClick={() => history.push("/")}
+        onClick={
+          window.localStorage.getItem("isAuth") === "false"
+            ? () => history.push("/login")
+            : () => history.push("/mypage")
+        }
         src={profile}
         style={{ marginLeft: "29px" }}
       ></Button>

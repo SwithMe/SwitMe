@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
   height: ${(props) => props.height || 65}px;
   margin-top: ${(props) => props.marginTop || 0}px;
   border-radius: 10px;
-  border: 1px solid #56be9c;
+  border: 1px solid ${(props) => props.borderColor || "#56be9c"};
   justify-content: center;
   display: flex;
   flex-direction: row;
@@ -39,6 +39,7 @@ const Input = ({
   placeholder,
   marginTop,
   validinput,
+  borderColor,
   ...rest
 }) => {
   return (
@@ -48,6 +49,7 @@ const Input = ({
       borderRadius={borderRadius}
       border={border}
       marginTop={marginTop}
+      borderColor={borderColor}
       {...rest}
     >
       {validinput === "true" ? (

@@ -5,18 +5,23 @@ import lombok.*;
 
 import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Table(name="Study_main")
 @Entity(name="study_main")
 public class Study {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable=false, unique=true)
-    private Integer study_idx;
+    private Long study_idx;
 
     @Column(nullable=false, unique=true, length=45)
     private String title;
@@ -26,23 +31,19 @@ public class Study {
 
     // 스터디 진행 시작(기간)
     @Column(nullable=false)
-    private Timestamp termstart;
+    private Date termstart;
 
     // 스터디 진행 종료(기간)
     @Column(nullable=false)
-    private Timestamp termend;
+    private Date termend;
 
     // 스터디 시작시간
     @Column(nullable=false)
-    private Timestamp timestart;
+    private Time timestart;
 
     // 스터디 종료시간
     @Column(nullable=false)
-<<<<<<< Updated upstream
-    private Timestamp timeend;
-=======
     private Time timeend;
->>>>>>> Stashed changes
 
     // 모집 인원
     @Column(nullable=false)
@@ -89,11 +90,7 @@ public class Study {
     private Integer avgMannerTemperature;
 
     @Builder
-<<<<<<< Updated upstream
-    public void StudyEntity(Integer study_idx, String title, String type, Timestamp termstart, Timestamp termend, Timestamp timestart, Timestamp timeend, Integer size, String tags, String location, String extra, String image, Integer leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
-=======
     public void StudyEntity(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
->>>>>>> Stashed changes
     {
         this.study_idx = study_idx;
         this.title = title;

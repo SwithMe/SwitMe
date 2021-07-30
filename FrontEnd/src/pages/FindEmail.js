@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Input2 from "../components/Input2";
 import Button from "../components/Button";
-
+import { useHistory } from "react-router";
 import logo from "../assets/logo.png";
 
 const Wrapper = styled.div`
@@ -30,10 +30,16 @@ const TextBox = styled.div`
 `;
 
 const FindEmail = () => {
+  const history = useHistory();
   return (
     <Wrapper>
       <Items>
-        <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
+        <img
+          alt="로고"
+          src={logo}
+          style={{ marginBottom: "1rem", cursor: "pointer" }}
+          onClick={() => history.push("/")}
+        ></img>
         <Input2 name="가입된 이메일 주소를 입력해주세요" width="29rem"></Input2>
         <TextBox>
           <div>가입된 이메일 주소로 확인 메일이 발송됩니다.</div>

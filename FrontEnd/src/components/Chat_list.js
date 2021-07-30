@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import "../assets/chat.css";
 import logo from "../assets/logo.png";
 import Title from "../components/Title";
+import Chat from "./Chat";
+import { getChatlist } from "../_actions/actions";
+import { useDispatch } from "react-redux";
 
 const Col = styled.div`
   display: flex;
@@ -30,40 +33,71 @@ const Study = styled.div`
 
 const Chat_list = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header } = props;
+  const { setinitial, open, close, openstate2, open2, close2, header } = props;
+  const dispatch = useDispatch();
+  const user_id = 1; //window.localStorage.getItem("id");
 
   const [studies, setStudies] = useState([
     {
+      room_idx: 1,
+      room_name: "",
       studyprofile: "../assets/circle.png",
-      name: "김김김",
-      content: "내용내용내용내용내용",
+      other_user: "김김김",
+      notification: 0,
+      message: "최근 메세지",
       unread: "../assets/circle2.png",
     },
     {
+      room_idx: 2,
+      room_name: "",
       studyprofile: "../assets/circle.png",
-      name: "김김김",
-      content: "내용내용내용내용내용",
+      other_user: "김김김",
+      notification: 0,
+      message: "최근 메세지",
       unread: "../assets/circle2.png",
     },
     {
+      room_idx: 3,
+      room_name: "",
       studyprofile: "../assets/circle.png",
-      name: "김김김",
-      content: "내용내용내용내용내용",
+      other_user: "김김김",
+      notification: 0,
+      message: "최근 메세지",
       unread: "../assets/circle2.png",
     },
     {
+      room_idx: 4,
       studyprofile: "../assets/circle.png",
-      name: "김김김",
-      content: "내용내용내용내용내용",
+      other_user: "김김김",
+      notification: 0,
+      message: "최근 메세지",
       unread: "../assets/circle2.png",
     },
     {
+      room_idx: 5,
       studyprofile: "../assets/circle.png",
-      name: "김김김",
-      content: "내용내용내용내용내용",
+      other_user: "김김김",
+      notification: 1,
+      message: "최근 메세지",
       unread: "../assets/circle2.png",
     },
   ]);
+
+  useEffect(() => {
+    // dispatch(getChatlist(user_id)).then((response) => {
+    //   if (response.payload) {
+    //     setStudies(response.payload);
+    //     let arr = new Array(response.payload.length);
+    //     arr.fill(false);
+    //     setModalOpen(arr);
+    //   } else {
+    //     console.log("채팅 목록 불러오기 에러");
+    //   }
+    // });
+    let arr = new Array(5);
+    arr.fill(false);
+    setinitial(arr);
+  }, [open]);
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
@@ -94,7 +128,34 @@ const Chat_list = (props) => {
               {studies.map((study, i) => {
                 if (i > 4) return false;
                 return (
-                  <Study key={i}>
+                  <Study
+                    key={i}
+                    onClick={!openstate2[i] ? () => open2(i) : () => {}}
+                  >
+                    <React.Fragment>
+                      {/* {openstate2 ? (
+                        <Chat
+                          open={openstate2}
+                          close={close2}
+                          header=""
+                          other_user={study.other_user}
+                          room_idx={study.room_idx}
+                        ></Chat>
+                      ) : (
+                        <></>
+                      )} */}
+                      {openstate2 ? (
+                        <Chat
+                          open={openstate2[i]}
+                          close={() => close2(i)}
+                          header=""
+                          other_user={study.other_user}
+                          room_idx={study.room_idx}
+                        ></Chat>
+                      ) : (
+                        <></>
+                      )}
+                    </React.Fragment>
                     <img
                       alt="study profile"
                       src={require("../assets/circle.png").default}
@@ -103,10 +164,10 @@ const Chat_list = (props) => {
                     <Col>
                       <div style={{ width: "300px" }}>
                         <Title size="20" weight="400">
-                          {study.name}
+                          {study.other_user}
                         </Title>
                       </div>
-                      <div>{study.content}</div>
+                      <div>{study.message}</div>
                     </Col>
                     <div>
                       <img

@@ -1,7 +1,5 @@
 package com.watch.switme.domain;
 
-import com.watch.switme.domain.UserRole;
-import com.watch.switme.domain.UserYesOrNo;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "User_data_change")
+@Table(name = "User_data")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -31,8 +29,8 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @Setter
-    @Column(name="auth", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isEnable = true;
+    @Column(name="auth", columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean isEnable;
 
     @Setter
     @Column(name="UserName", nullable = true)
@@ -58,4 +56,9 @@ public class User implements Serializable {
     @Column(nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+//    public void updateUserPassword(String pw){
+//        this.pw = pw;
+//    }
+
 }

@@ -5,6 +5,7 @@ import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserStudy;
 import com.watch.switme.dto.JoinStudyDto;
 import com.watch.switme.dto.makeStudyDto;
+import com.watch.switme.domain.UserStudy;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
@@ -12,6 +13,7 @@ import com.watch.switme.service.UserService;
 import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -116,6 +118,7 @@ public class StudyController {
     @PutMapping("/array/join/{user_idx}/{study_idx}")
     public void JoinStudy(@PathVariable Long user_udx, @PathVariable Long study_idx){
 
+        return userStudyRepository.findByUserIdx(user_idx);
     }
 
     //스터디 탈퇴하기 //User_study 이용하기 (테스트 필요함)
@@ -124,6 +127,7 @@ public class StudyController {
         System.out.println(study_idx);
         System.out.println(user_idx);
         userStudyRepository.deleteById(study_idx);
+
     }
 
     //스터디 탈퇴하기
@@ -156,8 +160,5 @@ public class StudyController {
         //System.out.println(leader);
         return studyRepository.findAllByleader(leader);
     }
-
-
-
 
 }
