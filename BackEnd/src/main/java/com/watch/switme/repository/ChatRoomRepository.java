@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
-    @Query(value = "select * from chat_room c where c.inquirer_idx = ?1 ", nativeQuery = true)
-    List<ChatRoom> findByInquirer_UserIdx(Long inquirer_idx);
+    @Query(value = "select * from chat_room c where c.inquirer_idx = ?1 or c.leader_idx = ?1 ", nativeQuery = true)
+    List<ChatRoom> findByUserIdx(Long inquirer_idx);
 
     ChatRoom findFirstByRoomIdx(Long room_idx);
 }

@@ -6,14 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
 @Service
 public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
+
+    @Transactional
     public Study findByStudyIdx(Long study_idx){
-        return (Study) studyRepository.findFirstByStudyIdx(study_idx);
+        return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
     //스터디 추가..?

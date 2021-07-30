@@ -93,7 +93,6 @@ const MakeStudy = () => {
     location: "",
     extra: "",
     image: "", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
-    leader: window.localStorage.getItem("id"),
     link: "",
   });
 
@@ -116,7 +115,7 @@ const MakeStudy = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="3" />
       <Row style={{ marginTop: "40px" }}>
         <Col>
           <div style={{ marginLeft: "10px" }}>
@@ -169,7 +168,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="online"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "online" })}
+                    onChange={() => setStudy({ ...study, type: "online" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -187,7 +186,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "offline" })}
+                    onChange={() => setStudy({ ...study, type: "offline" })}
                   ></RadioButton>
                 </Col>
                 <Col

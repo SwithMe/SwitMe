@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface StudyRepository extends JpaRepository<Study, Long> {
-    @Query(value = "select s from Study_main s where s.study_idx = ?1", nativeQuery = true)
-    List<Study> findFirstByStudyIdx(Long study_idx);
+    @Query(value = "select * from Study_main s where s.study_idx = ?1", nativeQuery = true)
+    Study findFirstByStudyIdx(Long study_idx);
 
     @Query(value="select * from Study_main s", nativeQuery = true)
     List<Study> findAllByStudy_idx(Long study_idx);
