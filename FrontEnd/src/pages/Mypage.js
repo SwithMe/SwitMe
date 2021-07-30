@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
+import ImageUpload from "../components/ImageUpload";
 
 const Wrapper = styled.div`
   display: flex;
@@ -117,7 +118,6 @@ const Mypage = () => {
   return (
     <Wrapper>
       <Header />
-
       <Col>
         <Row
           style={{
@@ -138,6 +138,21 @@ const Mypage = () => {
                 width="124"
                 height="124"
               />
+              {/* {ImageUpload.event.target.files !== null ? (
+                <Image
+                  alt="profile"
+                  src={require("../assets/profile.png").default}
+                  width="124"
+                  height="124"
+                />
+              ) : (
+                <Image
+                  alt="profile"
+                  src={require("../assets/profile.png").default}
+                  width="124"
+                  height="124"
+                />
+              )} */}
             </Col>
             <Col style={{ width: "660px" }}>
               <Title size="32" color="#064538">
@@ -157,13 +172,12 @@ const Mypage = () => {
               </Title>
             </Col>
           </Row>
-          <Button
+          <ImageUpload
             name="회원정보수정"
             width="251px"
             height="65px"
-            color="#CCCCCC"
-            borderRadius="40px"
-          ></Button>
+            radius="40px"
+          ></ImageUpload>
           <Button
             name="로그아웃"
             width="251px"
