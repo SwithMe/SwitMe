@@ -65,7 +65,9 @@ export const getRankingstudy = () => {
   const request = axios
     .get(`${USER_SERVER}/main/rank/study`)
     .then((response) => response.data)
-    .catch((error) => {});
+    .catch((error) => {
+      if (error.response) console.log(error.response);
+    });
   return { type: GET_RANK_STUDY, payload: request };
 };
 
