@@ -56,11 +56,9 @@ public class StudyController {
             throw new Exception(HttpStatus.CONFLICT, "오류");
         }*/
         // 제약조건을 통과못하면 error 리턴한다.
-        // 여기 채워야함!
-        //leader 값에 만드는 사람의 study_idx 넣기
-        //leader name 추가하기
-        // 사진 넣는 거 바꾸기
-        // resources save /server 주소 /폴더 위치
+        // 1. leader 값에 만드는 사람의 user_idx 넣기
+        // 2. leader name 추가하기
+        // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
         studyRepository.save(study);
     }
 
@@ -76,12 +74,11 @@ public class StudyController {
     //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
     //}
 
-    //스터디 가입하기1 //User_study 이용하기
+    //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public JoinStudyDto JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
        // Study study = studyService.findByStudyIdx(study_idx);
        // UserYesOrNo studyActivate = study.getActivate();
-
         JoinStudyDto joinStudyDto = JoinStudyDto.builder()
                 .amLeader(UserYesOrNo.N)
                 .studyIdx(study_idx)
@@ -93,11 +90,9 @@ public class StudyController {
         return  joinStudyDto; //joinStudyRepository.save(joinStudyDto.toEntity()).getUserStudyIdx();
     }
 
-    //스터디 탈퇴하기 //User_study 이용하기 (테스트 필요함)
+    //스터디 탈퇴하기 (테스트 필요함)
     @DeleteMapping("/array/leave/{user_study_idx}")
-    public void LeaveStudy(@PathVariable Long user_study_idx){
-       // userStudyRepository.deleteByuser_study_idx(user_study_idx);
-    }
+    public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){studyService.delete(user_study_idx);}
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
     @GetMapping("/array/study/{study_idx}")
@@ -105,8 +100,7 @@ public class StudyController {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
-
-
+    //스터디 검색 기능
     @PostMapping("/array")
     public List<Study> example(@RequestBody SearchStudyDto searchStudyDto){
         return studyRepository.getQuery
