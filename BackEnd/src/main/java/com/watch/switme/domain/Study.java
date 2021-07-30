@@ -10,11 +10,10 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
+//@AllArgsConstructor
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Table(name="Study_main")
 @Entity(name="study_main")
 public class Study {
@@ -90,8 +89,7 @@ public class Study {
     private Integer avgMannerTemperature;
 
     @Builder
-    public void StudyEntity(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature )
-    {
+    public Study(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature) {
         this.study_idx = study_idx;
         this.title = title;
         this.type = type;
@@ -106,7 +104,7 @@ public class Study {
         this.image = image;
         this.leader = leader;
         this.link = link;
-        this.activate =activate;
+        this.activate = activate;
         this.studyIntro = studyIntro;
         this.participant = participant;
         this.avgMannerTemperature = avgMannerTemperature;
