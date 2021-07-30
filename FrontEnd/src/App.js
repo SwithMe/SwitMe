@@ -26,10 +26,10 @@ function App() {
         <Route exact path="/studylist" component={StudyList} />
         <Route exact path="/stopwatch" component={StopWatch} />
         <Route exact path="/studydetail/:study_id" component={StudyDetail} />
-        <Route exact path="/memberlist" component={MemberList} />
+        <Route exact path="/memberlist/:study_id" component={MemberList} />
         <Route exact path="/makestudy" component={MakeStudy} />
         <Route exact path="/mypage" component={Mypage} />
-        <Route exact path="/editstudy" component={EditStudy} />
+        <Route exact path="/editstudy/:study_id" component={EditStudy} />
         <Route exact path="/modal" component={Modal} />
       </Switch>
     </Router>

@@ -49,7 +49,7 @@ const Lower = styled.div`
 `;
 
 const StudyDetail = ({ match }) => {
-  const study_id = match.params;
+  const { study_id } = match.params;
   const dispatch = useDispatch();
   const history = useHistory();
   const [study, setStudy] = useState({
@@ -265,7 +265,7 @@ const StudyDetail = ({ match }) => {
               fontFamily: "NotoSans",
               cursor: "pointer",
             }}
-            onClick={() => console.log("수정")}
+            onClick={() => history.push(`/editstudy/${study_id}`)}
           >
             스터디 수정하기
           </button>
