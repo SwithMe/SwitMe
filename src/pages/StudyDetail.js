@@ -50,6 +50,7 @@ const Lower = styled.div`
 
 const StudyDetail = ({ match }) => {
   const study_id = match.params;
+  console.log(study_id);
   const dispatch = useDispatch();
   const history = useHistory();
   const [study, setStudy] = useState({
@@ -113,7 +114,7 @@ const StudyDetail = ({ match }) => {
 
   return (
     <Fix>
-      <Header />
+      <Header page="3" />
       <Info>
         <div>
           <Image

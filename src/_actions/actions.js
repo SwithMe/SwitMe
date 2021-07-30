@@ -11,11 +11,13 @@ const GET_STUDYDETAIL = "GET_STUDYDETAIL";
 const JOIN_STUDY = "JOIN_STUDY";
 const LEAVE_STUDY = "LEAVE_STUDY";
 const MAKE_STUDY = "MAKE_STUDY";
+const GET_MESSAGES = "GET_MESSAGES";
+const GET_CHATLIST = "GET_CHATLIST";
 
 export const login = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/auth/login`, dataToSubmit)
-    .then((response) => response.data)
+    .then((response) => response.headers.get("Authorization"))
     .catch((error) => {});
   return {
     type: LOGIN,
@@ -25,7 +27,7 @@ export const login = (dataToSubmit) => {
 
 export const signup = (dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/auth/signin`, dataToSubmit)
+    .post(`${USER_SERVER}/auth/signup`, dataToSubmit)
     .then((response) => response.data)
     .catch((error) => {});
   return {
@@ -44,7 +46,7 @@ export const getTotalTime = (id) => {
 
 export const getRanking = () => {
   const request = axios
-    .get(`${USER_SERVER}/main/rank`)
+    .get(`${USER_SERVER}/main/rank/individual`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: GET_RANK, payload: request };
@@ -103,10 +105,26 @@ export const makestudy = (dataToSubmit) => {
   };
 };
 
+export const getMessages = (room_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/chat/room?room_idx=${room_idx}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return { type: GET_MESSAGES, payload: request };
+};
+
+export const getChatlist = (user_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/chat/room_list?user_idx=${user_idx}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return { type: GET_CHATLIST, payload: request };
+};
+
 const actions = (state = {}, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, isAuth: action.payload.success };
+      return { ...state, isAuth: "true" };
     default:
       return state;
   }

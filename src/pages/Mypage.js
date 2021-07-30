@@ -116,7 +116,7 @@ const Mypage = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="3" />
 
       <Col>
         <Row

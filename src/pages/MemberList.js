@@ -91,7 +91,7 @@ const MemberList = () => {
   });
   return (
     <>
-      <Header />
+      <Header page="3" />
       <Fix>
         <Row border="none" style={{ marginTop: "1%" }}>
           <Title size="32">{study.studyname}</Title>

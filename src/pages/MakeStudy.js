@@ -116,7 +116,7 @@ const MakeStudy = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="3" />
       <Row>
         <Col>
           <div style={{ marginLeft: "10px" }}>
@@ -169,7 +169,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="online"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "online" })}
+                    onChange={() => setStudy({ ...study, type: "online" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -187,7 +187,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "offline" })}
+                    onChange={() => setStudy({ ...study, type: "offline" })}
                   ></RadioButton>
                 </Col>
                 <Col

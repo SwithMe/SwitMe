@@ -34,7 +34,7 @@ const StopWatch = () => {
         onInputChange={TimerList.onInputChange}
         onSubmit={TimerList.onSubmit}
       ></ModalTimer>
-      <Header></Header>
+      <Header page="1"></Header>
       <Wrapper>
         <TimerList openModal={openModal}></TimerList>
         <Watch name={TimerListContent.name}></Watch>

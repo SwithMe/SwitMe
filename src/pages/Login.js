@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import logo from "../assets/logo.png";
 import { login } from "../_actions/actions";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,9 +35,10 @@ const TextBox = styled.div`
 
 const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({
-    useremail: "",
-    userpassword: "",
+    email: "",
+    pw: "",
   });
 
   const onInputChange = (e) => {
@@ -46,8 +48,8 @@ const Login = () => {
 
   const formSubmit = async (evt) => {
     evt.preventDefault();
+    console.log(user);
     dispatch(login(user)).then((response) => {
-      console.log(response);
       if (response.payload) {
         console.log("로그인 성공");
       } else {
@@ -60,16 +62,22 @@ const Login = () => {
     <Wrapper>
       <form onSubmit={formSubmit}>
         <Items>
-          <img alt="로고" src={logo} style={{ marginBottom: "1rem" }}></img>
+          <img
+            alt="로고"
+            src={logo}
+            style={{ marginBottom: "1rem", cursor: "pointer" }}
+            onClick={() => history.push("/")}
+          ></img>
           <Input2
-            name="useremail"
+            name="email"
             placeholder="E-mail"
             width="29rem"
             value={user.id}
             onChange={onInputChange}
           ></Input2>
           <Input2
-            name="userpassword"
+            name="pw"
+            type="password"
             placeholder="비밀번호"
             width="29rem"
             value={user.password}
@@ -82,8 +90,18 @@ const Login = () => {
             type="submit"
           ></Button>
           <TextBox>
-            <div>이메일 / 비밀번호 찾기</div>
-            <div>회원가입</div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => history.push("/findemail")}
+            >
+              이메일 / 비밀번호 찾기
+            </div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => history.push("/signup")}
+            >
+              회원가입
+            </div>
           </TextBox>
         </Items>
       </form>
