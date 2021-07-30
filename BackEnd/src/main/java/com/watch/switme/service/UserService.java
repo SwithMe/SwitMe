@@ -27,6 +27,7 @@ public class UserService {
 
     @Transactional
     public User signUp(final SignUpDTO signUpDTO) {
+        //먼저 객체를 만들
         final User user = User.builder()
                 .email(signUpDTO.getEmail())
                 .pw(passwordEncoder.encode(signUpDTO.getPw()))
@@ -36,7 +37,7 @@ public class UserService {
                 .realname(signUpDTO.getRealname())
                 .isEnable(true)
                 .build();
-
+        //그다음에 추가해주세요.
         return userRepository.save(user);
     }
 
