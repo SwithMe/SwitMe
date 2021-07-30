@@ -74,7 +74,7 @@ public class Study {
 
     // 현재 진행중인지?
     @Column
-    private String activate;
+    private UserYesOrNo activate;
 
     // 한줄 소개
     @Column
@@ -89,7 +89,7 @@ public class Study {
     private Integer avgMannerTemperature;
 
     @Builder
-    public Study(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, String activate, String studyIntro, Integer participant, Integer avgMannerTemperature) {
+    public Study(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size, String tags, String location, String extra, String image, Long leader, String link, UserYesOrNo activate, String studyIntro, Integer participant, Integer avgMannerTemperature) {
         this.study_idx = study_idx;
         this.title = title;
         this.type = type;
