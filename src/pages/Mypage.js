@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
+import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
-import { getUserInfo } from "../_actions/actions";
+import {
+  getUserInfo,
+  getUserStopwatch,
+  getUserStudy,
+} from "../_actions/actions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,6 +76,7 @@ const Circle = styled.div`
 
 const Mypage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({
     user_idx: "",
     user_name: "이름",
@@ -131,7 +137,27 @@ const Mypage = () => {
         console.log("회원정보 가져오기 에러");
       }
     });
+    dispatch(getUserStudy(user_id)).then((response) => {
+      if (response.payload) {
+        setStudies(response.payload);
+      } else {
+        console.log("스터디 목록 가져오기 에러");
+      }
+    });
+    dispatch(getUserStopwatch(user_id)).then((response) => {
+      if (response.payload) {
+        setTimes(response.payload);
+      } else {
+        console.log("스톱워치 목록 가져오기 에러");
+      }
+    });
   }, []);
+
+  const logout = () => {
+    window.localStorage.setItem("isAuth", "false");
+    window.localStorage.setItem("id", "");
+    history.push("/");
+  };
 
   return (
     <Wrapper>
@@ -189,6 +215,7 @@ const Mypage = () => {
             height="65px"
             color="#CCCCCC"
             borderRadius="40px"
+            onClick={logout}
           ></Button>
         </ProfileBox>
         <Row

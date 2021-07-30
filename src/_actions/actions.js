@@ -15,6 +15,8 @@ const MAKE_STUDY = "MAKE_STUDY";
 const GET_MESSAGES = "GET_MESSAGES";
 const GET_CHATLIST = "GET_CHATLIST";
 const GET_USER_INFO = "GET_USER_INFO";
+const GET_USER_STUDY = "GET_USER_STUDY";
+const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
 
 export const login = (dataToSubmit) => {
   const request = axios
@@ -59,7 +61,7 @@ export const getRankingstudy = () => {
     .get(`${USER_SERVER}/main/rank/study`)
     .then((response) => response.data)
     .catch((error) => {});
-  return { type: GET_RANK, payload: request };
+  return { type: GET_RANK_STUDY, payload: request };
 };
 
 export const recommendedStudy = () => {
@@ -80,7 +82,7 @@ export const getStudylist = (dataToSubmit) => {
 
 export const getStudydetail = (id) => {
   const request = axios
-    .get(`${USER_SERVER}/list/array?study_idx=${id}`)
+    .get(`${USER_SERVER}/list/array/study?study_idx=${id}`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: GET_STUDYDETAIL, payload: request };
@@ -91,7 +93,7 @@ export const joinStudy = (user_id, study_id) => {
     .put(`${USER_SERVER}/list/join?user_idx=${user_id}&sutdy_idx=${study_id}`)
     .then((response) => response.data)
     .catch((error) => {});
-  return { tyoe: JOIN_STUDY, payload: request };
+  return { type: JOIN_STUDY, payload: request };
 };
 
 export const leaveStudy = (user_id, study_id) => {
@@ -137,6 +139,22 @@ export const getUserInfo = (user_idx) => {
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_USER_INFO, payload: request };
+};
+
+export const getUserStudy = (user_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/api/mypage/study_list?user_idx=${user_idx}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return { type: GET_USER_STUDY, payload: request };
+};
+
+export const getUserStopwatch = (user_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/api/mypage/timer_log?user_idx=${user_idx}`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return { type: GET_USER_STOPWATCH, payload: request };
 };
 
 const actions = (state = {}, action) => {

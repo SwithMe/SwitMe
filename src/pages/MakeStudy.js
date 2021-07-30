@@ -94,11 +94,27 @@ const MakeStudy = () => {
     extra: "",
     image: "", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
     link: "",
+    leader: 0,
   });
 
   const onFormSubmit = () => {
-    console.log(study);
-    dispatch(makestudy(study)).then((response) => {
+    const data = {
+      title: study.title,
+      type: study.type,
+      termstart: study.termstart,
+      termend: study.termend,
+      timestart: study.timestart + ":00",
+      timeend: study.timeend + ":00",
+      size: study.size,
+      tags: study.tags,
+      location: study.location,
+      extra: study.extra,
+      image: study.image, //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
+      link: study.link,
+      leader: study.leader,
+    };
+    console.log(data);
+    dispatch(makestudy(data)).then((response) => {
       if (response.payload) {
         alert("스터디가 생성되었습니다..");
         history.push(`/`);
