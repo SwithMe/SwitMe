@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Search from "../assets/search.png";
+import Image from "../components/Image";
 import { getStudydetail, getMember, warnMember } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 
@@ -108,6 +109,7 @@ const MemberList = ({ match }) => {
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
+        // console.log("기존 스터디 정보 가져오기 성공");
         setStudy({ ...study, studyname: response.payload.title });
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
@@ -115,6 +117,7 @@ const MemberList = ({ match }) => {
     });
     dispatch(getMember(study_id)).then((response) => {
       if (response.payload) {
+        console.log("스터디 멤버 정보 가져오기 성공");
         console.log(response.payload);
         setStudy({ ...study, members: response.payload });
       } else {
@@ -122,6 +125,7 @@ const MemberList = ({ match }) => {
       }
     });
   }, []);
+
   const warn = (user_idx) => {
     const data = {
       study_idx: study_id,
@@ -136,6 +140,13 @@ const MemberList = ({ match }) => {
       }
     });
   };
+
+  // const handleImgError = (e) => {
+  //   // e.target.src = require("../assets/circle.png").default;
+  //   if (study.user_image === null) {
+  //     e.target.src = "../assets/circle.png";
+  //   }
+  // };
 
   return (
     <>
@@ -186,21 +197,24 @@ const MemberList = ({ match }) => {
                   alignItems: "center",
                 }}
               >
-                <img
+                <Image
                   alt="profile"
-                  src={require("../assets/circle.png").default}
-                  style={{ marginLeft: "21px" }}
+                  src={member.user_image}
+                  // onerror={handleImgError}
+                  // src={require("../assets/circle.png").default}
+                  width="80"
+                  height="80"
                 />
                 &emsp;
                 <Title weight="400" size="20">
-                  {member.name}
+                  {member.user_name}
                 </Title>
               </div>
               <Title weight="400" size="20">
-                {member.temperature}°C
+                {member.user_manner}°C
               </Title>
               <Title weight="400" size="20">
-                {member.warning}회
+                {member.user_warning}회
               </Title>
             </div>
             <div
@@ -230,22 +244,6 @@ const MemberList = ({ match }) => {
             </div>
           </Row>
         ))}
-        <Row border="none">
-          <Input
-            validinput="true"
-            inputwidth="300"
-            width="368"
-            placeholder="스터디원 이름을 입력하세요"
-            marginTop="40"
-            style={{}}
-          >
-            <img
-              alt="search"
-              src={Search}
-              style={{ width: "16px", height: "16px" }}
-            ></img>
-          </Input>
-        </Row>
       </Fix>
     </>
   );
