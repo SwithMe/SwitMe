@@ -20,14 +20,28 @@ const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
 const EDIT_STUDY = "EDIT_STUDY";
 const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
+const ADD_STOPWATCH = "ADD_STOPWATCH";
+const GET_TIMER_LIST = "GET_TIMER_LIST";
+const EDIT_TIMER = "EDIT_TIMER";
+const DELETE_STOPWATCH = "DELETE_TIMER";
+const SAVE_STOPWATCH = "SAVE_STOPWATCH";
+const USER_MAKE_CHAT = "USER_MAKE_CHAT";
 const EDIT_USER = "EDIT_USER";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/auth/login`, dataToSubmit)
-    .then((response) => response.headers.get("Authorization"))
-    .catch((error) => {});
+    .then((response) => {
+      return new Promise(function (resolve, reject) {
+        console.log(response.headers);
+        let idx = response.headers["USER_IDX"];
+        resolve(idx);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   return {
     type: LOGIN,
     payload: request,
@@ -224,7 +238,6 @@ export const warnMember = (dataToSubmit) => {
   };
 };
 
-<<<<<<< HEAD
 //스톱워치 기능
 export const addStopwatch = (user_idx, dataToSubmit) => {
   const request = axios
@@ -292,8 +305,6 @@ export const userMakeChat = (dataToSubmit) => {
   return { type: USER_MAKE_CHAT, payload: request };
 };
 
-=======
->>>>>>> origin/Header값추가
 const actions = (state = {}, action) => {
   switch (action.type) {
     case LOGIN:
