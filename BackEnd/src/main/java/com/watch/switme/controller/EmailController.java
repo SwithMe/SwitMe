@@ -17,15 +17,19 @@ import javax.mail.MessagingException;
 
 @RequiredArgsConstructor
 @RestController
+
+
 public class EmailController {
 
 
+    @Autowired
     private final EmailService emailService;
 
     @PostMapping(value="/user/email/find")
     public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
+
         System.out.println("출력>>>"+signUpDTO.getEmail()+ signUpDTO.getPw());
-        System.out.println(emailService.findPassword("kje000124@naver.com"));
+        System.out.println("kje000124@naver.com");
 
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
@@ -54,16 +58,32 @@ public class EmailController {
         );
         emailcontent.append("</body>");
         emailcontent.append("</html>");
-        emailService.sendMail(signUpDTO, emailcontent.toString());
+        emailService.sendMail(signUpDTO.getEmail(), emailcontent.toString());
     }
 
-
-
-
-
+/*
+    @Transactional
+    public User signUp(final SignUpDTO signUpDTO) {
+        final User user = User.builder()
+                .email(signUpDTO.getEmail())
+                .pw(passwordEncoder.encode(signUpDTO.getPw()))
+                .role(UserRole.ROLE_USER)
+                .manner_temperature(70)
+                .UserAgree(UserYesOrNo.Y)
+                .realname(signUpDTO.getRealname())
+                .isEnable(true)
+                .build();
+        return userRepository.save(user);
+    }
+ */
     @PostMapping(value="/user/email/send")
-    public void sendMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
-        System.out.println("출력>>>"+signUpDTO.getEmail()+ signUpDTO.getPw());
+    public void sendMail(@RequestBody SignUpDTO signUpDTO) throws MessagingException{
+        System.out.println(signUpDTO.getEmail());
+
+        String email=signUpDTO.getEmail();
+        String pw=signUpDTO.getPw();
+        String realname=signUpDTO.getRealname();
+
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
         emailcontent.append("<html>");
@@ -79,14 +99,14 @@ public class EmailController {
                         "	</h1>\n"																																																+
                         "	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">"
                         +
-                        signUpDTO.getRealname()																																							+
+                        realname																																							+
                         "		님 안녕하세요.<br />"																																													+
-                        "		SWITME에 가입해 주셔서 진심으로 감사드립니다.<br />"																																						+
-                        "		아래 <b style=\"color: #02b875\">'메일 인증'</b> 버튼을 클릭하여 회원가입을 완료해 주세요.<br />"																													+
+
+                        "		<b style=\"color: #02b875\">'메일 인증'</b> 버튼을 클릭하여 회원가입을 완료해 주세요.<br />"																													+
                         "		감사합니다."																																															+
                         "	</p>"																																																	+
                         "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\""																																	+
-                        "	href=\"http://localhost:8080/auth/signup/"+ signUpDTO.getEmail() +"/"+ signUpDTO.getPw() +"/"+signUpDTO.getRealname()+"\" target=\"_blank\">"														+
+                        "	href=\"http://localhost:8080/auth/signup/"+ email +"/"+ pw +"/"+realname+"\" target=\"_blank\">"														+
                         "		<p"																																																	+
                         "			style=\"display: inline-block; width: 210px; height: 45px; margin: 30px 5px 40px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">"							+
                         "			메일 인증</p>"																																														+
@@ -96,6 +116,6 @@ public class EmailController {
         );
         emailcontent.append("</body>");
         emailcontent.append("</html>");
-        emailService.sendMail(signUpDTO, emailcontent.toString());
+        emailService.sendMail(email, emailcontent.toString());
     }
 }

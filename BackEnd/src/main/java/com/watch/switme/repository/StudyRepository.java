@@ -28,11 +28,6 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     List <Study> findByStudy_idx(@Param("sstudy_idx")Long study_idx);
 */
 
-
-
-
-
-
     @Query(value = "select * from Study_main u where u.title=:title", nativeQuery=true)
     List <Study> findByTitle(@Param("title")String title);
 

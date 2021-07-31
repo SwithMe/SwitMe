@@ -4,6 +4,7 @@ import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ import java.awt.*;
 @Service
 public class EmailService {
 
+    @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -29,21 +33,18 @@ public class EmailService {
     }
 
 
-    public void sendMail(SignUpDTO signUpDTO, String message)  throws MessagingException{
+    public void sendMail(String email, String message)  throws MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
         helper.setFrom("SWITME");
-        helper.setTo(signUpDTO.getEmail());
+        helper.setTo(email);
         helper.setSubject("SWITME");
         helper.setText(message, true);
 
         javaMailSender.send(mimeMessage);
     }
 
-    public String findPassword(String email){
-        return ".";
-    }
 
 
 
