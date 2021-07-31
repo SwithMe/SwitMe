@@ -1,6 +1,8 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import styled from "styled-components";
 import TimerListContent from "./TimerListContent";
+import { addStopwatch, getTimerList, deleteTimer } from "../_actions/actions";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,21 +54,51 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
-function TimerList({ openModal }) {
+function TimerList({ openModal, changeTimer }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
-  const [timers, setTimers] = useState([
-    {
-      id: 1,
-      name: "타이머1",
-      time: "00",
-    },
-    {
-      id: 2,
-      name: "타이머2",
-      time: "00",
-    },
-  ]);
+  const [toggle, setToggle] = useState(false);
+  const dispatch = useDispatch();
+  const [timers, setTimers] = useState();
+
+  useEffect(() => {
+    dispatch(getTimerList(window.localStorage.getItem("id"))).then(
+      (response) => {
+        if (response.payload) {
+          const tmp_arr = [];
+          response.payload?.map((timer) => {
+            const stopwatch = {
+              timer_idx: timer.timer_idx,
+              name: timer.name,
+              duration: 0,
+            };
+            const time = timer.duration;
+            const second =
+              time % 60 < 10
+                ? "0" + Math.floor(time % 60)
+                : Math.floor(time % 60);
+            const minute =
+              Math.floor(time / 60) < 10
+                ? "0" + Math.floor(time / 60)
+                : Math.floor(time / 60);
+            const hour = Math.floor(time / 360);
+            stopwatch["duration"] =
+              hour.toString() +
+              " : " +
+              minute.toString() +
+              " : " +
+              second.toString();
+            tmp_arr.push(stopwatch);
+            console.log(timer.duration);
+          });
+          setTimers(tmp_arr);
+          if (tmp_arr.length > 0) changeTimer(tmp_arr[0]);
+        } else {
+          console.log("스톱워치 리스트 에러");
+        }
+      }
+    );
+  }, [toggle]);
 
   //추가하기 status:1
   const Add = () => {
@@ -75,40 +107,42 @@ function TimerList({ openModal }) {
 
   //input
   const [value, setValue] = useState("");
+
   const onInputChange = useCallback((e) => {
     setValue(e.target.value);
     console.log(value);
   }, []);
 
-  const nextId = useRef(2);
-
-  const onInsert = useCallback(
-    (value) => {
-      const timer = {
-        id: nextId.current,
-        name: value,
-        time: "00",
-      };
-      setTimers(timers.concat(timer));
-      nextId.current += 1;
-    },
-    [timers]
-  );
-
   const onSubmit = useCallback(
     (e) => {
-      onInsert(value);
+      dispatch(
+        addStopwatch(window.localStorage.getItem("id"), { timer_name: value })
+      ).then((response) => {
+        if (response.payload) {
+          console.log(response.payload);
+          setToggle(!toggle);
+        } else {
+          console.log("스톱워치 추가 에러");
+        }
+      });
       setValue("");
       e.preventDefault();
       setStatus(0);
     },
-    [onInsert, value]
+    [value]
   );
 
   //삭제
   const onRemove = useCallback(
     (id) => {
-      setTimers(timers.filter((timer) => timer.id !== id));
+      dispatch(deleteTimer(id)).then((response) => {
+        if (response.type) {
+          console.log(response.payload);
+          setToggle(!toggle);
+        } else {
+          console.log("스톱워치 삭제 에러");
+        }
+      });
     },
     [timers]
   );
@@ -120,12 +154,15 @@ function TimerList({ openModal }) {
       <div class="head">2021.07.18. 일요일</div>
 
       <div>
-        {timers.map((timer) => (
+        {timers?.map((timer) => (
           <TimerListContent
             timer={timer}
             key={timer.id}
             onRemove={onRemove}
             openModal={openModal}
+            toggle={toggle}
+            setToggle={setToggle}
+            changeTimer={changeTimer}
           ></TimerListContent>
         ))}
       </div>

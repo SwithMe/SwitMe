@@ -35,65 +35,22 @@ const Chat_list = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { setinitial, open, close, openstate2, open2, close2, header } = props;
   const dispatch = useDispatch();
-  const user_id = 1; //window.localStorage.getItem("id");
+  const user_id = window.localStorage.getItem("id");
 
-  const [studies, setStudies] = useState([
-    {
-      room_idx: 1,
-      room_name: "",
-      studyprofile: "../assets/circle.png",
-      other_user: "김김김",
-      notification: 0,
-      message: "최근 메세지",
-      unread: "../assets/circle2.png",
-    },
-    {
-      room_idx: 2,
-      room_name: "",
-      studyprofile: "../assets/circle.png",
-      other_user: "김김김",
-      notification: 0,
-      message: "최근 메세지",
-      unread: "../assets/circle2.png",
-    },
-    {
-      room_idx: 3,
-      room_name: "",
-      studyprofile: "../assets/circle.png",
-      other_user: "김김김",
-      notification: 0,
-      message: "최근 메세지",
-      unread: "../assets/circle2.png",
-    },
-    {
-      room_idx: 4,
-      studyprofile: "../assets/circle.png",
-      other_user: "김김김",
-      notification: 0,
-      message: "최근 메세지",
-      unread: "../assets/circle2.png",
-    },
-    {
-      room_idx: 5,
-      studyprofile: "../assets/circle.png",
-      other_user: "김김김",
-      notification: 1,
-      message: "최근 메세지",
-      unread: "../assets/circle2.png",
-    },
-  ]);
+  const [studies, setStudies] = useState([]);
 
   useEffect(() => {
-    // dispatch(getChatlist(user_id)).then((response) => {
-    //   if (response.payload) {
-    //     setStudies(response.payload);
-    //     let arr = new Array(response.payload.length);
-    //     arr.fill(false);
-    //     setModalOpen(arr);
-    //   } else {
-    //     console.log("채팅 목록 불러오기 에러");
-    //   }
-    // });
+    dispatch(getChatlist(user_id)).then((response) => {
+      if (response.payload) {
+        console.log(response);
+        setStudies(response.payload);
+        let arr = new Array(response.payload.length);
+        arr.fill(false);
+        setinitial(arr);
+      } else {
+        console.log("채팅 목록 불러오기 에러");
+      }
+    });
     let arr = new Array(5);
     arr.fill(false);
     setinitial(arr);
@@ -125,26 +82,14 @@ const Chat_list = (props) => {
           <main>
             {props.children}
             <List>
-              {studies.map((study, i) => {
-                if (i > 4) return false;
+              {studies?.map((study, i) => {
                 return (
                   <Study
                     key={i}
                     onClick={!openstate2[i] ? () => open2(i) : () => {}}
                   >
                     <React.Fragment>
-                      {/* {openstate2 ? (
-                        <Chat
-                          open={openstate2}
-                          close={close2}
-                          header=""
-                          other_user={study.other_user}
-                          room_idx={study.room_idx}
-                        ></Chat>
-                      ) : (
-                        <></>
-                      )} */}
-                      {openstate2 ? (
+                      {openstate2[i] ? (
                         <Chat
                           open={openstate2[i]}
                           close={() => close2(i)}
