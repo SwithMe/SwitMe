@@ -23,22 +23,25 @@ public class ChatController {
 
     @MessageMapping("/chat/message")
     public void Message(SocketDto message){
-
-        ChatRoom presentRoom = chatRoomService.findRoom(Long.parseLong(message.getRoom_idx()));
+        ChatRoom presentRoom = chatRoomService.findByRoomIdx(Long.parseLong(message.getRoom_idx()));
         User sender;
         if(Long.parseLong(message.getUser_idx()) == presentRoom.getInquirer().getUser_idx()){
             sender = presentRoom.getInquirer();
         } else{
             sender = presentRoom.getLeader();
         }
+        LocalDateTime now = LocalDateTime.now();
 
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
                 .message(message.getMessage())
                 .sender(sender)
-                .room(presentRoom).build();
+                .room(presentRoom)
+                .time(now)
+                .build();
+
         chatMessageService.save(chatMessageDto);
 
-        message.setTime(LocalDateTime.now());
+        message.setTime(now);
         messagingTemplate.convertAndSend("/topic/"+message.getRoom_idx(), message);
     }
 

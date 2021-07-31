@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -15,13 +16,15 @@ public class ChatMessageDto {
     private String message;
     private User sender;
     private ChatRoom room;
+    private LocalDateTime time;
 
     //sender idx도 수정..
     @Builder
-    public ChatMessageDto(String message, User sender, ChatRoom room){
+    public ChatMessageDto(String message, User sender, ChatRoom room, LocalDateTime time){
         this.message = message;
         this.sender = sender;
         this.room = room;
+        this.time = time;
     }
 
     public ChatMessage toEntity(){
@@ -29,6 +32,7 @@ public class ChatMessageDto {
                 .message(this.message)
                 .sender(this.sender)
                 .room(this.room)
+                .time(time)
                 .build();
     }
 }
