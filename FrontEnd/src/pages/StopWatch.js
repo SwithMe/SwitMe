@@ -5,6 +5,8 @@ import Watch from "../components/Watch";
 import TimerList from "../components/TimerList";
 import ModalTimer from "../components/ModalTimer";
 import TimerListContent from "../components/TimerListContent";
+import { addStopwatch } from "../_actions/actions";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,6 +20,7 @@ const Wrapper = styled.div`
 
 const StopWatch = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setModalOpen(true);

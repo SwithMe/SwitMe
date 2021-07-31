@@ -4,6 +4,7 @@ import com.watch.switme.domain.Study;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +24,11 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
 
     List<Study> findAllByleader(int leader);
 
+    List<Study> findTop12ByTypeOrderByAvgMannerTemperatureDesc(String type);
+
     //public void createStudy(Study study);
+
+    //List<Study> findByStudy_idx(Long study_idx);
+
+
 }

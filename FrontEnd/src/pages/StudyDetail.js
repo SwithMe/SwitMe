@@ -49,15 +49,16 @@ const Lower = styled.div`
 `;
 
 const StudyDetail = ({ match }) => {
-  const study_id = match.params;
-  console.log(study_id);
+  const { study_id } = match.params;
+  const user_id = window.localStorage.getItem("id");
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isSet, setIsSet] = useState(false);
   const [study, setStudy] = useState({
     title: "스터디 이름 쓰는 칸",
     outline:
       "스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개",
-    leader: "스터디장 이름",
+    leader: 1,
     temperature: "80",
     state: "모집중", //추후 삭제 필요
     startdate: "2021-11-11",
@@ -72,7 +73,8 @@ const StudyDetail = ({ match }) => {
     extra:
       "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
-  const [isMember, setIsMember] = useState(true);
+  const [isLeader, setIsLeader] = useState(false);
+  const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
@@ -82,6 +84,11 @@ const StudyDetail = ({ match }) => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
         setStudy(response.payload);
+        console.log(response.payload);
+        if (String(response.payload.leader) === user_id) {
+          setIsLeader(true);
+        }
+        setIsSet(true);
       } else {
         console.log("스터디 상세정보 가져오기 실패");
       }
@@ -123,115 +130,119 @@ const StudyDetail = ({ match }) => {
             radius="10px"
           ></Image>
         </div>
-        <Detail>
-          <Title size="32" color="#064538">
-            {study.title}
-          </Title>
-          <Title size="24" weight="400" marginTop="17">
-            {study.outline}
-          </Title>
-          <div
-            style={{
-              marginTop: "30px",
-              marginBottom: "30px",
-              border: "3px solid #56BE9C",
-              background: "#56BE9C",
-            }}
-          ></div>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">스터디장</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.leader}
-              </Title>
-            </Content>
-            <div style={{ width: "174px" }}>
-              <Title size="20">매너온도</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.temperature}℃
-              </Title>
-            </Content>
-          </Row>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">모집상태</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.state}
-              </Title>
-            </Content>
-            <div style={{ width: "174px" }}>
-              <Title size="20">기간</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.startdate} ~ {study.enddate}
-              </Title>
-            </Content>
-          </Row>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">진행방식</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.type}
-              </Title>
-            </Content>
-            <div style={{ width: "174px" }}>
-              <Title size="20">시간</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.starttime} ~ {study.endtime}
-              </Title>
-            </Content>
-          </Row>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">현재 / 최대 인원</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.currentnum} / {study.size}명
-              </Title>
-            </Content>
-            <div style={{ width: "174px" }}>
-              <Title size="20">태그</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.tags}
-              </Title>
-            </Content>
-          </Row>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">링크</Title>
-            </div>
-            <Content>
-              <Title weight="400" size="20">
-                {study.link}
-              </Title>
-            </Content>
-          </Row>
-          <div
-            style={{ border: "1px solid #56BE9C", marginBottom: "30px" }}
-          ></div>
-          <Row>
-            <div style={{ width: "174px" }}>
-              <Title size="20">기타사항</Title>
-            </div>
-            <Title weight="400" size="20">
-              {study.extra}
+        {isSet ? (
+          <Detail>
+            <Title size="32" color="#064538">
+              {study.title}
             </Title>
-          </Row>
-        </Detail>
+            <Title size="24" weight="400" marginTop="17">
+              {study.outline}
+            </Title>
+            <div
+              style={{
+                marginTop: "30px",
+                marginBottom: "30px",
+                border: "3px solid #56BE9C",
+                background: "#56BE9C",
+              }}
+            ></div>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">스터디장</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.leader}
+                </Title>
+              </Content>
+              <div style={{ width: "174px" }}>
+                <Title size="20">매너온도</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.avgMannerTemperature}℃
+                </Title>
+              </Content>
+            </Row>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">모집상태</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.activate === "Y" ? "모집중" : "모집 완료"}
+                </Title>
+              </Content>
+              <div style={{ width: "174px" }}>
+                <Title size="20">기간</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.termstart} ~ {study.termend}
+                </Title>
+              </Content>
+            </Row>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">진행방식</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.type === "online" ? "온라인" : "오프라인"}
+                </Title>
+              </Content>
+              <div style={{ width: "174px" }}>
+                <Title size="20">시간</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.timestart.slice(0, 5)} ~ {study.timeend.slice(0, 5)}
+                </Title>
+              </Content>
+            </Row>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">현재 / 최대 인원</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.participant || 0} / {study.size}명
+                </Title>
+              </Content>
+              <div style={{ width: "174px" }}>
+                <Title size="20">태그</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.tags}
+                </Title>
+              </Content>
+            </Row>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">링크</Title>
+              </div>
+              <Content>
+                <Title weight="400" size="20">
+                  {study.link}
+                </Title>
+              </Content>
+            </Row>
+            <div
+              style={{ border: "1px solid #56BE9C", marginBottom: "30px" }}
+            ></div>
+            <Row>
+              <div style={{ width: "174px" }}>
+                <Title size="20">기타사항</Title>
+              </div>
+              <Title weight="400" size="20">
+                {study.extra}
+              </Title>
+            </Row>
+          </Detail>
+        ) : (
+          <></>
+        )}
       </Info>
       <Lower>
         <button
@@ -247,11 +258,29 @@ const StudyDetail = ({ match }) => {
             fontFamily: "NotoSans",
             cursor: "pointer",
           }}
-          onClick={() => history.push("/studylist")}
+          onClick={() => history.goBack()}
         >
           목록으로
         </button>
-        {isMember ? (
+        {isLeader ? (
+          <button
+            style={{
+              width: "282px",
+              height: "70px",
+              background: "#56Be9c",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "24px",
+              color: "#ffffff",
+              fontWeight: "700",
+              fontFamily: "NotoSans",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push(`/editstudy/${study_id}`)}
+          >
+            스터디 수정하기
+          </button>
+        ) : isMember ? (
           <div
             style={{
               background: "#56BE9C",
@@ -309,7 +338,9 @@ const StudyDetail = ({ match }) => {
         ) : (
           <div></div>
         )}
-        {isMember ? (
+        {isLeader ? (
+          <></>
+        ) : isMember ? (
           <button
             style={{
               width: "282px",
@@ -328,23 +359,43 @@ const StudyDetail = ({ match }) => {
             탈퇴하기
           </button>
         ) : (
-          <button
-            style={{
-              width: "282px",
-              height: "70px",
-              background: "#56Be9c",
-              border: "none",
-              borderRadius: "10px",
-              fontSize: "24px",
-              color: "#ffffff",
-              fontWeight: "700",
-              fontFamily: "NotoSans",
-              cursor: "pointer",
-            }}
-            onClick={join}
-          >
-            가입 신청하기
-          </button>
+          <div>
+            <button
+              style={{
+                width: "180px",
+                height: "70px",
+                background: "#FFFFFF",
+                border: "1px solid #56Be9c",
+                borderRadius: "10px",
+                fontSize: "24px",
+                color: "#56Be9c",
+                fontWeight: "700",
+                fontFamily: "NotoSans",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => console.log("채팅 열기")}
+            >
+              문의하기
+            </button>
+            <button
+              style={{
+                width: "282px",
+                height: "70px",
+                background: "#56Be9c",
+                border: "none",
+                borderRadius: "10px",
+                fontSize: "24px",
+                color: "#ffffff",
+                fontWeight: "700",
+                fontFamily: "NotoSans",
+                cursor: "pointer",
+              }}
+              onClick={join}
+            >
+              가입 신청하기
+            </button>
+          </div>
         )}
       </Lower>
     </Fix>

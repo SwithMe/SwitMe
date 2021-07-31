@@ -82,7 +82,7 @@ const Circle = styled.div`
 const Slider = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 1520px;
   flex-direction: row;
   transition: 0.1s;
 `;
@@ -99,93 +99,12 @@ const MainPage = () => {
   const minute = useRef(0);
   const second = useRef(0);
   const [ranktoggle, setRankToggle] = useState(1);
+  const [typetoggle, setTypeToggle] = useState(1);
   const [ranking, setRanking] = useState([]);
   const [studyRanking, setStudyRanking] = useState([]);
-  const [studies, setStudies] = useState([
-    {
-      study_idx: 1,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 2,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 3,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 4,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 5,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 6,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 7,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 8,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-    {
-      study_idx: 9,
-      type: "online",
-      src: "../assets/books",
-      study_name: "스터디명",
-      member_cnt: 0,
-      manner_temperature: "0",
-      hashtag: ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
-    },
-  ]);
+  const [studies, setStudies] = useState([]);
   const move = useRef(0);
-  const move_max = useRef((studies.length - 6) * 260);
+  const move_max = useRef(0);
 
   const slideRef = useRef();
 
@@ -193,9 +112,10 @@ const MainPage = () => {
     dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
       (response) => {
         if (response.payload) {
-          hour.current = response.payload;
-          minute.current = response.payload;
-          second.current = response.payload;
+          const time = response.payload.cumulative_time;
+          second.current = time % 60;
+          minute.current = Math.floor(time / 60);
+          hour.current = Math.floor(time / 360);
         } else {
           console.log("공부 시간 가져오기 에러");
         }
@@ -212,12 +132,13 @@ const MainPage = () => {
       if (response.payload) {
         setStudyRanking(response.payload);
       } else {
-        console.log("스터디 랭킹 가져오기 에러");
+        console.log(response);
       }
     });
     dispatch(recommendedStudy()).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
+        move_max.current = studies.length >= 6 ? (studies.length - 6) * 260 : 0;
       } else {
         console.log("추천 스터디 가져오기 에러");
       }
@@ -245,7 +166,14 @@ const MainPage = () => {
             <div></div>
             <Timer>
               <Time>
-                {hour.current} : {minute.current} : {second.current}
+                {hour.current} :{" "}
+                {minute.current < 10
+                  ? "0" + minute.current.toString()
+                  : minute.current}{" "}
+                :{" "}
+                {second.current < 10
+                  ? "0" + second.current.toString()
+                  : second.current}
               </Time>
             </Timer>
           </div>
@@ -298,29 +226,24 @@ const MainPage = () => {
                         key={i}
                         style={{ marginBottom: "16px", height: "43px" }}
                       >
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="24"
-                        >
+                        <Title width="60" weight="400" size="24">
                           {i + 1}위
                         </Title>
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="114"
-                        >
+                        <Title width="140" weight="400" size="24">
                           {person.name}
                         </Title>
                         <Title
+                          width="150"
                           weight="700"
                           size="24"
-                          lineHeight="34.75"
                           color="#56BE9C"
                         >
-                          {person.time}
+                          {Math.floor(person.cumulative_time / 360)} :{" "}
+                          {Math.floor(person.cumulative_time / 60) < 10
+                            ? "0" +
+                              Math.floor(person.cumulative_time / 60).toString()
+                            : Math.floor(person.cumulative_time / 60)}{" "}
+                          : {person.cumulative_time % 60}
                         </Title>
                       </div>
                     );
@@ -331,29 +254,24 @@ const MainPage = () => {
                         key={i}
                         style={{ marginBottom: "16px", height: "43px" }}
                       >
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="24"
-                        >
+                        <Title width="60" weight="400" size="24">
                           {i + 1}위
                         </Title>
-                        <Title
-                          weight="400"
-                          size="24"
-                          lineHeight="34.75"
-                          marginLeft="114"
-                        >
+                        <Title weight="400" size="24" width="140">
                           {person.name}
                         </Title>
                         <Title
                           weight="700"
                           size="24"
-                          lineHeight="34.75"
+                          width="150"
                           color="#56BE9C"
                         >
-                          {person.time}
+                          {Math.floor(person.cumulative_time / 360)} :{" "}
+                          {Math.floor(person.cumulative_time / 60) < 10
+                            ? "0" +
+                              Math.floor(person.cumulative_time / 60).toString()
+                            : Math.floor(person.cumulative_time / 60)}{" "}
+                          : {person.cumulative_time % 60}
                         </Title>
                       </div>
                     );
@@ -369,16 +287,45 @@ const MainPage = () => {
             }}
           >
             <Title marginBottom="18">추천 스터디</Title>
-            <span style={{ float: "right" }}>
-              <span style={{ marginRight: "31px" }}>
-                <Circle />
-                온라인
+            {typetoggle === 1 ? (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{ marginRight: "31px", cursor: "pointer" }}
+                  onClick={() => setTypeToggle(1)}
+                >
+                  <Circle />
+                  온라인
+                </span>
+                <span
+                  style={{ color: "#cccccc", cursor: "pointer" }}
+                  onClick={() => setTypeToggle(2)}
+                >
+                  <Circle color="#cccccc" />
+                  오프라인
+                </span>
               </span>
-              <span style={{ color: "#cccccc" }}>
-                <Circle color="#cccccc" />
-                오프라인
+            ) : (
+              <span style={{ float: "right" }}>
+                <span
+                  style={{
+                    marginRight: "31px",
+                    color: "#cccccc",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setTypeToggle(1)}
+                >
+                  <Circle color="#cccccc" />
+                  온라인
+                </span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setTypeToggle(2)}
+                >
+                  <Circle />
+                  오프라인
+                </span>
               </span>
-            </span>
+            )}
           </div>
           <div
             style={{
@@ -406,6 +353,9 @@ const MainPage = () => {
             <div style={{ overflowX: "hidden" }}>
               <Slider ref={slideRef}>
                 {studies.map((study, i) => {
+                  if (study.type === "online" && typetoggle === 2) return false;
+                  if (study.type === "offline" && typetoggle === 1)
+                    return false;
                   return (
                     <Study
                       key={i}
@@ -415,19 +365,19 @@ const MainPage = () => {
                     >
                       <Image
                         alt="스터디 이미지"
-                        src={require("../assets/books.jpg").default}
+                        src={study.image}
                         height="190"
                       />
                       <Title lineHeight="34.75" size="24" marginTop="11">
-                        스터디명
+                        {study.title}
                       </Title>
                       <Title size="18" weight="400" lineHeight="26.06">
-                        {study.member_cnt}명 / 매너온도{" "}
-                        {study.manner_temperature}°C
+                        {study.participant || 0}명 / 매너온도{" "}
+                        {study.avgMannerTemperature}°C
                       </Title>
                       <div>
                         <span style={{ size: "18px", color: "#CCCCCC" }}>
-                          {study.hashtag}
+                          {study.tags}
                         </span>
                       </div>
                     </Study>
