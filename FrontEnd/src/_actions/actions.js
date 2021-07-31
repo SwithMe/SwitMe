@@ -22,6 +22,8 @@ const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
 const ADD_STOPWATCH = "ADD_STOPWATCH";
 const GET_TIMER_LIST = "GET_TIMER_LIST";
+const EDIT_TIMER = "EDIT_TIMER";
+const DELETE_STOPWATCH = "DELETE_TIMER";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -232,6 +234,28 @@ export const getTimerList = (user_idx) => {
     .catch((error) => {});
   return {
     type: GET_TIMER_LIST,
+    payload: request,
+  };
+};
+
+export const editTimer = (timer_idx, dataToSubmit) => {
+  const request = axios
+    .put(`${USER_SERVER}/timer/edit/${timer_idx}`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_TIMER,
+    payload: request,
+  };
+};
+
+export const deleteTimer = (timer_idx) => {
+  const request = axios
+    .delete(`${USER_SERVER}/timer/delete/${timer_idx}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: DELETE_STOPWATCH,
     payload: request,
   };
 };

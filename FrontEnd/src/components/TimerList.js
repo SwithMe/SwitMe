@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import styled from "styled-components";
 import TimerListContent from "./TimerListContent";
-import { addStopwatch, getTimerList } from "../_actions/actions";
+import { addStopwatch, getTimerList, deleteTimer } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
@@ -134,7 +134,14 @@ function TimerList({ openModal }) {
   //삭제
   const onRemove = useCallback(
     (id) => {
-      setTimers(timers.filter((timer) => timer.id !== id));
+      console.log("삭제");
+      dispatch(deleteTimer(id)).then((response) => {
+        if (response.payload) {
+          console.log(response.payload);
+        } else {
+          console.log("스톱워치 삭제 에러");
+        }
+      });
     },
     [timers]
   );
