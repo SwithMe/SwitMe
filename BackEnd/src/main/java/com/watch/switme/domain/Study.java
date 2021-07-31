@@ -109,4 +109,20 @@ public class Study {
         this.participant = participant;
         this.avgMannerTemperature = avgMannerTemperature;
     }
+
+    /*public void update(Study study){
+        this.title = study.title;
+        this.type = study.type;
+        this.termstart = study.termstart;
+        this.termend = study.termend;
+        this.timestart = study.timestart;
+        this.timeend = study.timeend;
+        this.size = study.size;
+        this.tags = study.tags;
+        this.location = study.location;
+        this.extra = study.extra;
+        this.image = study.image;
+        this.link = study.link;
+        this.studyIntro = study.studyIntro;
+    }*/
 }

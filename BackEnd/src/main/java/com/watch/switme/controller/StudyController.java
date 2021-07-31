@@ -23,11 +23,9 @@ import javax.naming.directory.SearchResult;
 import java.util.List;
 
 /*
-* 1. 스터디 개설하기 테스트
-* 2. 스터디 가입하기 채우기
-* 3. 스터디 탈퇴하기
-* 4. 스터디 수정하기
-* 5. 스터디 세부사항 테스트
+* 1. 스터디 개설하기 추가 변경
+* 2. 스터디 가입하기 저장
+* 3. 스터디 수정하기
 * */
 
 
@@ -70,9 +68,9 @@ public class StudyController {
     }
 
     //스터디 수정하기
-    //@PutMapping("/array/fix/{study_idx}")
-    //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
-    //}
+    @PutMapping("/array/fix/{study_idx}")
+    public void edit(@PathVariable Long study_idx, @RequestBody Study study){
+    }
 
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
@@ -94,7 +92,7 @@ public class StudyController {
     @DeleteMapping("/array/leave/{user_study_idx}")
     public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){studyService.delete(user_study_idx);}
 
-    //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
+    //스터디 세부사항 보여주기
     @GetMapping("/array/study/{study_idx}")
     public Study showStudyDetail(@PathVariable Long study_idx){
         return studyRepository.findFirstByStudyIdx(study_idx);

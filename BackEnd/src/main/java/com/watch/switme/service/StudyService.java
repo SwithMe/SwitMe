@@ -29,6 +29,12 @@ public class StudyService {
         userStudyRepository.deleteById(userStudyIdx);
     }
 
+    /*@Transactional
+    public void update(Long study_idx){
+        Study study = studyRepository.findById(study_idx).get();
+        study.update(study);
+        return study_idx;
+    }*/
 
     /*
     @Transactional
