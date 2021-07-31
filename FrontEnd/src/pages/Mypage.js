@@ -102,6 +102,7 @@ const Mypage = () => {
     dispatch(getUserStudy(user_id)).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
+        console.log(response.payload);
       } else {
         console.log("스터디 목록 가져오기 에러");
       }
@@ -264,7 +265,8 @@ const Mypage = () => {
                         style={{
                           width: "60px",
                           height: "60px",
-                          marginLeft: "58px",
+                          marginLeft: "10px",
+                          marginRight: "20px",
                         }}
                       />
                       <Col
@@ -278,15 +280,33 @@ const Mypage = () => {
                             {study.study_title}
                           </Title>
                         </div>
-                        <div style={{ width: "270px" }}>
+                        <div style={{ width: "200px" }}>
                           <Title size="18" color="#CCCCCC" weight="400">
                             {study.start_date} - {study.end_date}
                           </Title>
                         </div>
                       </Col>
-                      <div style={{ width: "152px", marginRight: "58px" }}>
+                      <div style={{ width: "160px", marginRight: "30px" }}>
                         <Title size="24" weight="400" color="#56BE9C">
                           누적 경고 {study.warning}회
+                        </Title>
+                      </div>
+                      <div
+                        style={{
+                          width: "120px",
+                          marginRight: "58px",
+                        }}
+                      >
+                        <Title
+                          size="24"
+                          weight="400"
+                          color="#56BE9C"
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            history.push(`/memberlist/${study.study_idx}`)
+                          }
+                        >
+                          멤버 보기
                         </Title>
                       </div>
                     </Study>
@@ -340,7 +360,7 @@ const Mypage = () => {
             {times.map((study, i) => {
               return (
                 <Study key={i}>
-                  <Col style={{ marginLeft: "58px" }}>
+                  <Col style={{ marginLeft: "30px" }}>
                     <div style={{ width: "141px" }}>
                       <Title size="20" weight="400">
                         {study.start_date === study.end_date
