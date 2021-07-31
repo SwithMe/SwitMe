@@ -5,6 +5,7 @@ import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -114,5 +115,4 @@ public class EmailController {
         emailcontent.append("</html>");
         emailService.sendMail(email, emailcontent.toString());
     }
-}
 }
