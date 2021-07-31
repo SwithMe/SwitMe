@@ -6,7 +6,7 @@ import Input from "./Input";
 import { getMessages } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 import SockJS from "sockjs-client";
-import * as StompJs from "@stomp/stompjs";
+import { Client } from "@stomp/stompjs";
 
 const Content = styled.div`
   display: flex;
@@ -38,52 +38,94 @@ const Bubble = styled.div`
 
 const Chat = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header, other_user, other_user_name, room_idx } = props;
-  const myid = window.localStorage.getItem("id");
+  const { open, close, header, other_user, leader, user, room_idx } = props;
+  //const myname = window.localStorage.getItem("name");
+  //const myid = window.localStorage.getItem("id");
+  const myid = 1;
   const myname = "나";
+  const other = other_user;
+  const leader_idx = leader;
+  const member_idx = user;
   const last = useRef("");
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState();
+  const [messages, setMessages] = useState([
+    {
+      message: "안녕",
+      time: "2021-07-28",
+      sender_UserIdx: 2,
+      sender_UserName: "친구",
+      room_RoomIdx: 1,
+    },
+    {
+      message: "안녕!",
+      time: "2021-07-28",
+      sender_UserIdx: 2,
+      sender_UserName: "친구",
+      room_RoomIdx: 1,
+    },
+    {
+      message: "안녕?",
+      time: "2021-07-28",
+      sender_UserIdx: 1,
+      sender_UserName: "나",
+      room_RoomIdx: 1,
+    },
+    {
+      message: "안녕!!!",
+      time: "2021-07-28",
+      sender_UserIdx: 1,
+      sender_UserName: "나",
+      room_RoomIdx: 1,
+    },
+    {
+      message: "안녕~",
+      time: "2021-07-28",
+      sender_UserIdx: 1,
+      sender_UserName: "친구",
+      room_RoomIdx: 1,
+    },
+  ]);
+  var client = new Client();
+  client.configure({
+    brokerURL: "ws://localhost:5000/sock",
+    debug: function (str) {
+      console.log(str);
+    },
+    reconnectDelay: 5000,
+    heartbeatIncoming: 4000,
+    heartbeatOutgoing: 4000,
+    onConnect: () => {
+      console.log("onConnect");
+    },
+  });
+
+  const callback = (message) => {
+    if (message.body) {
+      alert("got message with body " + message.body);
+    } else {
+      alert("got empty message");
+    }
+  };
+
+  client.onConnect = function (frame) {
+    client.subscribe(`/topic/${room_idx}`, callback);
+  };
+  client.onStompError = function (frame) {
+    console.log("Broker reported error: " + frame.headers["message"]);
+    console.log("Additional details: " + frame.body);
+  };
+
+  client.activate();
   const dispatch = useDispatch();
-  const client = useRef({});
 
   useEffect(() => {
-    dispatch(getMessages(room_idx)).then((response) => {
-      if (response.payload) {
-        console.log(response);
-        setMessages(response.payload);
-      } else {
-        console.log("메세지 목록 가져오기 에러");
-      }
-    });
-    client.current = new StompJs.Client({
-      //brokerURL: "ws://localhost:8080/sock",
-      webSocketFactory: () => new SockJS("/sock"),
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    });
-
-    const callback = (message) => {
-      if (message.body) {
-        alert("got message with body " + message.body);
-      } else {
-        alert("got empty message");
-      }
-    };
-
-    client.current.onConnect = function (frame) {
-      client.current.subscribe(`/topic/${room_idx}`, callback);
-    };
-    client.current.onStompError = function (frame) {
-      console.log("Broker reported error: " + frame.headers["message"]);
-      console.log("Additional details: " + frame.body);
-    };
-
-    client.current.activate();
+    // dispatch(getMessages(room_idx)).then((response) => {
+    //   if (response.payload) {
+    //     setMessage(response.payload);
+    //   } else {
+    //     console.log("메세지 목록 가져오기 에러");
+    //   }
+    // });
     last.current = "";
   }, []);
 
@@ -93,8 +135,8 @@ const Chat = (props) => {
   };
 
   const sendMessage = () => {
-    client.current.publish({
-      destination: "/pub/chat/message",
+    client.publish({
+      destination: "/pub/message",
       body: JSON.stringify({
         room_idx: room_idx,
         user_idx: myid,
@@ -103,20 +145,11 @@ const Chat = (props) => {
       }),
     });
     setMessage("");
-    dispatch(getMessages(room_idx)).then((response) => {
-      if (response.payload) {
-        console.log(response);
-        setMessages(response.payload);
-      } else {
-        console.log("메세지 목록 가져오기 에러");
-      }
-    });
-    last.current = myid;
   };
 
   const disconnect = () => {
-    client.current.publish({
-      destination: "/pub/disconnect",
+    client.publish({
+      destination: "/pub/message",
       body: JSON.stringify({
         room_idx: room_idx,
         user_idx: myid,
@@ -143,7 +176,9 @@ const Chat = (props) => {
             }}
           >
             <div>
-              <Title>{other_user_name}</Title>
+              <Title>
+                {other ? other : member_idx ? member_idx : leader_idx}
+              </Title>
             </div>
             {header}
             <button className="close" onClick={disconnect}>
@@ -154,21 +189,20 @@ const Chat = (props) => {
           <Content>
             {messages?.map((message, i) => {
               if (
-                last.current !== message.sender_idx &&
-                message.sender_idx !== myid
+                last.current !== message.sender_UserName &&
+                message.sender_UserName !== myname
               ) {
-                last.current = message.sender_idx;
+                last.current = message.sender_UserName;
                 return (
                   <Row>
                     <img
                       alt="profile"
-                      src={message.self_image}
+                      src={require("../assets/profile.png").default}
                       style={{
                         width: "70px",
                         height: "70px",
                         marginRight: "10px",
                         position: "absolute",
-                        borderRadius: "50%",
                       }}
                     />
                     <img
@@ -184,14 +218,17 @@ const Chat = (props) => {
                     <Bubble>{message.message}</Bubble>
                   </Row>
                 );
-              } else if (message.sender_idx !== myid) {
+              } else if (message.sender_UserName !== myname) {
                 return (
                   <Row>
                     <Bubble marginLeft="100">{message.message}</Bubble>
                   </Row>
                 );
-              } else if (last.current !== myid && message.sender_idx === myid) {
-                last.current = myid;
+              } else if (
+                last.current !== myname &&
+                message.sender_UserName === myname
+              ) {
+                last.current = myname;
                 return (
                   <Row location="flex-end">
                     <Bubble>{message.message}</Bubble>

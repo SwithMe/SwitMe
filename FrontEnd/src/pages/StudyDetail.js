@@ -80,7 +80,7 @@ const StudyDetail = ({ match }) => {
     type: "",
   });
   const [isLeader, setIsLeader] = useState(false);
-  const [isMember, setIsMember] = useState(false);
+  const [isMember, setIsMember] = useState(true);
   const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,

@@ -117,7 +117,7 @@ const MakeStudy = () => {
     };
     console.log(data);
     dispatch(makestudy(data)).then((response) => {
-      if (response.payload) {
+      if (response.type) {
         alert("스터디가 생성되었습니다..");
         history.push(`/`);
       } else {

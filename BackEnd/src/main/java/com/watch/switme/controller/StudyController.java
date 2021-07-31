@@ -43,12 +43,10 @@ public class StudyController {
     // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
     //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
-    public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto) {
-        System.out.println("\n\n안" + makeStudyDto.getLeader());
-        User user = userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
-        int temp = user.getManner_temperature();
+    public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
+        User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
+        int temp=user.getManner_temperature();
         System.out.println(user.getManner_temperature());
-        // study main 에 저장하면 됨.
         Study study = Study.builder()
                 .title(makeStudyDto.getTitle())
                 .type(makeStudyDto.getType())
