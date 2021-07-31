@@ -27,10 +27,6 @@ public class EmailController {
 
     @PostMapping(value="/user/email/find")
     public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
-
-        //1. userRespository에서 signupDTO의 useremail과 같은 애를 찾는다.
-        //2. 그 user의 pw를 받아온다.
-        //3. 그 값을 리턴해준다.
         User user=userRepository.findByEmailAndRealname(signUpDTO.getEmail(), signUpDTO.getRealname());
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
@@ -62,21 +58,6 @@ public class EmailController {
         emailService.sendMail(signUpDTO.getEmail(), emailcontent.toString());
     }
 
-/*
-    @Transactional
-    public User signUp(final SignUpDTO signUpDTO) {
-        final User user = User.builder()
-                .email(signUpDTO.getEmail())
-                .pw(passwordEncoder.encode(signUpDTO.getPw()))
-                .role(UserRole.ROLE_USER)
-                .manner_temperature(70)
-                .UserAgree(UserYesOrNo.Y)
-                .realname(signUpDTO.getRealname())
-                .isEnable(true)
-                .build();
-        return userRepository.save(user);
-    }
- */
     @PostMapping(value="/user/email/send")
     public void sendMail(@RequestBody SignUpDTO signUpDTO) throws MessagingException{
         System.out.println(signUpDTO.getEmail());

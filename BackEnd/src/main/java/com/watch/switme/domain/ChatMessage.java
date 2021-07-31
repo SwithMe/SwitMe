@@ -20,8 +20,8 @@ public class ChatMessage {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "time")
-    private LocalDateTime time;
+    @Column(name = "send_time")
+    private LocalDateTime sendTime;
 
     @ManyToOne
     @JoinColumn(name="sender_idx")
@@ -31,20 +31,20 @@ public class ChatMessage {
     @JoinColumn(name="room_idx")
     private ChatRoom room;
 
-    @Column(columnDefinition = "TINYINT")
-    private int check;
+    @Column(columnDefinition = "TINYINT", name="check_read")
+    private int checkRead;
 
     @Builder
     public ChatMessage(String message, User sender, ChatRoom room, LocalDateTime time, int check){
         this.message = message;
         this.sender = sender;
         this.room = room;
-        this.time = time;
-        this.check = check;
+        this.sendTime = time;
+        this.checkRead = check;
     }
 
     public void checkUpdate(int check){
-        this.check = check;
+        this.checkRead = check;
     }
 
 }

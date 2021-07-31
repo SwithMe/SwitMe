@@ -38,7 +38,7 @@ public class ChatRoomService {
         List<RoomListResponseDto> roomListResponseDtoList = new ArrayList<>();
 
         for(ChatRoom room : chatRoomList){
-            ChatMessage chatMessage = chatMessageRepository.findFirstByRoom_RoomIdxOrderByTimeDesc(room.getRoomIdx());
+            ChatMessage chatMessage = chatMessageRepository.findFirstByRoom_RoomIdxOrderBySendTimeDesc(room.getRoomIdx());
             System.out.println(chatMessage);
             String message;
             if (chatMessage == null) {
@@ -67,7 +67,7 @@ public class ChatRoomService {
                     .other_user(other_user)
                     .user_image(userDataExtraRepository.findFirstByUserIdx(other_idx).getSelfImage())
                     .message(message)
-                    .notification(chatMessageRepository.countByCheckEquals(0))
+                    .notification(chatMessageRepository.countByCheckReadEquals(0))
                     .build();
 
             roomListResponseDtoList.add(roomListResponseDto);

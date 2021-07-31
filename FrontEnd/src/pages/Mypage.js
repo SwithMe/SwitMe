@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
@@ -82,10 +82,10 @@ const Mypage = () => {
   const [studytoggle, setStudyToggle] = useState(1);
   const [user, setUser] = useState({
     user_idx: "",
-    user_name: "이름",
-    user_email: "abc@ewhain.net",
+    user_email: "",
+    username: "",
     user_image: "",
-    user_manner: 50,
+    user_manner: "",
   });
   const [studies, setStudies] = useState([]);
 
@@ -142,7 +142,6 @@ const Mypage = () => {
   return (
     <Wrapper>
       <Header page="3" />
-
       <Col>
         <Row
           style={{

@@ -19,10 +19,10 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             "where c.room_idx = ?1 ", nativeQuery = true)
     List<ChatMessageInterface> findByRoom_RoomIdx(Long room_idx);
 
-    ChatMessage findFirstByRoom_RoomIdxOrderByTimeDesc(Long room_idx);
+    ChatMessage findFirstByRoom_RoomIdxOrderBySendTimeDesc(Long room_idx);
 
-    long countByCheckEquals(int num);
+    long countByCheckReadEquals(int num);
 
-    @Query(value = "select * from chat_message c where c.room_idx = ?1 and c.sender_idx = ?2 and c.check = ?3", nativeQuery = true)
+    @Query(value = "select * from chat_message c where c.room_idx = ?1 and c.sender_idx = ?2 and c.check_read = ?3", nativeQuery = true)
     List<ChatMessage> findByRoom_RoomIdxIsAndSender_UserIdxIsAndCheckEquals(Long room_idx, Long user_idx, int num);
 }
