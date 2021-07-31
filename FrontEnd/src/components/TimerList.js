@@ -54,7 +54,7 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
-function TimerList({ openModal }) {
+function TimerList({ openModal, changeTimer }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
   const [toggle, setToggle] = useState(false);
@@ -89,9 +89,9 @@ function TimerList({ openModal }) {
               " : " +
               second.toString();
             tmp_arr.push(stopwatch);
-            console.log(tmp_arr);
           });
           setTimers(tmp_arr);
+          changeTimer(tmp_arr[0]);
         } else {
           console.log("스톱워치 리스트 에러");
         }
@@ -161,6 +161,7 @@ function TimerList({ openModal }) {
             openModal={openModal}
             toggle={toggle}
             setToggle={setToggle}
+            changeTimer={changeTimer}
           ></TimerListContent>
         ))}
       </div>

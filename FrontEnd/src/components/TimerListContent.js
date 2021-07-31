@@ -73,7 +73,13 @@ const Content = styled.div`
   }
 `;
 
-const TimerListContent = ({ timer, onRemove, toggle, setToggle }) => {
+const TimerListContent = ({
+  timer,
+  onRemove,
+  toggle,
+  setToggle,
+  changeTimer,
+}) => {
   const { timer_idx, name, duration } = timer;
   const [modalOpen, setModalOpen] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -112,7 +118,13 @@ const TimerListContent = ({ timer, onRemove, toggle, setToggle }) => {
         value={newName}
       ></ModalTimer>
       <Content>
-        <div class="name">{name}</div>
+        <div
+          class="name"
+          style={{ cursor: "pointer" }}
+          onClick={() => changeTimer(timer)}
+        >
+          {name}
+        </div>
         <div class="green">
           <div class="time">{duration}</div>
           <div class="edit" onClick={openModal}></div>

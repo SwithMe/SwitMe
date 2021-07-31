@@ -50,7 +50,7 @@ const Button = styled.button`
 `;
 
 function Watch(props) {
-  const { name } = props;
+  const { timer } = props;
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
@@ -122,7 +122,7 @@ function Watch(props) {
       ":" +
       seconds;
     const dataToSubmit = {
-      timer_idx: 1,
+      timer_idx: timer.timer_idx,
       timer_duration: time.s + time.m * 60 + time.h * 360,
       start_time: start_time.current,
       end_time: end_time.current,
@@ -137,7 +137,7 @@ function Watch(props) {
     <Wrapper>
       <div style={{ height: "150px" }}></div>
       <div className="timerName">
-        <div style={{ fontSize: "48px" }}>{name}</div>
+        <div style={{ fontSize: "48px" }}>{timer.name}</div>
       </div>
       <div
         className="display"
