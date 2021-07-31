@@ -54,7 +54,6 @@ public class StudyController {
         studyRepository.save(study);
     }
 
-
     //전체 스터디 리스트 가져오기.
     @GetMapping("/alllist")
     public Iterable<Study> list(){
@@ -94,7 +93,7 @@ public class StudyController {
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
     @GetMapping("/array/study/{study_idx}")
-    public List<Study> showStudyDetail(@PathVariable Long study_idx){
+    public Study showStudyDetail(@PathVariable Long study_idx){
         return studyRepository.findByStudy_idx(study_idx);
     }
 

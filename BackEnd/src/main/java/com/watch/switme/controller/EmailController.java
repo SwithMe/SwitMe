@@ -3,8 +3,11 @@ package com.watch.switme.controller;
 import com.watch.switme.domain.User;
 import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
+import com.watch.switme.repository.UserRepository;
 import com.watch.switme.service.EmailService;
+import com.watch.switme.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +17,12 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 @RestController
 
-
 public class EmailController {
-
-
     @Autowired
     private final EmailService emailService;
+
+    @Autowired
+    private final UserRepository userRepository;
 
     @PostMapping(value="/user/email/find")
     public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
@@ -115,4 +118,4 @@ public class EmailController {
         emailService.sendMail(email, emailcontent.toString());
     }
 }
-}
+
