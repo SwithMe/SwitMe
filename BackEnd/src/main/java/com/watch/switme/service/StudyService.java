@@ -4,10 +4,12 @@ import com.watch.switme.domain.Study;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserRole;
 import com.watch.switme.domain.UserYesOrNo;
+import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.RecomStudyResDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
+import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,9 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final UserStudyRepository userStudyRepository;
 
-    @Transactional
-    public void delete(Long userStudyIdx){
-        userStudyRepository.deleteById(userStudyIdx);
-    }
+    @Autowired
+    private final UserRepository userRepository;
+
 
     /*
     @Transactional
@@ -48,6 +49,15 @@ public class StudyService {
     }
     */
 
+    @Transactional
+    public void delete(Long userStudyIdx){
+        userStudyRepository.deleteById(userStudyIdx);}
+
+
+    @Transactional
+    public Study update(Study study, MakeStudyDto makeStudyDto){
+        study.update(study, makeStudyDto);
+        return study;}
 
     @Transactional
     public Study findByStudyIdx(Long study_idx) {

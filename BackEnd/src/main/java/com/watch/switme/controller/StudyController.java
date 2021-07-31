@@ -1,14 +1,18 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.Study;
+import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserYesOrNo;
 import com.watch.switme.dto.JoinStudyDto;
+import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.SearchResultDto;
 import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.repository.StudyRepository;
+import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserService;
+import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +34,12 @@ import java.util.List;
 @RequestMapping("/list")
 public class StudyController {
 
+    @Autowired
     private StudyService studyService;
     private UserService userService;
 
     StudyRepository studyRepository;
+    UserRepository userRepository;
     UserStudyRepository userStudyRepository;
 
     @Autowired
@@ -43,17 +49,37 @@ public class StudyController {
 
     //온/오프라인 스터디 개설하기
     @PostMapping("/array/enroll")
-    public void createnewStudy(@RequestBody Study study){
-        /*Optional<Study> exist=studyRepository.findByTitle(study.getTitle());
-        if(exist.isPresent()) {
-            throw new Exception(HttpStatus.CONFLICT, "오류");
-        }*/
-        // 1. leader 값에 만드는 사람의 user_idx 넣기
-        // 2. leader name 추가하기
-        // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
-        studyRepository.save(study);
-    }
+    // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
+    public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
+        User user= userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
+        int temp=user.getManner_temperature();
+        System.out.println(user.getManner_temperature());
+        Study study = Study.builder()
+                .title(makeStudyDto.getTitle())
+                .type(makeStudyDto.getType())
+                .studyIntro(makeStudyDto.getStudyIntro())
+                .image(makeStudyDto.getImage())
+                .location(makeStudyDto.getLocation())
+                .link(makeStudyDto.getLink())
+                .size(makeStudyDto.getSize())
+                .tags(makeStudyDto.getTags())
+                .leader((long) makeStudyDto.getLeader())
+                .activate(UserYesOrNo.Y)
+                .termend(makeStudyDto.getTermend())
+                .termstart(makeStudyDto.getTermstart())
+                .timeend(makeStudyDto.getTimeend())
+                .timestart(makeStudyDto.getTimestart())
+                .avgMannerTemperature(temp)
+                .build();
+        return studyRepository.save(study);
+        }
 
+    //스터디 수정하기
+    @PostMapping("/array/fix/{study_idx}")
+    public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
+        Study study = studyRepository.findById(study_idx).get();
+        return studyService.update(study, makeStudyDto);
+       }
 
     //전체 스터디 리스트 가져오기.
     @GetMapping("/alllist")
@@ -66,7 +92,8 @@ public class StudyController {
     //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
     //}
 
-    //스터디 가입하기
+    //스터디 가입하기 //매너온도값에 추가하기
+
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public JoinStudyDto JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
 
