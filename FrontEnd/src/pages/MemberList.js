@@ -33,85 +33,17 @@ const MemberList = ({ match }) => {
   const dispatch = useDispatch();
   const [study, setStudy] = useState({
     studyname: "스터디 이름쓰는 칸",
-    members: [
-      {
-        user_idx: 0,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 1,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 2,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 3,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 4,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 5,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 6,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 7,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 8,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-      {
-        user_idx: 9,
-        name: "김김김",
-        profile: "../assets/circle.png",
-        temperature: "00",
-        warning: "0",
-      },
-    ],
+    members: [],
   });
+  const [isLeader, setIsLeader] = useState(false);
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
         console.log(study);
         setStudy({ ...study, studyname: response.payload.title });
+        if (response.payload.leader === window.localStorage.getItem("id"))
+          isLeader(true);
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
       }
@@ -219,23 +151,27 @@ const MemberList = ({ match }) => {
                 alignItems: "center",
               }}
             >
-              <button
-                style={{
-                  border: "1px solid #C70000",
-                  borderRadius: "10px",
-                  background: "white",
-                  width: "105px",
-                  height: "45px",
-                  fontSize: "20px",
-                  color: "#C70000",
-                  fontFamily: "NotoSans",
-                  cursor: "pointer",
-                }}
-                // onClick={openModal}
-                onClick={() => warn(member.user_idx)}
-              >
-                경고하기
-              </button>
+              {isLeader ? (
+                <button
+                  style={{
+                    border: "1px solid #C70000",
+                    borderRadius: "10px",
+                    background: "white",
+                    width: "105px",
+                    height: "45px",
+                    fontSize: "20px",
+                    color: "#C70000",
+                    fontFamily: "NotoSans",
+                    cursor: "pointer",
+                  }}
+                  // onClick={openModal}
+                  onClick={() => warn(member.user_idx)}
+                >
+                  경고하기
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           </Row>
         ))}
