@@ -5,8 +5,6 @@ import Watch from "../components/Watch";
 import TimerList from "../components/TimerList";
 import ModalTimer from "../components/ModalTimer";
 import TimerListContent from "../components/TimerListContent";
-import { addStopwatch } from "../_actions/actions";
-import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,27 +17,26 @@ const Wrapper = styled.div`
 `;
 
 const StopWatch = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const dispatch = useDispatch();
+  // const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // const openModal = (id, name) => {
+  //   setModalOpen(true);
+  // };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // // };
+  // <ModalTimer
+  //       open={modalOpen}
+  //       close={closeModal}
+  //       onInputChange={TimerList.onInputChange}
+  //       onSubmit={TimerList.onSubmit}
+  //     ></ModalTimer>
 
   return (
     <div>
-      <ModalTimer
-        open={modalOpen}
-        close={closeModal}
-        onInputChange={TimerList.onInputChange}
-        onSubmit={TimerList.onSubmit}
-      ></ModalTimer>
       <Header page="1"></Header>
       <Wrapper>
-        <TimerList openModal={openModal}></TimerList>
+        <TimerList /*openModal={openModal}*/></TimerList>
         <Watch name={TimerListContent.name}></Watch>
       </Wrapper>
     </div>

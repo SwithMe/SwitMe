@@ -96,7 +96,7 @@ const EditStudy = ({ match }) => {
         console.log("기존 스터디 정보 가져오기 실패");
       }
     });
-  });
+  }, []);
 
   const onFormSubmit = () => {
     console.log(study);

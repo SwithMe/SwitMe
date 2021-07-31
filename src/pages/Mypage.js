@@ -102,6 +102,7 @@ const Mypage = () => {
     dispatch(getUserStudy(user_id)).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
+        console.log(response.payload);
       } else {
         console.log("스터디 목록 가져오기 에러");
       }
