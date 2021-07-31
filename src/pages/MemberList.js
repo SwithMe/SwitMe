@@ -67,7 +67,7 @@ const MemberList = ({ match }) => {
     };
     console.log(data);
     dispatch(warnMember(data)).then((response) => {
-      if (response.payload) {
+      if (response.type) {
         console.log("경고 성공");
       } else {
         console.log("경고 주기 에러 발생");

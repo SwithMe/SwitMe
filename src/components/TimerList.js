@@ -54,12 +54,20 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
+<<<<<<< HEAD
 function TimerList({ openModal, changeTimer }) {
+=======
+function TimerList({ openModal, changeTimer, change }) {
+>>>>>>> feature-connect
   //타이머 목록
   const [status, setStatus] = useState(0);
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
+<<<<<<< HEAD
   const [timers, setTimers] = useState();
+=======
+  const [timers, setTimers] = useState([]);
+>>>>>>> feature-connect
 
   useEffect(() => {
     dispatch(getTimerList(window.localStorage.getItem("id"))).then(
@@ -89,7 +97,10 @@ function TimerList({ openModal, changeTimer }) {
               " : " +
               second.toString();
             tmp_arr.push(stopwatch);
+<<<<<<< HEAD
             console.log(timer.duration);
+=======
+>>>>>>> feature-connect
           });
           setTimers(tmp_arr);
           if (tmp_arr.length > 0) changeTimer(tmp_arr[0]);
@@ -98,7 +109,11 @@ function TimerList({ openModal, changeTimer }) {
         }
       }
     );
+<<<<<<< HEAD
   }, [toggle]);
+=======
+  }, [toggle, change]);
+>>>>>>> feature-connect
 
   //추가하기 status:1
   const Add = () => {
