@@ -1,33 +1,50 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Input2 from "../components/Input2";
-import Button from "../components/Button";
 import { useHistory } from "react-router";
 import Image from "../components/Image";
+import ImageUpload from "../components/ImageUpload";
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-`;
-
-const Items = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  height: 50vh;
+  justify-content: content;
 `;
 
-const TextBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  //justify-content: flex-start;
-  width: 98%;
-  color: #064538;
+const Input = styled.input`
+  width: 480px;
+  height: 65px;
+  border-radius: 10px;
+  border: 1px solid var(--middle);
+  margin: 20px;
+  outline: none;
+  font-size: 20px;
+  padding: 10px;
+`;
+
+const Box = styled.div`
+  width: 480px;
+  height: 65px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  margin: 20px;
+  outline: none;
+  font-size: 20px;
+  padding: 10px;
+`;
+
+const Button = styled.button`
+  width: 228px;
+  height: 70px;
+  background: var(--middle);
+  border-radius: 10px;
+  margin: 10px;
+  margin-top: 40px;
+  color: white;
+  font-size: 24px;
+  outline: none;
+  border: none;
 `;
 
 const Signup = () => {
@@ -47,40 +64,20 @@ const Signup = () => {
 
   return (
     <Wrapper>
-      {/* <form onSubmit={formSubmit}> */}
-      <Image width="198" height="198" src={user.user_image}></Image>
-      <Items>
-        <Input2
-          name="username"
-          placeholder="이름"
-          width="29rem"
-          onChange={onInputChange}
-        ></Input2>
-        <Input2
-          name="useremail"
-          placeholder="ewhain 이메일 주소"
-          width="29rem"
-          onChange={onInputChange}
-        ></Input2>
-        <Input2
-          name="userpassword"
-          placeholder="비밀번호(영문, 숫자, 특수기호 포함 8~16자)"
-          width="29rem"
-          onChange={onInputChange}
-        ></Input2>
-        <Input2
-          name="userpassword2"
-          placeholder="비밀번호 확인"
-          width="29rem"
-          onChange={onInputChange}
-        ></Input2>
-        <Button
-          type="submit"
-          name="회원가입"
-          width="29rem"
-          color="#56BE9C"
-        ></Button>
-      </Items>
+      <Image width="198px" height="198px" src={user.user_image}></Image>
+      <Box>{user.user_name}</Box>
+      <Box>{user.user_email}</Box>
+      <Input
+        placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"
+        onChange={onInputChange}
+      ></Input>
+      <Input placeholder="비밀번호 확인" onChange={onInputChange}></Input>
+
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <Button style={{ backgroundColor: "#cccccc" }}>뒤로가기</Button>
+        <Button>수정하기</Button>
+      </div>
+
       {/* </form> */}
     </Wrapper>
   );
