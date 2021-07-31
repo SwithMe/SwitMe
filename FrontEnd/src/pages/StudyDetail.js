@@ -54,25 +54,7 @@ const StudyDetail = ({ match }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isSet, setIsSet] = useState(false);
-  const [study, setStudy] = useState({
-    title: "스터디 이름 쓰는 칸",
-    outline:
-      "스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개 스터디 한줄 소개",
-    leader: 1,
-    temperature: "80",
-    state: "모집중", //추후 삭제 필요
-    startdate: "2021-11-11",
-    enddate: "2021-11-11",
-    type: "온라인",
-    starttime: "AM 10:00",
-    endtime: "AM 11:00",
-    currentnum: 10,
-    size: 20,
-    tags: "태그1, 태그2, 태그3",
-    link: "https://www.naver.com/",
-    extra:
-      "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
-  });
+  const [study, setStudy] = useState();
   const [isLeader, setIsLeader] = useState(false);
   const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
@@ -83,7 +65,7 @@ const StudyDetail = ({ match }) => {
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
-        setStudy(response.payload);
+        setStudy(response.payload[0]);
         console.log(response.payload);
         if (String(response.payload.leader) === user_id) {
           setIsLeader(true);
@@ -196,7 +178,8 @@ const StudyDetail = ({ match }) => {
               </div>
               <Content>
                 <Title weight="400" size="20">
-                  {study.timestart.slice(0, 5)} ~ {study.timeend.slice(0, 5)}
+                  {study.timestart ? study.timestart.slice(0, 5) : "00"} ~{" "}
+                  {study.timeend ? study.timeend.slice(0, 5) : "00"}
                 </Title>
               </Content>
             </Row>

@@ -24,6 +24,7 @@ const ADD_STOPWATCH = "ADD_STOPWATCH";
 const GET_TIMER_LIST = "GET_TIMER_LIST";
 const EDIT_TIMER = "EDIT_TIMER";
 const DELETE_STOPWATCH = "DELETE_TIMER";
+const SAVE_STOPWATCH = "SAVE_STOPWATCH";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -39,7 +40,7 @@ export const login = (dataToSubmit) => {
 
 export const signup = (dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/auth/signup`, dataToSubmit)
+    .post(`${USER_SERVER}/user/email/send`, dataToSubmit)
     .then((response) => response.data)
     .catch((error) => {});
   return {
@@ -253,10 +254,23 @@ export const deleteTimer = (timer_idx) => {
   const request = axios
     .delete(`${USER_SERVER}/timer/delete/${timer_idx}`)
     .then((response) => response.data)
-    .catch((error) => {});
+    .catch((error) => {
+      return null;
+    });
   return {
     type: DELETE_STOPWATCH,
     payload: request,
+  };
+};
+
+export const saveTimer = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/timer/save`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: SAVE_STOPWATCH,
+    payload: request.payload,
   };
 };
 

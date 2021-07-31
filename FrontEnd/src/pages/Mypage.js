@@ -80,13 +80,7 @@ const Mypage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [studytoggle, setStudyToggle] = useState(1);
-  const [user, setUser] = useState({
-    user_idx: "",
-    user_name: "이름",
-    user_email: "abc@ewhain.net",
-    user_image: "",
-    user_manner: 50,
-  });
+  const [user, setUser] = useState();
   const [studies, setStudies] = useState([]);
 
   const [times, setTimes] = useState([]);
