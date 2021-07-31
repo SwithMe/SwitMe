@@ -1,14 +1,15 @@
 package com.watch.switme.controller;
 
-import com.watch.switme.domain.Study;
-import com.watch.switme.domain.UserYesOrNo;
+import com.watch.switme.domain.*;
 import com.watch.switme.dto.JoinStudyDto;
 import com.watch.switme.dto.SearchResultDto;
 import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.repository.StudyRepository;
+import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserService;
+import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +31,10 @@ import java.util.List;
 @RequestMapping("/list")
 public class StudyController {
 
-    private StudyService studyService;
-    private UserService userService;
-
+    @Autowired
+    UserStudyService userStudyService;
     StudyRepository studyRepository;
+    UserRepository userRepository;
     UserStudyRepository userStudyRepository;
 
     @Autowired
@@ -66,31 +67,28 @@ public class StudyController {
     //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
     //}
 
-    //스터디 가입하기
-    @PostMapping("/array/join/{user_idx}/{study_idx}")
+    //스터디 가입하기(테스트 필요함)
+    /*@PostMapping("/array/join/{user_idx}/{study_idx}")
     public JoinStudyDto JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
-
-        //User user = userService.findByUserIdx(user_idx);
-        //Study study =studyService.findByStudyIdx(study_idx);
-
         JoinStudyDto joinStudyDto = JoinStudyDto.builder()
-                .amLeader("N")
-                .studyIdx(study_idx)
-                .userIdx(user_idx) //t수정수정수정
-                .userIdx(user_idx)
+                .amLeader(UserYesOrNo.N)
+                .study_idx(study_idx)
+                .user_idx(user_idx)
                 .warning(0)
                 .joinDate(LocalDateTime.now())
                 .activate(UserYesOrNo.Y)
                 .build();
-        return joinStudyDto;
-        //joinStudyRepository.save(joinStudyDto.toEntity()).getUserStudyIdx();
+        return joinStudyDto;//studyRepository.save(joinStudyDto.toEntity()).getUserStudyIdx();
+    }*/
+    @PostMapping("/array/join/{user_idx}/{study_idx}")
+    public Long JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
+        return userStudyService.join(user_idx,study_idx);
     }
 
-
     //스터디 탈퇴하기 (테스트 필요함)
-    //@DeleteMapping("/array/leave/{user_study_idx}")
-    //public void LeaveStudy(@PathVariable Long user_study_idx){userStudyRepository.deleteById(user_study_idx); }
-
+     @DeleteMapping("/array/leave/{user_study_idx}")
+        public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){
+            userStudyService.leave(user_study_idx);}
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
     @GetMapping("/array/study/{study_idx}")
@@ -98,7 +96,7 @@ public class StudyController {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
-    /* 스터디 검색/리스트 관련 */
+    //스터디 검색 기능
     @PostMapping("/array")
     public List<Study> example(@RequestBody SearchStudyDto searchStudyDto){
         return studyRepository.getQuery

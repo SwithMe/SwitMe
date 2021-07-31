@@ -1,10 +1,9 @@
 package com.watch.switme.service;
 
-import com.watch.switme.domain.User;
-import com.watch.switme.domain.UserDataExtra;
-import com.watch.switme.domain.UserStudy;
-import com.watch.switme.domain.UserYesOrNo;
+import com.watch.switme.domain.*;
+import com.watch.switme.dto.JoinStudyRequestDto;
 import com.watch.switme.dto.MemberResponseDto;
+import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
@@ -12,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class UserStudyService {
     private final UserRepository userRepository;
     private final UserStudyRepository userStudyRepository;
     private final UserDataExtraRepository userDataExtraRepository;
+    private final StudyRepository studyRepository;
 
     @Transactional
     public List<MemberResponseDto> getMemberList(Long study_idx){
@@ -71,5 +72,24 @@ public class UserStudyService {
         } else{
             user.setManner_temperature(0);
         }
+    }
+
+    @Transactional
+    public void leave(Long user_study_idx){
+        userStudyRepository.deleteById(user_study_idx);
+    }
+
+    @Transactional //삭제
+    public Long join(Long user_idx, Long study_idx){
+        User user= userRepository.findById(user_idx).get();
+        Study study = studyRepository.findById(study_idx).get();
+        JoinStudyRequestDto joinStudyRequestDto = JoinStudyRequestDto.builder()
+                .joinDate(LocalDateTime.now())
+                .study(study)
+                .user(user)
+                .activate(UserYesOrNo.Y)
+                .amLeader(UserYesOrNo.N)
+                .build();
+        return userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
     }
 }
