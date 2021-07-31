@@ -20,7 +20,7 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     List<Study> findAll();
 
     @Query(value="SELECT * from Study_main u where u.study_idx=:sstudy_idx",nativeQuery=true)
-    List<Study> findByStudy_idx(@Param("sstudy_idx") Long study_idx);
+    Study findByStudy_idx(@Param("sstudy_idx") Long study_idx);
 
 /*
     @Query(value="select * from Study_main u where u.study_idx=:sstudy_idx", nativeQuery=true)

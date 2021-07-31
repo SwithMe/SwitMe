@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.directory.SearchResult;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /*
-* 1. 스터디 개설하기 테스트
 * 2. 스터디 가입하기 채우기
-* 3. 스터디 탈퇴하기
 * 4. 스터디 수정하기
-* 5. 스터디 세부사항 테스트
 * */
 
 
@@ -55,7 +53,6 @@ public class StudyController {
         studyRepository.save(study);
     }
 
-
     //전체 스터디 리스트 가져오기.
     @GetMapping("/alllist")
     public Iterable<Study> list(){
@@ -63,8 +60,8 @@ public class StudyController {
     }
 
     //스터디 수정하기
-    //@PutMapping("/array/fix/{study_idx}")
-    //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
+  //  @PostMapping("/array/fix/{study_idx}")
+   // public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study){
     //}
 
     //스터디 가입하기(테스트 필요함)
@@ -80,19 +77,20 @@ public class StudyController {
                 .build();
         return joinStudyDto;//studyRepository.save(joinStudyDto.toEntity()).getUserStudyIdx();
     }*/
+
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public Long JoinStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
         return userStudyService.join(user_idx,study_idx);
     }
 
-    //스터디 탈퇴하기 (테스트 필요함)
+    //스터디 탈퇴하기
      @DeleteMapping("/array/leave/{user_study_idx}")
         public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){
             userStudyService.leave(user_study_idx);}
 
-    //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
+    //스터디 세부사항 보여주기
     @GetMapping("/array/study/{study_idx}")
-    public List<Study> showStudyDetail(@PathVariable Long study_idx){
+    public Study showStudyDetail(@PathVariable Long study_idx){
         return studyRepository.findByStudy_idx(study_idx);
     }
 
@@ -108,8 +106,5 @@ public class StudyController {
                         searchStudyDto.getActivate()
                 );
     }
-
-
-
 
 }

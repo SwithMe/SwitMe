@@ -23,7 +23,6 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -31,8 +30,6 @@ public class EmailService {
     public EmailService(JavaMailSender javaMailSender){
         this.javaMailSender=javaMailSender;
     }
-
-
     public void sendMail(String email, String message)  throws MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
