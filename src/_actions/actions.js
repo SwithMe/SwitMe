@@ -20,6 +20,7 @@ const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
 const EDIT_STUDY = "EDIT_STUDY";
 const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
+const EDIT_USER = "EDIT_USER";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
