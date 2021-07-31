@@ -23,17 +23,12 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
-    private final UserStudyRepository userStudyRepository;
 
-    @Transactional
-    public void delete(Long userStudyIdx){
-        userStudyRepository.deleteById(userStudyIdx);
-    }
+
 
     /*
     @Transactional
     public User studyBuild(final SignUpDTO signUpDTO) {
-        //먼저 객체를 만들고,
         final User user = User.builder()
                 .email(signUpDTO.getEmail())
                 .pw(passwordEncoder.encode(signUpDTO.getPw()))
@@ -43,7 +38,6 @@ public class StudyService {
                 .realname(signUpDTO.getRealname())
                 .isEnable(true)
                 .build();
-        //그다음에 추가해주세요.
         return userRepository.save(user);
     }
     */
