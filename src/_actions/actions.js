@@ -26,6 +26,7 @@ const EDIT_TIMER = "EDIT_TIMER";
 const DELETE_STOPWATCH = "DELETE_TIMER";
 const SAVE_STOPWATCH = "SAVE_STOPWATCH";
 const USER_MAKE_CHAT = "USER_MAKE_CHAT";
+const EDIT_USER = "EDIT_USER";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
