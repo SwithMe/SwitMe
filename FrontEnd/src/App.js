@@ -13,6 +13,7 @@ import MakeStudy from "./pages/MakeStudy";
 import Mypage from "./pages/Mypage";
 import EditStudy from "./pages/EditStudy";
 import Modal from "./components/Modal";
+import EditUser from "./pages/EditUser";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/mypage" component={Mypage} />
         <Route exact path="/editstudy/:study_id" component={EditStudy} />
         <Route exact path="/modal" component={Modal} />
+        <Route exact path="/edituser" component={EditUser} />
       </Switch>
     </Router>
   );

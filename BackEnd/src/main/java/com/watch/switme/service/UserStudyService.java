@@ -9,6 +9,9 @@ import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
