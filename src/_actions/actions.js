@@ -85,6 +85,18 @@ export const recommendedStudy = () => {
   return { type: RECOMMENDED_STUDY, payload: request };
 };
 
+//회원정보 수정
+export const editUser = (user_idx, dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_USER,
+    payload: request,
+  };
+};
+
 //스터디 리스트 불러오기
 export const getStudylist = (dataToSubmit) => {
   const request = axios

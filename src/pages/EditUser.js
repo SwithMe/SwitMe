@@ -3,13 +3,10 @@ import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router";
 import Default from "../assets/profile.png";
+import { useDispatch } from "react-redux";
 import Edit from "../assets/edit.png";
+import { getUserInfo, editUser } from "../_actions/actions";
 import ImageUpload from "../components/ImageUpload";
-import {
-  getUserInfo,
-  getUserStopwatch,
-  getUserStudy,
-} from "../_actions/actions";
 import { checkPropTypes } from "prop-types";
 
 const Wrapper = styled.div`
@@ -43,6 +40,8 @@ const Input = styled.input`
 `;
 
 const Box = styled.div`
+  display: flex;
+  align-items: center;
   width: 480px;
   height: 65px;
   border-radius: 10px;
@@ -67,17 +66,48 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const EditUser = () => {
+const EditUser = ({ match }) => {
+  const { user_idx } = match.params;
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     user_idx: "",
-    user_name: "",
-    user_email: "",
-    password: "",
+    user_name: "김선달",
+    user_email: "whkakrkr@gmail.com",
     file: "",
+
     profile: Default,
+    new_password: "",
+    check_new_password: "",
   });
 
-  const history = useHistory();
+  useEffect(() => {
+    dispatch(getUserInfo(user_idx)).then((response) => {
+      if (response.payload) {
+        setUser(response.payload);
+        // setIsSet(true);
+        console.log(user);
+      } else {
+        console.log("기존 유저 정보 가져오기 실패");
+      }
+    });
+  }, []);
+
+  //이미지업로드
+  const onInputChange = (e) => {
+    console.log(e.target.value);
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const submit = () => {
+    if (user.check_new_password !== user.new_password) {
+      alert("비밀번호 확인이 일치하지 않습니다");
+    } else {
+      console.log(user.new_password);
+    }
+  };
+  // const history = useHistory();
 
   const uploadImage = () => {
     var input = document.createElement("input");
@@ -110,8 +140,20 @@ const EditUser = () => {
       <div style={{ height: "50px" }}></div>
       <Box>{user.user_name}</Box>
       <Box>{user.user_email}</Box>
-      <Input placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"></Input>
-      <Input placeholder="비밀번호 확인"></Input>
+      <Input
+        name="new_password"
+        onChange={onInputChange}
+        value={user.new_password}
+        placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"
+        type="text"
+      ></Input>
+      <Input
+        name="check_new_password"
+        onChange={onInputChange}
+        value={user.check_new_password}
+        placeholder="비밀번호 확인"
+        type="text"
+      ></Input>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Button
@@ -120,7 +162,7 @@ const EditUser = () => {
         >
           뒤로가기
         </Button>
-        <Button>수정하기</Button>
+        <Button onClick={submit}>수정하기</Button>
       </div>
 
       {/* </form> */}
