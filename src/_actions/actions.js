@@ -25,6 +25,7 @@ const GET_TIMER_LIST = "GET_TIMER_LIST";
 const EDIT_TIMER = "EDIT_TIMER";
 const DELETE_STOPWATCH = "DELETE_TIMER";
 const SAVE_STOPWATCH = "SAVE_STOPWATCH";
+const USER_MAKE_CHAT = "USER_MAKE_CHAT";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -105,7 +106,7 @@ export const getStudydetail = (id) => {
 //스터디 가입
 export const joinStudy = (user_id, study_id) => {
   const request = axios
-    .put(`${USER_SERVER}/list/join/${user_id}/${study_id}`)
+    .post(`${USER_SERVER}/list/array/join/${user_id}/${study_id}`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: JOIN_STUDY, payload: request };
@@ -114,7 +115,7 @@ export const joinStudy = (user_id, study_id) => {
 //스터디 탈퇴
 export const leaveStudy = (user_id, study_id) => {
   const request = axios
-    .delete(`${USER_SERVER}/list/leave/${user_id}/${study_id}`)
+    .delete(`${USER_SERVER}/list/array/leave/${user_id}/${study_id}`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: LEAVE_STUDY, payload: request };
@@ -135,7 +136,7 @@ export const makestudy = (dataToSubmit) => {
 //메세지 내역 다 가져오기
 export const getMessages = (room_idx) => {
   const request = axios
-    .get(`${USER_SERVER}/chat/room/${room_idx}`)
+    .get(`${USER_SERVER}/api/chat/room/${room_idx}`)
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_MESSAGES, payload: request };
@@ -143,8 +144,9 @@ export const getMessages = (room_idx) => {
 
 //채팅 리스트 다 가져오기
 export const getChatlist = (user_idx) => {
+  console.log(`${USER_SERVER}/api/chat/room_list/${user_idx}`);
   const request = axios
-    .get(`${USER_SERVER}/chat/room_list/${user_idx}`)
+    .get(`${USER_SERVER}/api/chat/room_list/${user_idx}`)
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_CHATLIST, payload: request };
@@ -272,6 +274,15 @@ export const saveTimer = (dataToSubmit) => {
     type: SAVE_STOPWATCH,
     payload: request.payload,
   };
+};
+
+//스터디원이 채팅 걸 때
+export const userMakeChat = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/api/chat/makeroom/user`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: USER_MAKE_CHAT, payload: request };
 };
 
 const actions = (state = {}, action) => {

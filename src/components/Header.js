@@ -186,17 +186,21 @@ function Header({ page }) {
       ></Button>
       {/* Chat_list 시작 */}
       <React.Fragment>
-        <Chat_list
-          setinitial={setModalOpen2}
-          open={modalOpen}
-          close={closeModal}
-          openstate2={modalOpen2}
-          open2={openModal2}
-          close2={closeModal2}
-          header=""
-        >
-          {/* // Chat_list.js <main> {props.children} </main>에 내용이 입력됨. */}
-        </Chat_list>
+        {modalOpen ? (
+          <Chat_list
+            setinitial={setModalOpen2}
+            open={modalOpen}
+            close={closeModal}
+            openstate2={modalOpen2}
+            open2={openModal2}
+            close2={closeModal2}
+            header=""
+          >
+            {/* // Chat_list.js <main> {props.children} </main>에 내용이 입력됨. */}
+          </Chat_list>
+        ) : (
+          <></>
+        )}
       </React.Fragment>
       {/* Chat_list 끝*/}
       <Button
