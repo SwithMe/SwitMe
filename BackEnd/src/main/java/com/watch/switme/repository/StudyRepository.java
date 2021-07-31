@@ -15,14 +15,23 @@ import java.util.List;
 @Repository
 public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecificationExecutor<Study> {
 
-
     @Query(value = "select * from Study_main s where s.study_idx = ?1", nativeQuery = true)
     Study findFirstByStudyIdx(Long study_idx);
 
-    @Query(value="select * from Study_main s", nativeQuery = true)
-    List<Study> findAllByStudy_idx(Long study_idx);
-
     List<Study> findAll();
+
+    @Query(value="SELECT * from Study_main u where u.study_idx=:sstudy_idx",nativeQuery=true)
+    List<Study> findByStudy_idx(@Param("sstudy_idx") Long study_idx);
+
+/*
+    @Query(value="select * from Study_main u where u.study_idx=:sstudy_idx", nativeQuery=true)
+    List <Study> findByStudy_idx(@Param("sstudy_idx")Long study_idx);
+*/
+
+
+
+
+
 
     @Query(value = "select * from Study_main u where u.title=:title", nativeQuery=true)
     List <Study> findByTitle(@Param("title")String title);

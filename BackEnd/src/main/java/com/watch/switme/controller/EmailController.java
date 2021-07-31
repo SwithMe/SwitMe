@@ -1,6 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.User;
+import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.repository.EmailUserService;
 import com.watch.switme.service.EmailService;
@@ -18,7 +19,46 @@ import javax.mail.MessagingException;
 @RestController
 public class EmailController {
 
+
     private final EmailService emailService;
+
+    @PostMapping(value="/user/email/find")
+    public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
+        System.out.println("출력>>>"+signUpDTO.getEmail()+ signUpDTO.getPw());
+        System.out.println(emailService.findPassword("kje000124@naver.com"));
+
+        StringBuffer emailcontent = new StringBuffer();
+        emailcontent.append("<!DOCTYPE html>");
+        emailcontent.append("<html>");
+        emailcontent.append("<head>");
+        emailcontent.append("</head>");
+        emailcontent.append("<body>");
+        emailcontent.append(
+                " <div" 																																																	+
+                        "	style=\"font-family: 'Apple SD Gothic Neo', 'sans-serif' !important; width: 400px; height: 600px; border-top: 4px solid #02b875; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">"		+
+                        "	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">"																															+
+                        "		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">FIND</span><br />"																													+
+                        "		<span style=\"color: #006400\">SWITME 비밀번호안내</span>"																																				+
+                        "	</h1>\n"																																																+
+                        "	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">"
+                        +
+                       ""																																						+
+                        "	비밀번호는"+signUpDTO.getPw()+"입니다."+
+                        "	</p>"																																																	+
+
+                        ""						+
+
+
+                        "	<div style=\"border-top: 1px solid #DDD; padding: 5px;\"></div>"																																		+
+                        " </div>"
+        );
+        emailcontent.append("</body>");
+        emailcontent.append("</html>");
+        emailService.sendMail(signUpDTO, emailcontent.toString());
+    }
+
+
+
 
 
     @PostMapping(value="/user/email/send")
@@ -58,7 +98,4 @@ public class EmailController {
         emailcontent.append("</html>");
         emailService.sendMail(signUpDTO, emailcontent.toString());
     }
-
-
-
 }
