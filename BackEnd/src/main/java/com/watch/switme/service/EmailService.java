@@ -21,12 +21,10 @@ public class EmailService {
     public void sendMail(String toEmail, String subject, String message)  throws MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-
         helper.setFrom("SWITME");
         helper.setTo("kje000124@naver.com");
         helper.setSubject(subject);
         helper.setText(message, true);
-
         javaMailSender.send(mimeMessage);
     }*/
 
