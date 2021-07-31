@@ -23,6 +23,11 @@ public class ChatRoomService {
     private final UserDataExtraRepository userDataExtraRepository;
 
     @Transactional
+    public ChatRoom findRoom(Long leader_idx, Long inquirer_idx){
+        return chatRoomRepository.findFirstByLeaderIdxIsAndInquirerIdxIs(leader_idx, inquirer_idx);
+    }
+
+    @Transactional
     public Long save(ChatRoomDto chatRoomDto){
         return chatRoomRepository.save(chatRoomDto.toEntity()).getRoomIdx();
     }

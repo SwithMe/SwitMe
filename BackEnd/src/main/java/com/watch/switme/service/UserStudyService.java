@@ -59,8 +59,17 @@ public class UserStudyService {
 
     @Transactional
     public void updateWarning(Long study_idx, Long user_idx) throws Exception {
+        User user = userRepository.findFirstByUserIdx(user_idx);
         UserStudy userStudy = userStudyRepository.findByUserAndStudy(study_idx, user_idx);
+
         int new_warning = userStudy.getWarning().intValue() + 1;
         userStudy.updateWarning(new_warning);
+
+        int manner = user.getManner_temperature();
+        if(manner-5 >= 0){
+            user.setManner_temperature(manner-5);
+        } else{
+            user.setManner_temperature(0);
+        }
     }
 }

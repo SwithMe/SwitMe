@@ -79,8 +79,7 @@ public class MyPageService {
             String new_password = bCryptPasswordEncoder.encode(userUpdateDto.getPassword());
             System.out.println(new_password);
             user.setPw(new_password);
-            System.out.println("hello..");
-            userRepository.save(user);
+            //userRepository.save(user);
         }
 
         if(userUpdateDto.getFile() != null){
