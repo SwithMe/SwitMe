@@ -31,19 +31,20 @@ const MemberList = ({ match }) => {
   const { study_id } = match.params;
   console.log(study_id);
   const dispatch = useDispatch();
-  const [study, setStudy] = useState({
-    studyname: "스터디 이름쓰는 칸",
-    members: [],
-  });
+  const [study, setStudy] = useState("");
+  const [members, setMembers] = useState([]);
   const [isLeader, setIsLeader] = useState(false);
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
-        console.log(study);
-        setStudy({ ...study, studyname: response.payload.title });
-        if (response.payload.leader === window.localStorage.getItem("id"))
-          isLeader(true);
+        console.log(response.payload);
+        setStudy(response.payload.title);
+        if (
+          response.payload.leader.toString() ===
+          window.localStorage.getItem("id")
+        )
+          setIsLeader(true);
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
       }
@@ -52,7 +53,7 @@ const MemberList = ({ match }) => {
       if (response.payload) {
         console.log("스터디 멤버 정보 가져오기 성공");
         console.log(response.payload);
-        setStudy({ ...study, members: response.payload });
+        setMembers(response.payload);
       } else {
         console.log("스터디 멤버 정보 가져오기 실패");
       }
@@ -66,7 +67,7 @@ const MemberList = ({ match }) => {
     };
     console.log(data);
     dispatch(warnMember(data)).then((response) => {
-      if (response.payload) {
+      if (response.type) {
         console.log("경고 성공");
       } else {
         console.log("경고 주기 에러 발생");
@@ -79,7 +80,7 @@ const MemberList = ({ match }) => {
       <Header page="3" />
       <Fix>
         <Row border="none" style={{ marginTop: "1%" }}>
-          <Title size="32">{study.studyname}</Title>
+          <Title size="32">{study}</Title>
         </Row>
         <div></div>
         <Row border="none">
@@ -105,7 +106,7 @@ const MemberList = ({ match }) => {
             background: "#56BE9C",
           }}
         ></div>
-        {study.members.map((member, i) => (
+        {members.map((member, i) => (
           <Row>
             <div
               style={{

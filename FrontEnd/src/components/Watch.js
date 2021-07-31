@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { saveTimer } from "../_actions/actions";
 
 const Num = styled.div`
   font-size: 100px;
@@ -50,12 +52,13 @@ const Button = styled.button`
 `;
 
 function Watch(props) {
-  const { timer } = props;
+  const { timer, save, isSave } = props;
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
   const start_time = useRef("");
   const end_time = useRef("");
+  const dispatch = useDispatch();
 
   //시작 status=0
   const start = () => {
@@ -127,7 +130,13 @@ function Watch(props) {
       start_time: start_time.current,
       end_time: end_time.current,
     };
-    console.log(dataToSubmit);
+    dispatch(saveTimer(dataToSubmit)).then((response) => {
+      if (response.payload) {
+        isSave(!save);
+      } else {
+        console.log("스톱워치 저장 싪패");
+      }
+    });
     clearInterval(interv);
     setStatus(0);
     setTime({ s: 0, m: 0, h: 0 });
