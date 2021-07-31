@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../components/Header_list";
+import Header from "../components/Header";
 import Input from "../components/Input";
 import Title from "../components/Title";
 import Image from "../components/Image";
@@ -195,19 +195,19 @@ const StudyList = () => {
 
   const onFormSubmit = async (evt) => {
     console.log(search);
-    // evt.preventDefault();
-    // dispatch(getStudylist(search)).then((response) => {
-    //   if (response.payload) {
-    //     setStudies(response.payload);
-    //   } else {
-    //     alert("스터디 검색 오류");
-    //   }
-    // });
+    evt.preventDefault();
+    dispatch(getStudylist(search)).then((response) => {
+      if (response.payload) {
+        setStudies(response.payload);
+      } else {
+        alert("스터디 검색 오류");
+      }
+    });
   };
 
   return (
     <Fix>
-      <Header />
+      <Header page="2" />
       <Search>
         <Item>
           <Title>스터디 이름</Title>

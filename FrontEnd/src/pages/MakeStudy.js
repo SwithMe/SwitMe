@@ -93,13 +93,28 @@ const MakeStudy = () => {
     location: "",
     extra: "",
     image: "", //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
-    leader: window.localStorage.getItem("id"),
     link: "",
+    leader: 0,
   });
 
   const onFormSubmit = () => {
-    console.log(study);
-    dispatch(makestudy(study)).then((response) => {
+    const data = {
+      title: study.title,
+      type: study.type,
+      termstart: study.termstart,
+      termend: study.termend,
+      timestart: study.timestart + ":00",
+      timeend: study.timeend + ":00",
+      size: study.size,
+      tags: study.tags,
+      location: study.location,
+      extra: study.extra,
+      image: study.image, //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
+      link: study.link,
+      leader: study.leader,
+    };
+    console.log(data);
+    dispatch(makestudy(data)).then((response) => {
       if (response.payload) {
         alert("스터디가 생성되었습니다..");
         history.push(`/`);
@@ -116,8 +131,8 @@ const MakeStudy = () => {
 
   return (
     <Wrapper>
-      <Header />
-      <Row>
+      <Header page="3" />
+      <Row style={{ marginTop: "40px" }}>
         <Col>
           <div style={{ marginLeft: "10px" }}>
             <Title>스터디 개설하기</Title>
@@ -169,7 +184,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="online"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "online" })}
+                    onChange={() => setStudy({ ...study, type: "online" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -187,7 +202,7 @@ const MakeStudy = () => {
                     type="radio"
                     id="offline"
                     name="onoff"
-                    onClick={() => setStudy({ ...study, type: "offline" })}
+                    onChange={() => setStudy({ ...study, type: "offline" })}
                   ></RadioButton>
                 </Col>
                 <Col
@@ -458,10 +473,16 @@ const MakeStudy = () => {
           <Row
             style={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               marginTop: "120px",
             }}
           >
+            <Button
+              name="이전으로"
+              width="180px"
+              height="70px"
+              color="#CCCCCC"
+            ></Button>
             <Button
               name="스터디 개설하기"
               width="220px"

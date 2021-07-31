@@ -11,7 +11,9 @@ import StudyDetail from "./pages/StudyDetail";
 import MemberList from "./pages/MemberList";
 import MakeStudy from "./pages/MakeStudy";
 import Mypage from "./pages/Mypage";
+import EditStudy from "./pages/EditStudy";
 import Modal from "./components/Modal";
+import EditUser from "./pages/EditUser";
 
 function App() {
   return (
@@ -25,10 +27,12 @@ function App() {
         <Route exact path="/studylist" component={StudyList} />
         <Route exact path="/stopwatch" component={StopWatch} />
         <Route exact path="/studydetail/:study_id" component={StudyDetail} />
-        <Route exact path="/memberlist" component={MemberList} />
+        <Route exact path="/memberlist/:study_id" component={MemberList} />
         <Route exact path="/makestudy" component={MakeStudy} />
         <Route exact path="/mypage" component={Mypage} />
+        <Route exact path="/editstudy/:study_id" component={EditStudy} />
         <Route exact path="/modal" component={Modal} />
+        <Route exact path="/edituser" component={EditUser} />
       </Switch>
     </Router>
   );
