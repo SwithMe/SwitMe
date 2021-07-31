@@ -8,6 +8,7 @@ import com.watch.switme.dto.RecomStudyResDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
+import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
+    private final UserStudyRepository userStudyRepository;
+
+    @Transactional
+    public void delete(Long userStudyIdx){
+        userStudyRepository.deleteById(userStudyIdx);
+    }
 
     /*
     @Transactional

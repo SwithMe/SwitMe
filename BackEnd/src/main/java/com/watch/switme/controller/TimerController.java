@@ -156,7 +156,6 @@ public class TimerController {
         return saved_timerLog_idx;
     }
 
-
     //추천 스터디
     @GetMapping("/main/recomstudy")
     public ResponseEntity recomStudy(){
