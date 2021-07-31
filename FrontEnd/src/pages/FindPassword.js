@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Input2 from "../components/Input2";
+import Input from "../components/Input2";
 import Button from "../components/Button";
 
 import logo from "../assets/logo.png";
@@ -18,7 +18,7 @@ const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 40vh;
+  height: 500px;
 `;
 
 const TextBox = styled.div`
@@ -34,8 +34,9 @@ const FindPassword = () => {
     <Wrapper>
       <Items>
         <img src={logo} style={{ marginBottom: "1rem" }}></img>
-        <Input2 name="가입된 아이디를 입력해주세요" width="29rem"></Input2>
-        <Input2 name="가입된 이메일 주소를 입력해주세요" width="29rem"></Input2>
+        <Input placeholder="가입된 아이디를 입력해주세요" width="29rem" />
+        <Input placeholder="가입된 이메일 주소를 입력해주세요" width="29rem" />
+        <Input placeholder="가입된 이메일 주소를 입력해주세요" width="29rem" />
         <TextBox>
           <div>가입된 이메일 주소로 확인 메일이 발송됩니다.</div>
         </TextBox>

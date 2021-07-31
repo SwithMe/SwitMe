@@ -51,6 +51,8 @@ const Item = styled.div`
     z-index: 1;
     position: absolute;
     margin-top: 65px;
+    overflow-y: scroll;
+    height: 200px;
   }
   li {
     padding: 5px 10px;
@@ -131,12 +133,28 @@ const MakeStudy = () => {
               marginBottom: "20px",
             }}
           />
-          <Button
-            name="이미지 추가하기"
-            width="220px"
-            height="70px"
-            color="#56BE9C"
-          ></Button>
+          <input
+            style={{ display: "none" }}
+            id="imgfile"
+            type="file"
+            accept="image/*"
+          />
+          <label for="imgfile">
+            <div
+              style={{
+                fontSize: "20px",
+                backgroundColor: "#56BE9C",
+                borderRadius: "10px",
+                height: "70px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+              }}
+            >
+              이미지추가하기
+            </div>
+          </label>
         </Col>
 
         <Col style={{ marginLeft: "40px" }}>
@@ -289,6 +307,69 @@ const MakeStudy = () => {
                       03:00
                     </Title>
                   </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "04:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      04:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "05:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      05:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "06:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      06:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "07:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      07:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "08:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      08:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "09:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      09:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "10:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      10:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "11:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      11:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "12:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      12:00
+                    </Title>
+                  </li>
                 </ul>
               </Item>
               <div style={{ margin: "15px" }}>
@@ -328,6 +409,62 @@ const MakeStudy = () => {
                   <li onClick={() => setStudy({ ...study, timeend: "03:00" })}>
                     <Title size="20" weight="400">
                       03:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "05:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      05:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "06:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      06:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "07:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      07:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "08:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      08:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "09:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      09:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "10:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      10:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "11:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      11:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "12:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      12:00
                     </Title>
                   </li>
                 </ul>
@@ -373,6 +510,16 @@ const MakeStudy = () => {
                   <li onClick={() => setStudy({ ...study, size: 3 })}>
                     <Title size="20" weight="400">
                       3
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 4 })}>
+                    <Title size="20" weight="400">
+                      4
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 5 })}>
+                    <Title size="20" weight="400">
+                      5
                     </Title>
                   </li>
                 </ul>

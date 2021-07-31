@@ -9,6 +9,9 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { editstudy } from "../_actions/actions";
 
+import "react-datepicker/dist/react-datepicker.css";
+import Calendar from "../components/Calendar";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -116,9 +119,24 @@ const EditStudy = () => {
   };
 
   const onInputChange = (e) => {
+    console.log(e.target.value);
     const { name, value } = e.target;
     setStudy({ ...study, [name]: value });
   };
+
+  // const onImgChange = async (event) => {
+  //   setImgLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("file", event.target.files[0]);
+  //   const response = await apiClient.post("/brand/logo_image", formData);
+  //   //response.data.location이 업로드한 파일의 url
+  //   setImgLoding(false);
+  // };
+
+  // const onImgInputBtnClick = (event) => {
+  //   event.preventDefault();
+  //   logoImgInput.current.click();
+  // };
 
   return (
     <Wrapper>
@@ -131,6 +149,7 @@ const EditStudy = () => {
           <img
             alt="study profile"
             src={require("../assets/rectangle.png").default}
+            // src={study.image}
             style={{
               width: "220px",
               height: "220px",
@@ -138,12 +157,28 @@ const EditStudy = () => {
               marginBottom: "20px",
             }}
           />
-          <Button
-            name="이미지 추가하기"
-            width="220px"
-            height="70px"
-            color="#56BE9C"
-          ></Button>
+          <input
+            style={{ display: "none" }}
+            id="imgfile"
+            type="file"
+            accept="image/*"
+          />
+          <label for="imgfile">
+            <div
+              style={{
+                fontSize: "20px",
+                backgroundColor: "#56BE9C",
+                borderRadius: "10px",
+                height: "70px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+              }}
+            >
+              이미지추가하기
+            </div>
+          </label>
         </Col>
 
         <Col style={{ marginLeft: "40px" }}>
@@ -213,8 +248,8 @@ const EditStudy = () => {
             <Textbox>
               <Title>기간</Title>
             </Textbox>
-            <Inputbox>
-              <Input
+            <Inputbox style={{ paddingTop: "18px" }}>
+              {/* <Input
                 name="termstart"
                 value={study.termstart}
                 placeholder="날짜를 선택하세요"
@@ -223,7 +258,8 @@ const EditStudy = () => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
-              ></Input>
+              /> */}
+              <Calendar />
               <div style={{ margin: "15px", marginTop: "30px" }}>
                 <img
                   alt="line"
@@ -231,7 +267,7 @@ const EditStudy = () => {
                   style={{ width: "57px", height: "3px" }}
                 />
               </div>
-              <Input
+              {/* <Input
                 name="termend"
                 value={study.termend}
                 placeholder="날짜를 선택하세요"
@@ -240,7 +276,8 @@ const EditStudy = () => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
-              ></Input>
+              ></Input> */}
+              <Calendar />
             </Inputbox>
           </Row>
 
