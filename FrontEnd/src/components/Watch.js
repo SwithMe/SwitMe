@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { saveTimer } from "../_actions/actions";
 
 const Num = styled.div`
   font-size: 100px;
@@ -50,15 +52,35 @@ const Button = styled.button`
 `;
 
 function Watch(props) {
-  const { timer } = props;
+  const { timer, save, isSave } = props;
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
   const start_time = useRef("");
   const end_time = useRef("");
+  const dispatch = useDispatch();
 
   //시작 status=0
   const start = () => {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+    var day = ("0" + today.getDate()).slice(-2);
+    var hours = ("0" + today.getHours()).slice(-2);
+    var minutes = ("0" + today.getMinutes()).slice(-2);
+    var seconds = ("0" + today.getSeconds()).slice(-2);
+    start_time.current =
+      year +
+      "-" +
+      month +
+      "-" +
+      day +
+      "T" +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds;
     run();
     var today = new Date();
     var year = today.getFullYear();
@@ -128,6 +150,14 @@ function Watch(props) {
       end_time: end_time.current,
     };
     console.log(dataToSubmit);
+
+    dispatch(saveTimer(dataToSubmit)).then((response) => {
+      if (response.payload) {
+        isSave(!save);
+      } else {
+        console.log("스톱워치 저장 싪패");
+      }
+    });
     clearInterval(interv);
     setStatus(0);
     setTime({ s: 0, m: 0, h: 0 });

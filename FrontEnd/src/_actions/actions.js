@@ -32,8 +32,15 @@ const EDIT_USER = "EDIT_USER";
 export const login = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/auth/login`, dataToSubmit)
-    .then((response) => response.headers.get("Authorization"))
-    .catch((error) => {});
+    .then((response) => {
+      return new Promise(function (resolve, reject) {
+        let idx = response.headers["user_idx"];
+        resolve(idx);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   return {
     type: LOGIN,
     payload: request,
@@ -285,7 +292,11 @@ export const saveTimer = (dataToSubmit) => {
     .catch((error) => {});
   return {
     type: SAVE_STOPWATCH,
+<<<<<<< HEAD
     payload: request.payload,
+=======
+    payload: request,
+>>>>>>> feature-connect
   };
 };
 

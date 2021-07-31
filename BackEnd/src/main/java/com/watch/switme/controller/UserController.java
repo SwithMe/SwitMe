@@ -4,9 +4,11 @@ import com.watch.switme.config.WebSecurityConfig;
 import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.dto.UserListResponseDTO;
+import com.watch.switme.repository.UserRepository;
 import com.watch.switme.service.UserService;
 import com.watch.switme.service.TokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,12 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    WebSecurityConfig webSecurityConfig;
+
+    @Autowired
+    UserRepository userRepository;
 
     //회원가입
     @PostMapping(value = "/newsignup")
@@ -43,6 +51,11 @@ public class UserController {
                 : ResponseEntity.ok(TokenUtils.generateJwtToken(userService.signUp(signUpDTO)));
     }
 
+    @PostMapping(path="/loginget")
+    public String authloginadd(SignUpDTO signUpDTO) throws Exception {
+        webSecurityConfig.customAuthenticationFilter();
+        return signUpDTO.getPw();
+    }
 
     //회원정보 리스트 반환
     @GetMapping(value = "/list")

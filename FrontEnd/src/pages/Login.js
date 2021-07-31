@@ -50,10 +50,11 @@ const Login = () => {
     evt.preventDefault();
     console.log(user);
     dispatch(login(user)).then((response) => {
-      console.log(response);
-      if (response.payload) {
+      if (response) {
         console.log("로그인 성공");
-        window.localStorage.setItem("id", response.payload.user_idx);
+        console.log(response.payload);
+        window.localStorage.setItem("id", response.payload);
+        window.location.replace("/");
       } else {
         console.log(response);
         alert("로그인 오류");
