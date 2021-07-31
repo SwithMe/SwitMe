@@ -20,7 +20,7 @@ public class ChatMessage {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "time")
+    @Column(name = "send_time")
     private LocalDateTime sendTime;
 
     @ManyToOne
@@ -31,7 +31,7 @@ public class ChatMessage {
     @JoinColumn(name="room_idx")
     private ChatRoom room;
 
-    @Column(columnDefinition = "TINYINT", name="check")
+    @Column(columnDefinition = "TINYINT", name="check_read")
     private int checkRead;
 
     @Builder
