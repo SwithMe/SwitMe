@@ -37,6 +37,7 @@ public class ChatController {
                 .sender(sender)
                 .room(presentRoom)
                 .time(now)
+                .check(0)
                 .build();
 
         chatMessageService.save(chatMessageDto);

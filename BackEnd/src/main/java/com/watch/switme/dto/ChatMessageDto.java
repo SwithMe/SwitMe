@@ -17,14 +17,16 @@ public class ChatMessageDto {
     private User sender;
     private ChatRoom room;
     private LocalDateTime time;
+    private int check;
 
     //sender idx도 수정..
     @Builder
-    public ChatMessageDto(String message, User sender, ChatRoom room, LocalDateTime time){
+    public ChatMessageDto(String message, User sender, ChatRoom room, LocalDateTime time, int check){
         this.message = message;
         this.sender = sender;
         this.room = room;
         this.time = time;
+        this.check = check;
     }
 
     public ChatMessage toEntity(){
@@ -32,7 +34,8 @@ public class ChatMessageDto {
                 .message(this.message)
                 .sender(this.sender)
                 .room(this.room)
-                .time(time)
+                .time(this.time)
+                .check(this.check)
                 .build();
     }
 }

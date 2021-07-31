@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { useHistory } from "react-router";
 import Default from "../assets/profile.png";
 import Edit from "../assets/edit.png";
@@ -9,6 +10,7 @@ import {
   getUserStopwatch,
   getUserStudy,
 } from "../_actions/actions";
+import { checkPropTypes } from "prop-types";
 
 const Wrapper = styled.div`
   padding-top: 100px;
@@ -25,7 +27,7 @@ const Profile = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  background: url(${Default});
+  background: url(${(props) => props.src});
   background-size: 100%;
 `;
 
@@ -67,10 +69,12 @@ const Button = styled.button`
 
 const EditUser = () => {
   const [user, setUser] = useState({
-    realname: "",
-    email: "",
-    pw: "",
-    pw2: "",
+    user_idx: "",
+    user_name: "",
+    user_email: "",
+    password: "",
+    file: "",
+    profile: Default,
   });
 
   const history = useHistory();
@@ -87,13 +91,14 @@ const EditUser = () => {
 
       reader.onload = function () {
         console.log(reader.result);
+        setUser({ profile: reader.result });
       };
     };
   };
 
   return (
     <Wrapper>
-      <Profile>
+      <Profile src={user.profile}>
         {/* <Image src={Profile}></Image> */}
         <img
           onClick={uploadImage}
