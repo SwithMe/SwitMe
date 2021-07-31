@@ -95,6 +95,7 @@ function Header({ page }) {
   }, [modalOpen, rerender]);
 
   const openModal = () => {
+    setModalOpen(true);
     if (window.localStorage.getItem("isAuth") === "false") {
       alert("로그인이 필요한 서비스입니다.");
       history.push("/login");
@@ -123,12 +124,14 @@ function Header({ page }) {
     history.push("/");
   };
   const StopWatch = () => {
+    history.push("/StopWatch");
     if (window.localStorage.getItem("isAuth") === "false") {
       alert("로그인이 필요한 서비스입니다.");
       history.push("/login");
     } else history.push("/StopWatch");
   };
   const StudyList = () => {
+    history.push("/StudyList");
     if (window.localStorage.getItem("isAuth") === "false") {
       alert("로그인이 필요한 서비스입니다.");
       history.push("/login");
