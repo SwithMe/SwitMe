@@ -17,27 +17,13 @@ const Wrapper = styled.div`
 `;
 
 const StopWatch = () => {
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const openModal = (id, name) => {
-  //   setModalOpen(true);
-  // };
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // // };
-  // <ModalTimer
-  //       open={modalOpen}
-  //       close={closeModal}
-  //       onInputChange={TimerList.onInputChange}
-  //       onSubmit={TimerList.onSubmit}
-  //     ></ModalTimer>
-
+  const [timer, setTimer] = useState();
   return (
     <div>
       <Header page="1"></Header>
       <Wrapper>
-        <TimerList /*openModal={openModal}*/></TimerList>
-        <Watch name={TimerListContent.name}></Watch>
+        <TimerList></TimerList>
+        <Watch timer={timer}></Watch>
       </Wrapper>
     </div>
   );

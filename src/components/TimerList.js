@@ -134,10 +134,10 @@ function TimerList({ openModal }) {
   //삭제
   const onRemove = useCallback(
     (id) => {
-      console.log("삭제");
       dispatch(deleteTimer(id)).then((response) => {
-        if (response.payload) {
+        if (response.type) {
           console.log(response.payload);
+          setToggle(!toggle);
         } else {
           console.log("스톱워치 삭제 에러");
         }
@@ -159,6 +159,8 @@ function TimerList({ openModal }) {
             key={timer.id}
             onRemove={onRemove}
             openModal={openModal}
+            toggle={toggle}
+            setToggle={setToggle}
           ></TimerListContent>
         ))}
       </div>

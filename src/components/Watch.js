@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 const Num = styled.div`
@@ -54,10 +54,31 @@ function Watch(props) {
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
+  const start_time = useRef("");
+  const end_time = useRef("");
 
   //시작 status=0
   const start = () => {
     run();
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+    var day = ("0" + today.getDate()).slice(-2);
+    var hours = ("0" + today.getHours()).slice(-2);
+    var minutes = ("0" + today.getMinutes()).slice(-2);
+    var seconds = ("0" + today.getSeconds()).slice(-2);
+    start_time.current =
+      year +
+      "-" +
+      month +
+      "-" +
+      day +
+      "T" +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds;
     setStatus(1);
     setInterv(setInterval(run, 1000));
   };
@@ -80,17 +101,33 @@ function Watch(props) {
     return setTime({ s: updatedS, m: updatedM, h: updatedH });
   };
 
-  //멈춤 status=2
-  const stop = () => {
-    clearInterval(interv);
-    setStatus(2);
-  };
-
-  const resume = () => {
-    start();
-  };
-
   const reset = () => {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+    var day = ("0" + today.getDate()).slice(-2);
+    var hours = ("0" + today.getHours()).slice(-2);
+    var minutes = ("0" + today.getMinutes()).slice(-2);
+    var seconds = ("0" + today.getSeconds()).slice(-2);
+    end_time.current =
+      year +
+      "-" +
+      month +
+      "-" +
+      day +
+      "T" +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds;
+    const dataToSubmit = {
+      timer_idx: 1,
+      timer_duration: time.s + time.m * 60 + time.h * 360,
+      start_time: start_time.current,
+      end_time: end_time.current,
+    };
+    console.log(dataToSubmit);
     clearInterval(interv);
     setStatus(0);
     setTime({ s: 0, m: 0, h: 0 });

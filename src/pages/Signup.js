@@ -72,11 +72,10 @@ const Signup = () => {
         email: user.email,
         pw: user.pw,
       };
-      console.log(submitUser);
       dispatch(signup(submitUser)).then((response) => {
         console.log(response);
-        if (response.payload) {
-          console.log("회원가입 성공");
+        if (response.type) {
+          alert("등록하신 이메일 계정에서 회원가입 인증을 진행해주세요");
           history.push("/login");
         } else {
           alert("회원가입 오류");

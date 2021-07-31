@@ -73,7 +73,7 @@ const Content = styled.div`
   }
 `;
 
-const TimerListContent = ({ timer, onRemove }) => {
+const TimerListContent = ({ timer, onRemove, toggle, setToggle }) => {
   const { timer_idx, name, duration } = timer;
   const [modalOpen, setModalOpen] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -94,6 +94,7 @@ const TimerListContent = ({ timer, onRemove }) => {
     dispatch(editTimer(timer_idx, { timer_name: newName })).then((response) => {
       if (response.payload) {
         console.log(response.payload);
+        setToggle(!toggle);
       } else {
         console.log("스톱워치 이름 변경 오류");
       }
