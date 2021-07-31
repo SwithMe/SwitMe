@@ -98,7 +98,10 @@ public class StudyController {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
+<<<<<<< HEAD
+=======
     //스터디 검색 기능
+>>>>>>> 1cd6e1df2969f09b72788f3aa6b20157e54de65c
     @PostMapping("/array")
     public List<Study> example(@RequestBody SearchStudyDto searchStudyDto){
         return studyRepository.getQuery
