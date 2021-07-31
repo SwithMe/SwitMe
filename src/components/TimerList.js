@@ -106,42 +106,40 @@ function TimerList({ openModal, changeTimer, change }) {
 
   //input
   const [value, setValue] = useState("");
-
   const onInputChange = useCallback((e) => {
     setValue(e.target.value);
     console.log(value);
   }, []);
 
+  const nextId = useRef(2);
+
+  const onInsert = useCallback(
+    (value) => {
+      const timer = {
+        id: nextId.current,
+        name: value,
+        time: "00",
+      };
+      setTimers(timers.concat(timer));
+      nextId.current += 1;
+    },
+    [timers]
+  );
+
   const onSubmit = useCallback(
     (e) => {
-      dispatch(
-        addStopwatch(window.localStorage.getItem("id"), { timer_name: value })
-      ).then((response) => {
-        if (response.payload) {
-          console.log(response.payload);
-          setToggle(!toggle);
-        } else {
-          console.log("스톱워치 추가 에러");
-        }
-      });
+      onInsert(value);
       setValue("");
       e.preventDefault();
       setStatus(0);
     },
-    [value]
+    [onInsert, value]
   );
 
   //삭제
   const onRemove = useCallback(
     (id) => {
-      dispatch(deleteTimer(id)).then((response) => {
-        if (response.type) {
-          console.log(response.payload);
-          setToggle(!toggle);
-        } else {
-          console.log("스톱워치 삭제 에러");
-        }
-      });
+      setTimers(timers.filter((timer) => timer.id !== id));
     },
     [timers]
   );
@@ -153,15 +151,12 @@ function TimerList({ openModal, changeTimer, change }) {
       <div class="head">2021.07.18. 일요일</div>
 
       <div>
-        {timers?.map((timer) => (
+        {timers.map((timer) => (
           <TimerListContent
             timer={timer}
             key={timer.id}
             onRemove={onRemove}
             openModal={openModal}
-            toggle={toggle}
-            setToggle={setToggle}
-            changeTimer={changeTimer}
           ></TimerListContent>
         ))}
       </div>

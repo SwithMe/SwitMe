@@ -90,7 +90,7 @@ const Modal = (props) => {
                 value={value}
                 onChange={onInputChange}
               ></Input>
-              <Button onClick={onSubmit}>변경하기</Button>
+              <Button onClick={(onSubmit, close)}>변경하기</Button>
             </div>
           </Wrapper>
         </Screen>
