@@ -20,6 +20,8 @@ const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
 const EDIT_STUDY = "EDIT_STUDY";
 const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
+const ADD_STOPWATCH = "ADD_STOPWATCH";
+const GET_TIMER_LIST = "GET_TIMER_LIST";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -207,6 +209,29 @@ export const warnMember = (dataToSubmit) => {
     });
   return {
     type: WARN_MEMBER,
+    payload: request,
+  };
+};
+
+//스톱워치 기능
+export const addStopwatch = (user_idx, dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/timer/add/${user_idx}`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: ADD_STOPWATCH,
+    payload: request,
+  };
+};
+
+export const getTimerList = (user_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/timer/list/${user_idx}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: GET_TIMER_LIST,
     payload: request,
   };
 };

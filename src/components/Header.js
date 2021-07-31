@@ -40,6 +40,7 @@ const Menu = styled.div`
     border-bottom: 5px solid;
     border-color: var(--middle);
     color: var(--deep);
+    cursor: pointer;
   }
 `;
 
@@ -94,7 +95,10 @@ function Header({ page }) {
   }, [modalOpen, rerender]);
 
   const openModal = () => {
-    setModalOpen(true);
+    if (window.localStorage.getItem("isAuth") === "false") {
+      alert("로그인이 필요한 서비스입니다.");
+      history.push("/login");
+    } else setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
@@ -119,10 +123,16 @@ function Header({ page }) {
     history.push("/");
   };
   const StopWatch = () => {
-    history.push("/StopWatch");
+    if (window.localStorage.getItem("isAuth") === "false") {
+      alert("로그인이 필요한 서비스입니다.");
+      history.push("/login");
+    } else history.push("/StopWatch");
   };
   const StudyList = () => {
-    history.push("/StudyList");
+    if (window.localStorage.getItem("isAuth") === "false") {
+      alert("로그인이 필요한 서비스입니다.");
+      history.push("/login");
+    } else history.push("/StudyList");
   };
 
   return (

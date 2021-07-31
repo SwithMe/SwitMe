@@ -258,7 +258,7 @@ const StudyDetail = ({ match }) => {
             fontFamily: "NotoSans",
             cursor: "pointer",
           }}
-          onClick={() => history.push("/studylist")}
+          onClick={() => history.goBack()}
         >
           목록으로
         </button>

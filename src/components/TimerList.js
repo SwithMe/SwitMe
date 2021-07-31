@@ -1,6 +1,8 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import styled from "styled-components";
 import TimerListContent from "./TimerListContent";
+import { addStopwatch, getTimerList } from "../_actions/actions";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,6 +57,8 @@ const AddTimer = styled.input`
 function TimerList({ openModal }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
+  const [toggle, setToggle] = useState(false);
+  const dispatch = useDispatch();
   const [timers, setTimers] = useState([
     {
       id: 1,
@@ -68,6 +72,19 @@ function TimerList({ openModal }) {
     },
   ]);
 
+  useEffect(() => {
+    dispatch(getTimerList(window.localStorage.getItem("id"))).then(
+      (response) => {
+        if (response.payload) {
+          console.log(response.payload);
+          setTimers(response.payload);
+        } else {
+          console.log("스톱워치 리스트 에러");
+        }
+      }
+    );
+  }, [toggle]);
+
   //추가하기 status:1
   const Add = () => {
     setStatus(1);
@@ -75,34 +92,29 @@ function TimerList({ openModal }) {
 
   //input
   const [value, setValue] = useState("");
+
   const onInputChange = useCallback((e) => {
     setValue(e.target.value);
     console.log(value);
   }, []);
 
-  const nextId = useRef(2);
-
-  const onInsert = useCallback(
-    (value) => {
-      const timer = {
-        id: nextId.current,
-        name: value,
-        time: "00",
-      };
-      setTimers(timers.concat(timer));
-      nextId.current += 1;
-    },
-    [timers]
-  );
-
   const onSubmit = useCallback(
     (e) => {
-      onInsert(value);
+      dispatch(
+        addStopwatch(window.localStorage.getItem("id"), { timer_name: value })
+      ).then((response) => {
+        if (response.payload) {
+          console.log(response.payload);
+          setToggle(!toggle);
+        } else {
+          console.log("스톱워치 추가 에러");
+        }
+      });
       setValue("");
       e.preventDefault();
       setStatus(0);
     },
-    [onInsert, value]
+    [value]
   );
 
   //삭제
