@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -57,8 +58,9 @@ public class TimerDailyUserService {
         LocalDate before = LocalDate.now().minusDays(1);
         LocalDate now = LocalDate.now();
 
-        //여기도 수정?
-        TimerDailyUser timerDailyUser=timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, now,now).get();
+
+        TimerDailyUser timerDailyUser;
+        timerDailyUser= timerDailyUserRepository.findByUserIdxAndDateBetween(user_idx, now,now).orElse(null);
 
         return timerDailyUser;
     }

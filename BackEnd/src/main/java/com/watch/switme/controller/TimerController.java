@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -117,7 +118,7 @@ public class TimerController {
 
 
         //3. TimerDailyUser save
-        TimerDailyUser timerDailyUser=timerDailyUserService.findTimerDailyUser(timer.getUser().getUser_idx());
+        TimerDailyUser timerDailyUser=timerDailyUserService.findTimerDailyUser(user_idx);
 
         if(timerDailyUser==null){
             LocalDate currentDate =LocalDate.now();
