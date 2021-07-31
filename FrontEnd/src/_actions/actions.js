@@ -21,12 +21,6 @@ const EDIT_STUDY = "EDIT_STUDY";
 const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
 const EDIT_USER = "EDIT_USER";
-const ADD_STOPWATCH = "ADD_STOPWATCH";
-const GET_TIMER_LIST = "GET_TIMER_LIST";
-const EDIT_TIMER = "EDIT_TIMER";
-const DELETE_STOPWATCH = "DELETE_TIMER";
-const SAVE_STOPWATCH = "SAVE_STOPWATCH";
-const USER_MAKE_CHAT = "USER_MAKE_CHAT";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -42,7 +36,7 @@ export const login = (dataToSubmit) => {
 
 export const signup = (dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/user/email/send`, dataToSubmit)
+    .post(`${USER_SERVER}/auth/signup`, dataToSubmit)
     .then((response) => response.data)
     .catch((error) => {});
   return {
@@ -86,6 +80,18 @@ export const recommendedStudy = () => {
   return { type: RECOMMENDED_STUDY, payload: request };
 };
 
+//회원정보 수정
+export const editUser = (user_idx, dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_USER,
+    payload: request,
+  };
+};
+
 //스터디 리스트 불러오기
 export const getStudylist = (dataToSubmit) => {
   const request = axios
@@ -107,7 +113,7 @@ export const getStudydetail = (id) => {
 //스터디 가입
 export const joinStudy = (user_id, study_id) => {
   const request = axios
-    .post(`${USER_SERVER}/list/array/join/${user_id}/${study_id}`)
+    .put(`${USER_SERVER}/list/join/${user_id}/${study_id}`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: JOIN_STUDY, payload: request };
@@ -116,7 +122,7 @@ export const joinStudy = (user_id, study_id) => {
 //스터디 탈퇴
 export const leaveStudy = (user_id, study_id) => {
   const request = axios
-    .delete(`${USER_SERVER}/list/array/leave/${user_id}/${study_id}`)
+    .delete(`${USER_SERVER}/list/leave/${user_id}/${study_id}`)
     .then((response) => response.data)
     .catch((error) => {});
   return { type: LEAVE_STUDY, payload: request };
@@ -137,7 +143,7 @@ export const makestudy = (dataToSubmit) => {
 //메세지 내역 다 가져오기
 export const getMessages = (room_idx) => {
   const request = axios
-    .get(`${USER_SERVER}/api/chat/room/${room_idx}`)
+    .get(`${USER_SERVER}/chat/room/${room_idx}`)
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_MESSAGES, payload: request };
@@ -145,9 +151,8 @@ export const getMessages = (room_idx) => {
 
 //채팅 리스트 다 가져오기
 export const getChatlist = (user_idx) => {
-  console.log(`${USER_SERVER}/api/chat/room_list/${user_idx}`);
   const request = axios
-    .get(`${USER_SERVER}/api/chat/room_list/${user_idx}`)
+    .get(`${USER_SERVER}/chat/room_list/${user_idx}`)
     .then((request) => request.data)
     .catch((error) => {});
   return { type: GET_CHATLIST, payload: request };
@@ -193,18 +198,6 @@ export const editstudy = (study_id, dataToSubmit) => {
   };
 };
 
-//회원정보 수정
-export const editUser = (user_idx, dataToSubmit) => {
-  const request = axios
-    .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
-    .then((request) => request.data)
-    .catch((error) => {});
-  return {
-    type: EDIT_USER,
-    payload: request,
-  };
-};
-
 //스터디 멤버리스트 불러오기
 export const getMember = (study_id) => {
   const request = axios
@@ -231,6 +224,7 @@ export const warnMember = (dataToSubmit) => {
   };
 };
 
+<<<<<<< HEAD
 //스톱워치 기능
 export const addStopwatch = (user_idx, dataToSubmit) => {
   const request = axios
@@ -298,6 +292,8 @@ export const userMakeChat = (dataToSubmit) => {
   return { type: USER_MAKE_CHAT, payload: request };
 };
 
+=======
+>>>>>>> origin/Header값추가
 const actions = (state = {}, action) => {
   switch (action.type) {
     case LOGIN:

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { useHistory } from "react-router";
 import Default from "../assets/profile.png";
 import { useDispatch } from "react-redux";
 import Edit from "../assets/edit.png";
 import { getUserInfo, editUser } from "../_actions/actions";
+import ImageUpload from "../components/ImageUpload";
 import { checkPropTypes } from "prop-types";
 
 const Wrapper = styled.div`
@@ -72,10 +74,9 @@ const EditUser = ({ match }) => {
     user_idx: "",
     user_name: "김선달",
     user_email: "whkakrkr@gmail.com",
-
     file: "",
-    profile: Default,
 
+    profile: Default,
     new_password: "",
     check_new_password: "",
   });
@@ -92,6 +93,7 @@ const EditUser = ({ match }) => {
     });
   }, []);
 
+  //이미지업로드
   const onInputChange = (e) => {
     console.log(e.target.value);
     const { name, value } = e.target;
@@ -104,22 +106,9 @@ const EditUser = ({ match }) => {
     } else {
       console.log(user.new_password);
     }
-    // const password;
-    // console.log(password);
-    // dispatch(getUserInfo(password)).then((response) => {
-    //   if (response.payload) {
-    //     setUser(response.payload);
-    //   } else {
-    //     console.log("회원정보 가져오기 에러");
-    //   }
-    // });
   };
+  // const history = useHistory();
 
-  // useEffect(() => {
-  //   const user_id = window.localStorage.getItem("id");
-  // });
-
-  //이미지업로드
   const uploadImage = () => {
     var input = document.createElement("input");
     input.type = "file";
@@ -140,6 +129,7 @@ const EditUser = ({ match }) => {
   return (
     <Wrapper>
       <Profile src={user.profile}>
+        {/* <Image src={Profile}></Image> */}
         <img
           onClick={uploadImage}
           src={Edit}

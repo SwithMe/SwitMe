@@ -63,25 +63,6 @@ function Watch(props) {
   //시작 status=0
   const start = () => {
     run();
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = ("0" + (today.getMonth() + 1)).slice(-2);
-    var day = ("0" + today.getDate()).slice(-2);
-    var hours = ("0" + today.getHours()).slice(-2);
-    var minutes = ("0" + today.getMinutes()).slice(-2);
-    var seconds = ("0" + today.getSeconds()).slice(-2);
-    start_time.current =
-      year +
-      "-" +
-      month +
-      "-" +
-      day +
-      "T" +
-      hours +
-      ":" +
-      minutes +
-      ":" +
-      seconds;
     setStatus(1);
     setInterv(setInterval(run, 1000));
   };
@@ -102,6 +83,16 @@ function Watch(props) {
     }
     updatedS++;
     return setTime({ s: updatedS, m: updatedM, h: updatedH });
+  };
+
+  //멈춤 status=2
+  const stop = () => {
+    clearInterval(interv);
+    setStatus(2);
+  };
+
+  const resume = () => {
+    start();
   };
 
   const reset = () => {
@@ -161,15 +152,7 @@ function Watch(props) {
       </div>
 
       <div className="buttons">
-        {status === 0 ? (
-          timer.timer_idx ? (
-            <Button onClick={start}>시작하기</Button>
-          ) : (
-            ""
-          )
-        ) : (
-          ""
-        )}
+        {status === 0 ? <Button onClick={start}>시작하기</Button> : ""}
 
         {status === 1 ? (
           <div style={{ display: "flex", flexDirection: "row" }}>

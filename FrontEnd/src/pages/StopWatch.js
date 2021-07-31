@@ -29,6 +29,7 @@ const StopWatch = () => {
   useEffect(() => {
     console.log(save);
   }, [timer, save]);
+
   return (
     <div>
       <Header page="1"></Header>

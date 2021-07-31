@@ -44,11 +44,9 @@ public class StudyController {
     //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
     public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
-        System.out.println("\n\n안"+makeStudyDto.getLeader());
         User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
         int temp=user.getManner_temperature();
         System.out.println(user.getManner_temperature());
-        // study main 에 저장하면 됨.
         Study study = Study.builder()
                 .title(makeStudyDto.getTitle())
                 .type(makeStudyDto.getType())
@@ -67,14 +65,6 @@ public class StudyController {
                 .avgMannerTemperature(temp)
                 .build();
         return studyRepository.save(study);
-        /*Optional<Study> exist=studyRepository.findByTitle(study.getTitle());
-        if(exist.isPresent()) {
-            throw new Exception(HttpStatus.CONFLICT, "오류");
-        }*/
-        // 1. leader 값에 만드는 사람의 user_idx 넣기
-        // 2. leader name 추가하기
-        // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
-
     }
 
     //전체 스터디 리스트 가져오기.
