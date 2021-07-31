@@ -115,6 +115,9 @@ const Mypage = () => {
     },
   ]);
 
+  // var answer = require("../assets/profile.png").default;
+  // const [status, setStatus] = useState(0);
+
   return (
     <Wrapper>
       <Header />
@@ -135,10 +138,11 @@ const Mypage = () => {
               <Image
                 alt="profile"
                 src={require("../assets/profile.png").default}
+                // src={uploadImage}
                 width="124"
                 height="124"
               />
-              {/* {ImageUpload.event.target.files !== null ? (
+              {/* {status === 0 ? (
                 <Image
                   alt="profile"
                   src={require("../assets/profile.png").default}
@@ -146,12 +150,7 @@ const Mypage = () => {
                   height="124"
                 />
               ) : (
-                <Image
-                  alt="profile"
-                  src={require("../assets/profile.png").default}
-                  width="124"
-                  height="124"
-                />
+                <Image alt="profile" src={answer} width="124" height="124" />
               )} */}
             </Col>
             <Col style={{ width: "660px" }}>
