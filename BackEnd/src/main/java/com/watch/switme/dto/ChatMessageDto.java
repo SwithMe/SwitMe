@@ -34,8 +34,8 @@ public class ChatMessageDto {
                 .message(this.message)
                 .sender(this.sender)
                 .room(this.room)
-                .time(time)
-                .check(check)
+                .time(this.time)
+                .check(this.check)
                 .build();
     }
 }
