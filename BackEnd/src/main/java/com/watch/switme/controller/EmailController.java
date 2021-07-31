@@ -118,4 +118,3 @@ public class EmailController {
         emailService.sendMail(email, emailcontent.toString());
     }
 }
-

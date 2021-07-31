@@ -23,12 +23,8 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
-    private final UserStudyRepository userStudyRepository;
 
-    @Transactional
-    public void delete(Long userStudyIdx){
-        userStudyRepository.deleteById(userStudyIdx);
-    }
+
 
     /*
     @Transactional

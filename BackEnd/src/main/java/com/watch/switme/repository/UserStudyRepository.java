@@ -20,7 +20,5 @@ UserStudyRepository extends JpaRepository<UserStudy, Long> {
     @Query(value = "select * from User_study u where u.study_idx = ?1 and u.user_idx = ?2", nativeQuery = true)
     UserStudy findByUserAndStudy(Long study_idx, Long user_idx);
 
-    @Override
-    void deleteById(Long aLong);
 
 }
