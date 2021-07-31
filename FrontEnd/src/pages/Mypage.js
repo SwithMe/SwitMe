@@ -139,13 +139,9 @@ const Mypage = () => {
     history.push("/");
   };
 
-  // var answer = require("../assets/profile.png").default;
-  // const [status, setStatus] = useState(0);
-
   return (
     <Wrapper>
       <Header page="3" />
-
       <Col>
         <Row
           style={{
@@ -162,21 +158,10 @@ const Mypage = () => {
             <Col>
               <Image
                 alt="profile"
-                src={require("../assets/profile.png").default}
-                // src={uploadImage}
+                src={user.user_image}
                 width="124"
                 height="124"
               />
-              {/* {status === 0 ? (
-                <Image
-                  alt="profile"
-                  src={require("../assets/profile.png").default}
-                  width="124"
-                  height="124"
-                />
-              ) : (
-                <Image alt="profile" src={answer} width="124" height="124" />
-              )} */}
             </Col>
             <Col style={{ width: "660px" }}>
               <Title size="32" color="#064538">
@@ -196,12 +181,13 @@ const Mypage = () => {
               </Title>
             </Col>
           </Row>
-          <ImageUpload
+          <UploadButton
             name="회원정보수정"
             width="251px"
             height="65px"
-            radius="40px"
-          ></ImageUpload>
+            color="#CCCCCC"
+            borderRadius="40px"
+          ></UploadButton>
           <Button
             name="로그아웃"
             width="251px"
