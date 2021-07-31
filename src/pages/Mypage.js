@@ -163,6 +163,7 @@ const Mypage = () => {
                 src={user.user_image}
                 width="124"
                 height="124"
+                radius="60"
               />
             </Col>
             <Col style={{ width: "660px" }}>

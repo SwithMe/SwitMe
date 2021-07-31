@@ -62,6 +62,25 @@ function Watch(props) {
 
   //시작 status=0
   const start = () => {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+    var day = ("0" + today.getDate()).slice(-2);
+    var hours = ("0" + today.getHours()).slice(-2);
+    var minutes = ("0" + today.getMinutes()).slice(-2);
+    var seconds = ("0" + today.getSeconds()).slice(-2);
+    start_time.current =
+      year +
+      "-" +
+      month +
+      "-" +
+      day +
+      "T" +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds;
     run();
     setStatus(1);
     setInterv(setInterval(run, 1000));
@@ -121,6 +140,7 @@ function Watch(props) {
       start_time: start_time.current,
       end_time: end_time.current,
     };
+    console.log(dataToSubmit);
     dispatch(saveTimer(dataToSubmit)).then((response) => {
       if (response.payload) {
         isSave(!save);
