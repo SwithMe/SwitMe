@@ -36,7 +36,6 @@ public class ChatRoomController {
         Long room_idx;
         if(check == null){
             ChatRoomDto chatRoomDto = ChatRoomDto.builder().study(study).leader(leader).inquirer(inquirer).build();
-            System.out.println(chatRoomDto);
             room_idx = chatRoomService.save(chatRoomDto);
         } else{
             room_idx = check.getRoomIdx();
@@ -55,8 +54,14 @@ public class ChatRoomController {
         Long inquirer_idx = makeRoomLeaderDto.getMember_idx();
         User inquirer = userService.findByUserIdx(inquirer_idx);
 
-        ChatRoomDto chatRoomDto = ChatRoomDto.builder().study(study).leader(leader).inquirer(inquirer).build();
-        Long room_idx = chatRoomService.save(chatRoomDto);
+        ChatRoom check = chatRoomService.findRoom(leader_idx, inquirer_idx);
+        Long room_idx;
+        if(check==null){
+            ChatRoomDto chatRoomDto = ChatRoomDto.builder().study(study).leader(leader).inquirer(inquirer).build();
+            room_idx = chatRoomService.save(chatRoomDto);
+        } else{
+            room_idx = check.getRoomIdx();
+        }
 
         MakeRoomResponseDto makeRoomResponseDto = new MakeRoomResponseDto(room_idx);
         return makeRoomResponseDto;
