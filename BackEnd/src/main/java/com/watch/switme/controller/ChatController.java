@@ -21,7 +21,7 @@ public class ChatController {
     private final ChatMessageService chatMessageService;
     private final ChatRoomService chatRoomService;
 
-    @MessageMapping("/message")
+    @MessageMapping("/chat/message")
     public void Message(SocketDto message){
 
         ChatRoom presentRoom = chatRoomService.findRoom(Long.parseLong(message.getRoom_idx()));
