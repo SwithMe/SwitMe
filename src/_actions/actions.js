@@ -20,6 +20,7 @@ const GET_USER_STOPWATCH = "GET_USER_STOPWATCH";
 const EDIT_STUDY = "EDIT_STUDY";
 const GET_MEMBER = "GET_MEMBER";
 const WARN_MEMBER = "WARN_MEMBER";
+const EDIT_USER = "EDIT_USER";
 const ADD_STOPWATCH = "ADD_STOPWATCH";
 const GET_TIMER_LIST = "GET_TIMER_LIST";
 const EDIT_TIMER = "EDIT_TIMER";
@@ -188,6 +189,18 @@ export const editstudy = (study_id, dataToSubmit) => {
     .catch((error) => {});
   return {
     type: EDIT_STUDY,
+    payload: request,
+  };
+};
+
+//회원정보 수정
+export const editUser = (user_idx, dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return {
+    type: EDIT_USER,
     payload: request,
   };
 };
