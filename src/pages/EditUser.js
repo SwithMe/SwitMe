@@ -48,7 +48,7 @@ const Signup = () => {
   return (
     <Wrapper>
       {/* <form onSubmit={formSubmit}> */}
-      <Image></Image>
+      <Image width="198" height="198" src={user.user_image}></Image>
       <Items>
         <Input2
           name="username"
