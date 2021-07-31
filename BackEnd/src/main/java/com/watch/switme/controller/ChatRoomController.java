@@ -32,7 +32,7 @@ public class ChatRoomController {
         Long leader_idx = makeRoomDto.getLeader_idx();
         User leader = userService.findByUserIdx(leader_idx);
 
-        ChatRoom check = chatRoomService.findRoom(leader_idx, inquirer_idx);
+        ChatRoom check = chatRoomService.findRoom(leader_idx, inquirer_idx, study_idx);
         Long room_idx;
         if(check == null){
             ChatRoomDto chatRoomDto = ChatRoomDto.builder().study(study).leader(leader).inquirer(inquirer).build();
@@ -54,7 +54,7 @@ public class ChatRoomController {
         Long inquirer_idx = makeRoomLeaderDto.getMember_idx();
         User inquirer = userService.findByUserIdx(inquirer_idx);
 
-        ChatRoom check = chatRoomService.findRoom(leader_idx, inquirer_idx);
+        ChatRoom check = chatRoomService.findRoom(leader_idx, inquirer_idx, study_idx);
         Long room_idx;
         if(check==null){
             ChatRoomDto chatRoomDto = ChatRoomDto.builder().study(study).leader(leader).inquirer(inquirer).build();
