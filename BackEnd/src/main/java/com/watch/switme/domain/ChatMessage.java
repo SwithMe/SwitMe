@@ -35,12 +35,12 @@ public class ChatMessage {
     private int check;
 
     @Builder
-    public ChatMessage(String message, User sender, ChatRoom room, LocalDateTime time){
+    public ChatMessage(String message, User sender, ChatRoom room, LocalDateTime time, int check){
         this.message = message;
         this.sender = sender;
         this.room = room;
         this.time = time;
-        this.check = 0;
+        this.check = check;
     }
 
     public void checkUpdate(int check){
