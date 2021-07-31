@@ -3,12 +3,8 @@ package com.watch.switme.controller;
 import com.watch.switme.domain.User;
 import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
-import com.watch.switme.repository.EmailUserService;
 import com.watch.switme.service.EmailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -118,4 +114,5 @@ public class EmailController {
         emailcontent.append("</html>");
         emailService.sendMail(email, emailcontent.toString());
     }
+}
 }

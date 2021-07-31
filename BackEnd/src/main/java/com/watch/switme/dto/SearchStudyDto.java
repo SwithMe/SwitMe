@@ -15,4 +15,3 @@ public class SearchStudyDto {
     private String type;
     private Long leader;
 }
-

@@ -36,16 +36,10 @@ public class EmailService {
     public void sendMail(String email, String message)  throws MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-
         helper.setFrom("SWITME");
         helper.setTo(email);
         helper.setSubject("SWITME");
         helper.setText(message, true);
-
         javaMailSender.send(mimeMessage);
     }
-
-
-
-
 }

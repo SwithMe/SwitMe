@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 public class TimerController {
@@ -155,7 +156,6 @@ public class TimerController {
 
         return saved_timerLog_idx;
     }
-
 
     //추천 스터디
     @GetMapping("/main/recomstudy")
