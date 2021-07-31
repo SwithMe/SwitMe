@@ -1,29 +1,24 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.*;
-import com.watch.switme.dto.JoinStudyDto;
-import com.watch.switme.dto.SearchResultDto;
+import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
-import com.watch.switme.service.StudyService;
-import com.watch.switme.service.UserService;
 import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import javax.naming.directory.SearchResult;
-import java.time.LocalDateTime;
+
+import javax.sound.midi.SysexMessage;
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.List;
-import java.util.Optional;
 
 /*
 * 2. 스터디 가입하기 채우기
 * 4. 스터디 수정하기
 * */
-
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/list")
@@ -31,8 +26,13 @@ public class StudyController {
 
     @Autowired
     UserStudyService userStudyService;
+
+    @Autowired
     StudyRepository studyRepository;
+
+    @Autowired
     UserRepository userRepository;
+
     UserStudyRepository userStudyRepository;
 
     @Autowired
@@ -41,8 +41,32 @@ public class StudyController {
     }
 
     //온/오프라인 스터디 개설하기
+    //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
-    public void createnewStudy(@RequestBody Study study){
+    public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
+        System.out.println("\n\n안"+makeStudyDto.getLeader());
+        User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
+        int temp=user.getManner_temperature();
+        System.out.println(user.getManner_temperature());
+        // study main 에 저장하면 됨.
+        Study study = Study.builder()
+                .title(makeStudyDto.getTitle())
+                .type(makeStudyDto.getType())
+                .studyIntro(makeStudyDto.getStudyIntro())
+                .image(makeStudyDto.getImage())
+                .location(makeStudyDto.getLocation())
+                .link(makeStudyDto.getLink())
+                .size(makeStudyDto.getSize())
+                .tags(makeStudyDto.getTags())
+                .leader((long) makeStudyDto.getLeader())
+                .activate("N")
+                .termend(makeStudyDto.getTermend())
+                .termstart(makeStudyDto.getTermstart())
+                .timeend(makeStudyDto.getTimeend())
+                .timestart(makeStudyDto.getTimestart())
+                .avgMannerTemperature(temp)
+                .build();
+        return studyRepository.save(study);
         /*Optional<Study> exist=studyRepository.findByTitle(study.getTitle());
         if(exist.isPresent()) {
             throw new Exception(HttpStatus.CONFLICT, "오류");
@@ -50,7 +74,7 @@ public class StudyController {
         // 1. leader 값에 만드는 사람의 user_idx 넣기
         // 2. leader name 추가하기
         // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
-        studyRepository.save(study);
+
     }
 
     //전체 스터디 리스트 가져오기.

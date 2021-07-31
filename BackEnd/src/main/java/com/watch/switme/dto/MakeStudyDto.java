@@ -1,5 +1,6 @@
 package com.watch.switme.dto;
 
+import com.watch.switme.domain.UserYesOrNo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,10 +33,12 @@ public class MakeStudyDto {
     private Long leader;
     private String link;
     private String studyIntro;
+    private UserYesOrNo activate;
+    private int manner_temperature;
 
     @Builder
     public MakeStudyDto(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
-                        String tags, String location, String extra, String image, Long leader, String link, String studyIntro){
+                        String tags, String location, String extra, String image, Long leader, String link, String studyIntro, int manner_temperature){
         this.study_idx = study_idx;
         this.title = title;
         this.type = type;
@@ -51,7 +54,7 @@ public class MakeStudyDto {
         this.leader = leader;
         this.link = link;
         this.studyIntro = studyIntro;
-
+        this.manner_temperature=manner_temperature;
     }
 
 }
