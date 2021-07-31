@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import Input from "../components/Input";
 import Search from "../assets/search.png";
 import Image from "../components/Image";
+import Chat_list from "../components/Chat_list";
 import { getStudydetail, getMember, warnMember } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 
@@ -109,7 +110,7 @@ const MemberList = ({ match }) => {
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
-        // console.log("기존 스터디 정보 가져오기 성공");
+        console.log(study);
         setStudy({ ...study, studyname: response.payload.title });
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
@@ -140,13 +141,6 @@ const MemberList = ({ match }) => {
       }
     });
   };
-
-  // const handleImgError = (e) => {
-  //   // e.target.src = require("../assets/circle.png").default;
-  //   if (study.user_image === null) {
-  //     e.target.src = "../assets/circle.png";
-  //   }
-  // };
 
   return (
     <>
@@ -200,7 +194,7 @@ const MemberList = ({ match }) => {
                 <Image
                   alt="profile"
                   src={member.user_image}
-                  // onerror={handleImgError}
+                  // onerror={Default}
                   // src={require("../assets/circle.png").default}
                   width="80"
                   height="80"
@@ -237,6 +231,7 @@ const MemberList = ({ match }) => {
                   fontFamily: "NotoSans",
                   cursor: "pointer",
                 }}
+                // onClick={openModal}
                 onClick={() => warn(member.user_idx)}
               >
                 경고하기
