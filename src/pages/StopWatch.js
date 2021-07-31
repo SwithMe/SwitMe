@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Watch from "../components/Watch";
@@ -17,27 +17,21 @@ const Wrapper = styled.div`
 `;
 
 const StopWatch = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
+  const [timer, setTimer] = useState({
+    timer_idx: "",
+    name: "",
+    duration: "0:00:00",
+  });
+  const changeTimer = (newTimer) => {
+    setTimer(newTimer);
   };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
+  useEffect(() => {}, [timer]);
   return (
     <div>
-      <ModalTimer
-        open={modalOpen}
-        close={closeModal}
-        onInputChange={TimerList.onInputChange}
-        onSubmit={TimerList.onSubmit}
-      ></ModalTimer>
       <Header page="1"></Header>
       <Wrapper>
-        <TimerList openModal={openModal}></TimerList>
-        <Watch name={TimerListContent.name}></Watch>
+        <TimerList changeTimer={changeTimer}></TimerList>
+        <Watch timer={timer}></Watch>
       </Wrapper>
     </div>
   );
