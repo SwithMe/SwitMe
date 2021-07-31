@@ -34,7 +34,6 @@ public class TimerController {
     @PutMapping("/timer/edit/{timer_idx}")
     public Long timerUpdate(@PathVariable("timer_idx") long timer_idx, @RequestBody Map<String, String> param){
         String timer_name = param.get("timer_name");
-
         return timerService.update(timer_idx, timer_name);
     }
 
