@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository <User, Long> {
     Optional<User> findByEmail(String email);
+
+    User findByEmailAndRealname(String email, String realname);
+
     boolean existsByEmail(String email);
 
     @Query(value = "select * from User_data u where u.user_idx = ?1", nativeQuery = true)
