@@ -59,25 +59,39 @@ function TimerList({ openModal }) {
   const [status, setStatus] = useState(0);
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
-  const [timers, setTimers] = useState([
-    {
-      id: 1,
-      name: "타이머1",
-      time: "00",
-    },
-    {
-      id: 2,
-      name: "타이머2",
-      time: "00",
-    },
-  ]);
+  const [timers, setTimers] = useState();
 
   useEffect(() => {
     dispatch(getTimerList(window.localStorage.getItem("id"))).then(
       (response) => {
         if (response.payload) {
-          console.log(response.payload);
-          setTimers(response.payload);
+          const tmp_arr = [];
+          response.payload?.map((timer) => {
+            const stopwatch = {
+              timer_idx: timer.timer_idx,
+              name: timer.name,
+              duration: 0,
+            };
+            const time = timer.duration;
+            const second =
+              time % 60 < 10
+                ? "0" + Math.floor(time % 60)
+                : Math.floor(time % 60);
+            const minute =
+              Math.floor(time / 60) < 10
+                ? "0" + Math.floor(time / 60)
+                : Math.floor(time / 60);
+            const hour = Math.floor(time / 360);
+            stopwatch["duration"] =
+              hour.toString() +
+              " : " +
+              minute.toString() +
+              " : " +
+              second.toString();
+            tmp_arr.push(stopwatch);
+            console.log(tmp_arr);
+          });
+          setTimers(tmp_arr);
         } else {
           console.log("스톱워치 리스트 에러");
         }
@@ -132,7 +146,7 @@ function TimerList({ openModal }) {
       <div class="head">2021.07.18. 일요일</div>
 
       <div>
-        {timers.map((timer) => (
+        {timers?.map((timer) => (
           <TimerListContent
             timer={timer}
             key={timer.id}
