@@ -8,6 +8,7 @@ import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,9 +19,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserStudyService {
+    @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
     private final UserStudyRepository userStudyRepository;
+
     private final UserDataExtraRepository userDataExtraRepository;
+
+    @Autowired
     private final StudyRepository studyRepository;
 
     @Transactional
@@ -79,7 +86,7 @@ public class UserStudyService {
         userStudyRepository.deleteById(user_study_idx);
     }
 
-    @Transactional //삭제
+    @Transactional
     public Long join(Long user_idx, Long study_idx){
         User user= userRepository.findById(user_idx).get();
         Study study = studyRepository.findById(study_idx).get();
@@ -89,7 +96,9 @@ public class UserStudyService {
                 .user(user)
                 .activate(UserYesOrNo.Y)
                 .amLeader(UserYesOrNo.N)
+                .warning(0)
                 .build();
+        System.out.println(joinStudyRequestDto.getAmLeader());
         return userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
     }
 }

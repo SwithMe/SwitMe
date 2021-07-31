@@ -26,7 +26,6 @@ public class EmailController {
 
     @PostMapping(value="/user/email/find")
     public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
-
         System.out.println("출력>>>"+signUpDTO.getEmail()+ signUpDTO.getPw());
         System.out.println("kje000124@naver.com");
 
