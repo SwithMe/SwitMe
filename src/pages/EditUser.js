@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { useHistory } from "react-router";
-import Image from "../components/Image";
+import Default from "../assets/profile.png";
+import Edit from "../assets/edit.png";
 import ImageUpload from "../components/ImageUpload";
+import {
+  getUserInfo,
+  getUserStopwatch,
+  getUserStudy,
+} from "../_actions/actions";
+import { checkPropTypes } from "prop-types";
 
 const Wrapper = styled.div`
-  position: absolute;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: content;
+`;
+
+const Profile = styled.div`
+  width: 198px;
+  height: 198px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background: url(${(props) => props.src});
+  background-size: 100%;
 `;
 
 const Input = styled.input`
@@ -45,36 +64,62 @@ const Button = styled.button`
   font-size: 24px;
   outline: none;
   border: none;
+  cursor: pointer;
 `;
 
-const Signup = () => {
-  const history = useHistory();
+const EditUser = () => {
   const [user, setUser] = useState({
-    realname: "",
-    email: "",
-    pw: "",
-    pw2: "",
+    user_idx: "",
+    user_name: "",
+    user_email: "",
+    password: "",
+    file: "",
+    profile: Default,
   });
 
-  const onInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name !== "useragree") setUser({ ...user, [name]: value });
-    else setUser({ ...user, useragree: e.target.checked ? "Y" : "N" });
+  const history = useHistory();
+
+  const uploadImage = () => {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.click();
+    input.onchange = function (e) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = function () {
+        console.log(reader.result);
+        setUser({ profile: reader.result });
+      };
+    };
   };
 
   return (
     <Wrapper>
-      <Image width="198px" height="198px" src={user.user_image}></Image>
+      <Profile src={user.profile}>
+        {/* <Image src={Profile}></Image> */}
+        <img
+          onClick={uploadImage}
+          src={Edit}
+          style={{ width: "51px", height: "51px", cursor: "pointer" }}
+        ></img>
+      </Profile>
+
+      <div style={{ height: "50px" }}></div>
       <Box>{user.user_name}</Box>
       <Box>{user.user_email}</Box>
-      <Input
-        placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"
-        onChange={onInputChange}
-      ></Input>
-      <Input placeholder="비밀번호 확인" onChange={onInputChange}></Input>
+      <Input placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"></Input>
+      <Input placeholder="비밀번호 확인"></Input>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <Button style={{ backgroundColor: "#cccccc" }}>뒤로가기</Button>
+        <Button
+          style={{ backgroundColor: "#cccccc" }}
+          onClick={() => history.push("/mypage")}
+        >
+          뒤로가기
+        </Button>
         <Button>수정하기</Button>
       </div>
 
@@ -83,4 +128,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default EditUser;
