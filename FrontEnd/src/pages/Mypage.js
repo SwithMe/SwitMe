@@ -185,8 +185,9 @@ const Mypage = () => {
             name="회원정보수정"
             width="251px"
             height="65px"
-            color="#CCCCCC"
+            color="var(--middle)"
             borderRadius="40px"
+            onClick={() => history.push("/edituser")}
           ></Button>
           <Button
             name="로그아웃"

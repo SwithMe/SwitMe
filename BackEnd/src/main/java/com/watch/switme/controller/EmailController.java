@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,9 +27,11 @@ public class EmailController {
 
     @PostMapping(value="/user/email/find")
     public void findMail(@RequestBody  SignUpDTO signUpDTO) throws MessagingException{
-        System.out.println("출력>>>"+signUpDTO.getEmail()+ signUpDTO.getPw());
-        System.out.println("kje000124@naver.com");
 
+        //1. userRespository에서 signupDTO의 useremail과 같은 애를 찾는다.
+        //2. 그 user의 pw를 받아온다.
+        //3. 그 값을 리턴해준다.
+        User user=userRepository.findByEmailAndRealname(signUpDTO.getEmail(), signUpDTO.getRealname());
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
         emailcontent.append("<html>");
@@ -45,7 +48,7 @@ public class EmailController {
                         "	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">"
                         +
                        ""																																						+
-                        "	비밀번호는"+signUpDTO.getPw()+"입니다."+
+                        user.getRealname()+"님의 비밀번호는"+user.getPw()+"입니다."+
                         "	</p>"																																																	+
 
                         ""						+

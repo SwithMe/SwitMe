@@ -18,7 +18,7 @@ const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 40vh;
+  height: 500px;
 `;
 
 const TextBox = styled.div`

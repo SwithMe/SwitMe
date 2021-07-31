@@ -14,6 +14,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
     ChatRoom findFirstByRoomIdx(Long room_idx);
 
-    @Query(value = "select * from chat_room c where c.leader_idx = ?1 and c.inquirer_idx = ?2 ", nativeQuery = true)
-    ChatRoom findFirstByLeaderIdxIsAndInquirerIdxIs(Long leader_idx, Long inquirer_idx);
+    @Query(value = "select * from chat_room c where c.leader_idx = ?1 and c.inquirer_idx = ?2 and study_idx = ?3 ", nativeQuery = true)
+    ChatRoom findFirstByLeaderIdxIsAndInquirerIdxIs(Long leader_idx, Long inquirer_idx, Long study_idx);
 }

@@ -20,8 +20,7 @@ public class ChatMessage {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @CreatedDate
-    @Column(name = "time", nullable = false)
+    @Column(name = "time")
     private LocalDateTime time;
 
     @ManyToOne
@@ -36,10 +35,11 @@ public class ChatMessage {
     private int check;
 
     @Builder
-    public ChatMessage(String message, User sender, ChatRoom room){
+    public ChatMessage(String message, User sender, ChatRoom room, LocalDateTime time){
         this.message = message;
         this.sender = sender;
         this.room = room;
+        this.time = time;
         this.check = 0;
     }
 
@@ -47,8 +47,4 @@ public class ChatMessage {
         this.check = check;
     }
 
-//    @PrePersist
-//    public void chatTime(){
-//        this.time = LocalDateTime.now();
-//    }
 }

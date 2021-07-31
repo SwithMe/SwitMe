@@ -23,8 +23,8 @@ public class ChatRoomService {
     private final UserDataExtraRepository userDataExtraRepository;
 
     @Transactional
-    public ChatRoom findRoom(Long leader_idx, Long inquirer_idx){
-        return chatRoomRepository.findFirstByLeaderIdxIsAndInquirerIdxIs(leader_idx, inquirer_idx);
+    public ChatRoom findRoom(Long leader_idx, Long inquirer_idx, Long study_idx){
+        return chatRoomRepository.findFirstByLeaderIdxIsAndInquirerIdxIs(leader_idx, inquirer_idx, study_idx);
     }
 
     @Transactional
@@ -88,7 +88,7 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public ChatRoom findRoom(Long room_idx){
+    public ChatRoom findByRoomIdx(Long room_idx){
         return chatRoomRepository.findById(room_idx).get();
     }
 }
