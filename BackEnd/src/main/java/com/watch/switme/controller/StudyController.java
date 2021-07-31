@@ -94,9 +94,12 @@ public class StudyController {
 
     //스터디 세부사항 보여주기 (uri 수정 버전 테스트 필요함)
     @GetMapping("/array/study/{study_idx}")
-    public Study showStudyDetail(@PathVariable Long study_idx){
-        return studyRepository.findFirstByStudyIdx(study_idx);
+    public List<Study> showStudyDetail(@PathVariable Long study_idx){
+        return studyRepository.findByStudy_idx(study_idx);
     }
+
+
+    //스터디 검색 기능
 
     /* 스터디 검색/리스트 관련 */
     @PostMapping("/array")

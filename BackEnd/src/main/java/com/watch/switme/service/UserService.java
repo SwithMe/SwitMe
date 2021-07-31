@@ -39,14 +39,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public boolean userEmailCheck(String usermail, String username){
+        System.out.println(userRepository.findByEmail(usermail));
+        return true;
+    }
+
     public boolean isEmailDuplicated(final String email) {
         return userRepository.existsByEmail(email);
     }
     public List<User> findAll() {
         return userRepository.findAll();
     }
-    public Optional<User> findByEmail(final String email) {return userRepository.findByEmail(email);}
 
+    public Optional<User> findByEmail(final String email) {return userRepository.findByEmail(email);}
     public User findByUserIdx(Long user_idx){
         return userRepository.findFirstByUserIdx(user_idx);
     }
@@ -54,5 +59,6 @@ public class UserService {
     public UserDataExtra findExtraByUserIdx(Long user_idx){
         return userDataExtraRepository.findFirstByUserIdx(user_idx);
     }
+
 
 }
