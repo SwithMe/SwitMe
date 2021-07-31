@@ -34,8 +34,7 @@ export const login = (dataToSubmit) => {
     .post(`${USER_SERVER}/auth/login`, dataToSubmit)
     .then((response) => {
       return new Promise(function (resolve, reject) {
-        console.log(response.headers);
-        let idx = response.headers["USER_IDX"];
+        let idx = response.headers["user_idx"];
         resolve(idx);
       });
     })

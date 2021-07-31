@@ -74,7 +74,7 @@ const StudyDetail = ({ match }) => {
       "기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항 기타 사항",
   });
   const [isLeader, setIsLeader] = useState(false);
-  const [isMember, setIsMember] = useState(false);
+  const [isMember, setIsMember] = useState(true);
   const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
