@@ -71,13 +71,13 @@ const Content = styled.div`
 `;
 
 const TimerListContent = ({ timer, onRemove, openModal }) => {
-  const { id, name, time } = timer;
+  const { id, name, duration } = timer;
   return (
     <>
       <Content>
         <div class="name">{name}</div>
         <div class="green">
-          <div class="time">{time}</div>
+          <div class="time">{duration}</div>
           <div class="edit" onClick={openModal}></div>
           <div class="delete" onClick={() => onRemove(id)}></div>
         </div>
