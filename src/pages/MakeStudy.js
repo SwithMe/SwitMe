@@ -51,6 +51,8 @@ const Item = styled.div`
     z-index: 1;
     position: absolute;
     margin-top: 65px;
+    overflow-y: scroll;
+    height: 200px;
   }
   li {
     padding: 5px 10px;
@@ -305,6 +307,146 @@ const MakeStudy = () => {
                       03:00
                     </Title>
                   </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "04:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      04:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "05:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      05:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "06:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      06:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "07:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      07:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "08:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      08:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "09:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      09:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "10:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      10:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "11:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      11:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "12:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      12:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "13:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      13:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "14:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      14:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "15:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      15:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "16:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      16:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "17:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      17:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "18:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      18:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "19:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      19:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "20:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      20:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "21:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      21:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "22:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      22:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "23:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      23:00
+                    </Title>
+                  </li>
                 </ul>
               </Item>
               <div style={{ margin: "15px" }}>
@@ -344,6 +486,122 @@ const MakeStudy = () => {
                   <li onClick={() => setStudy({ ...study, timeend: "03:00" })}>
                     <Title size="20" weight="400">
                       03:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "04:00" })}>
+                    <Title size="20" weight="400">
+                      04:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "05:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      05:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "06:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      06:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "07:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      07:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "08:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      08:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "09:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      09:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "10:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      10:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "11:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      11:00
+                    </Title>
+                  </li>
+                  <li
+                    onClick={() => setStudy({ ...study, timestart: "12:00" })}
+                  >
+                    <Title size="20" weight="400">
+                      12:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "13:00" })}>
+                    <Title size="20" weight="400">
+                      13:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "14:00" })}>
+                    <Title size="20" weight="400">
+                      14:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "15:00" })}>
+                    <Title size="20" weight="400">
+                      15:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "16:00" })}>
+                    <Title size="20" weight="400">
+                      16:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "17:00" })}>
+                    <Title size="20" weight="400">
+                      17:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "18:00" })}>
+                    <Title size="20" weight="400">
+                      18:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "19:00" })}>
+                    <Title size="20" weight="400">
+                      19:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "20:00" })}>
+                    <Title size="20" weight="400">
+                      20:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "21:00" })}>
+                    <Title size="20" weight="400">
+                      21:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "22:00" })}>
+                    <Title size="20" weight="400">
+                      22:00
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, timeend: "23:00" })}>
+                    <Title size="20" weight="400">
+                      23:00
                     </Title>
                   </li>
                 </ul>
@@ -389,6 +647,41 @@ const MakeStudy = () => {
                   <li onClick={() => setStudy({ ...study, size: 3 })}>
                     <Title size="20" weight="400">
                       3
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 4 })}>
+                    <Title size="20" weight="400">
+                      4
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 5 })}>
+                    <Title size="20" weight="400">
+                      5
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 6 })}>
+                    <Title size="20" weight="400">
+                      6
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 7 })}>
+                    <Title size="20" weight="400">
+                      7
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 8 })}>
+                    <Title size="20" weight="400">
+                      8
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 9 })}>
+                    <Title size="20" weight="400">
+                      9
+                    </Title>
+                  </li>
+                  <li onClick={() => setStudy({ ...study, size: 10 })}>
+                    <Title size="20" weight="400">
+                      10
                     </Title>
                   </li>
                 </ul>
