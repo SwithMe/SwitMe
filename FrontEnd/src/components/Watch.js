@@ -152,7 +152,15 @@ function Watch(props) {
       </div>
 
       <div className="buttons">
-        {status === 0 ? <Button onClick={start}>시작하기</Button> : ""}
+        {status === 0 ? (
+          timer.timer_idx ? (
+            <Button onClick={start}>시작하기</Button>
+          ) : (
+            ""
+          )
+        ) : (
+          ""
+        )}
 
         {status === 1 ? (
           <div style={{ display: "flex", flexDirection: "row" }}>

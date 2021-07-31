@@ -89,9 +89,10 @@ function TimerList({ openModal, changeTimer }) {
               " : " +
               second.toString();
             tmp_arr.push(stopwatch);
+            console.log(timer.duration);
           });
           setTimers(tmp_arr);
-          changeTimer(tmp_arr[0]);
+          if (tmp_arr.length > 0) changeTimer(tmp_arr[0]);
         } else {
           console.log("스톱워치 리스트 에러");
         }

@@ -25,9 +25,7 @@ const StopWatch = () => {
   const changeTimer = (newTimer) => {
     setTimer(newTimer);
   };
-  useEffect(() => {
-    console.log(timer);
-  }, [timer]);
+  useEffect(() => {}, [timer]);
   return (
     <div>
       <Header page="1"></Header>
