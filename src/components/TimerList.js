@@ -54,7 +54,7 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
-function TimerList({ openModal, changeTimer }) {
+function TimerList({ openModal, changeTimer, change }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
   const [toggle, setToggle] = useState(false);
@@ -89,7 +89,6 @@ function TimerList({ openModal, changeTimer }) {
               " : " +
               second.toString();
             tmp_arr.push(stopwatch);
-            console.log(timer.duration);
           });
           setTimers(tmp_arr);
           if (tmp_arr.length > 0) changeTimer(tmp_arr[0]);
@@ -98,7 +97,7 @@ function TimerList({ openModal, changeTimer }) {
         }
       }
     );
-  }, [toggle]);
+  }, [toggle, change]);
 
   //추가하기 status:1
   const Add = () => {
