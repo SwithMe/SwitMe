@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Image from "../components/Image";
 import Title from "../components/Title";
-import { getStudydetail, joinStudy, leaveStudy } from "../_actions/actions";
+import {
+  getStudydetail,
+  joinStudy,
+  leaveStudy,
+  userMakeChat,
+} from "../_actions/actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import Chat from "../components/Chat";
 
 const Fix = styled.div`
   min-height: 100vh;
@@ -53,8 +59,26 @@ const StudyDetail = ({ match }) => {
   const user_id = window.localStorage.getItem("id");
   const dispatch = useDispatch();
   const history = useHistory();
-  const [isSet, setIsSet] = useState(false);
-  const [study, setStudy] = useState();
+  const [study, setStudy] = useState({
+    activate: "",
+    avgMannerTemperature: "",
+    extra: "",
+    image: "",
+    leader: "",
+    link: "",
+    location: "",
+    participant: "",
+    size: "",
+    studyIntro: "",
+    study_idx: "",
+    tags: "",
+    termend: "",
+    termstart: "",
+    timeend: "",
+    timestart: "",
+    title: "",
+    type: "",
+  });
   const [isLeader, setIsLeader] = useState(false);
   const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
@@ -62,15 +86,24 @@ const StudyDetail = ({ match }) => {
     participation: 3,
     warning: 0,
   });
+  const [modalOpen, setModalOpen] = useState(false);
+  const room = useRef();
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
-        setStudy(response.payload[0]);
+        setStudy(response.payload);
         console.log(response.payload);
         if (String(response.payload.leader) === user_id) {
           setIsLeader(true);
         }
-        setIsSet(true);
       } else {
         console.log("스터디 상세정보 가져오기 실패");
       }
@@ -82,7 +115,7 @@ const StudyDetail = ({ match }) => {
     dispatch(joinStudy(user_id, study_id)).then((response) => {
       if (response.payload) {
         alert("스터디에 가입되었습니다.");
-        window.location.replace(`/studydetail/${study.id}`);
+        window.location.replace(`/#/studydetail/${study.study_idx}`);
       } else {
         console.log("스터디 가입 실패");
       }
@@ -94,9 +127,24 @@ const StudyDetail = ({ match }) => {
     dispatch(leaveStudy(user_id, study_id)).then((response) => {
       if (response.payload) {
         alert("스터디에서 탈퇴되었습니다.");
-        window.location.replace(`/studydetail/${study.id}`);
+        window.location.replace(`/#/studydetail/${study.study_idx}`);
       } else {
         console.log("스터디 탈퇴 실패");
+      }
+    });
+  };
+
+  const userChat = () => {
+    const data = {
+      study_idx: study.study_idx,
+      leader_idx: study.leader,
+      user_idx: window.localStorage.getItem("id"),
+    };
+    console.log(data);
+    dispatch(userMakeChat(data)).then((response) => {
+      if (response.payload) {
+        room.current = response.payload.room_idx;
+        openModal();
       }
     });
   };
@@ -104,6 +152,17 @@ const StudyDetail = ({ match }) => {
   return (
     <Fix>
       <Header page="3" />
+      {modalOpen ? (
+        <Chat
+          open={modalOpen}
+          close={closeModal}
+          header=""
+          other_user={study.leader}
+          room_idx={room.current}
+        ></Chat>
+      ) : (
+        <></>
+      )}
       <Info>
         <div>
           <Image
@@ -112,120 +171,113 @@ const StudyDetail = ({ match }) => {
             radius="10px"
           ></Image>
         </div>
-        {isSet ? (
-          <Detail>
-            <Title size="32" color="#064538">
-              {study.title}
-            </Title>
-            <Title size="24" weight="400" marginTop="17">
-              {study.outline}
-            </Title>
-            <div
-              style={{
-                marginTop: "30px",
-                marginBottom: "30px",
-                border: "3px solid #56BE9C",
-                background: "#56BE9C",
-              }}
-            ></div>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">스터디장</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.leader}
-                </Title>
-              </Content>
-              <div style={{ width: "174px" }}>
-                <Title size="20">매너온도</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.avgMannerTemperature}℃
-                </Title>
-              </Content>
-            </Row>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">모집상태</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.activate === "Y" ? "모집중" : "모집 완료"}
-                </Title>
-              </Content>
-              <div style={{ width: "174px" }}>
-                <Title size="20">기간</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.termstart} ~ {study.termend}
-                </Title>
-              </Content>
-            </Row>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">진행방식</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.type === "online" ? "온라인" : "오프라인"}
-                </Title>
-              </Content>
-              <div style={{ width: "174px" }}>
-                <Title size="20">시간</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.timestart ? study.timestart.slice(0, 5) : "00"} ~{" "}
-                  {study.timeend ? study.timeend.slice(0, 5) : "00"}
-                </Title>
-              </Content>
-            </Row>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">현재 / 최대 인원</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.participant || 0} / {study.size}명
-                </Title>
-              </Content>
-              <div style={{ width: "174px" }}>
-                <Title size="20">태그</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.tags}
-                </Title>
-              </Content>
-            </Row>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">링크</Title>
-              </div>
-              <Content>
-                <Title weight="400" size="20">
-                  {study.link}
-                </Title>
-              </Content>
-            </Row>
-            <div
-              style={{ border: "1px solid #56BE9C", marginBottom: "30px" }}
-            ></div>
-            <Row>
-              <div style={{ width: "174px" }}>
-                <Title size="20">기타사항</Title>
-              </div>
+        <Detail>
+          <Title size="32" color="#064538">
+            {study.title}
+          </Title>
+          <div
+            style={{
+              marginTop: "30px",
+              marginBottom: "30px",
+              border: "3px solid #56BE9C",
+              background: "#56BE9C",
+            }}
+          ></div>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">스터디장</Title>
+            </div>
+            <Content>
               <Title weight="400" size="20">
-                {study.extra}
+                {study.leader}
               </Title>
-            </Row>
-          </Detail>
-        ) : (
-          <></>
-        )}
+            </Content>
+            <div style={{ width: "174px" }}>
+              <Title size="20">매너온도</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.avgMannerTemperature}℃
+              </Title>
+            </Content>
+          </Row>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">모집상태</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.activate === "Y" ? "모집중" : "모집 완료"}
+              </Title>
+            </Content>
+            <div style={{ width: "174px" }}>
+              <Title size="20">기간</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.termstart} ~ {study.termend}
+              </Title>
+            </Content>
+          </Row>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">진행방식</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.type === "online" ? "온라인" : "오프라인"}
+              </Title>
+            </Content>
+            <div style={{ width: "174px" }}>
+              <Title size="20">시간</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.timestart ? study.timestart.slice(0, 5) : "00"} ~{" "}
+                {study.timeend ? study.timeend.slice(0, 5) : "00"}
+              </Title>
+            </Content>
+          </Row>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">현재 / 최대 인원</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.participant || 0} / {study.size}명
+              </Title>
+            </Content>
+            <div style={{ width: "174px" }}>
+              <Title size="20">태그</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.tags}
+              </Title>
+            </Content>
+          </Row>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">링크</Title>
+            </div>
+            <Content>
+              <Title weight="400" size="20">
+                {study.link}
+              </Title>
+            </Content>
+          </Row>
+          <div
+            style={{ border: "1px solid #56BE9C", marginBottom: "30px" }}
+          ></div>
+          <Row>
+            <div style={{ width: "174px" }}>
+              <Title size="20">기타사항</Title>
+            </div>
+            <Title weight="400" size="20">
+              {study.extra}
+            </Title>
+          </Row>
+        </Detail>
       </Info>
       <Lower>
         <button
@@ -357,7 +409,7 @@ const StudyDetail = ({ match }) => {
                 cursor: "pointer",
                 marginRight: "15px",
               }}
-              onClick={() => console.log("채팅 열기")}
+              onClick={userChat}
             >
               문의하기
             </button>

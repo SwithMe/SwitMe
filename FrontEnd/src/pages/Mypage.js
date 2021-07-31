@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
@@ -80,7 +80,13 @@ const Mypage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [studytoggle, setStudyToggle] = useState(1);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    user_idx: "",
+    user_email: "",
+    username: "",
+    user_image: "",
+    user_manner: "",
+  });
   const [studies, setStudies] = useState([]);
 
   const [times, setTimes] = useState([]);
@@ -96,7 +102,6 @@ const Mypage = () => {
     dispatch(getUserStudy(user_id)).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
-        console.log(response.payload);
       } else {
         console.log("스터디 목록 가져오기 에러");
       }
@@ -137,7 +142,6 @@ const Mypage = () => {
   return (
     <Wrapper>
       <Header page="3" />
-
       <Col>
         <Row
           style={{
