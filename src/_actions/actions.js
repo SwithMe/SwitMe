@@ -292,11 +292,7 @@ export const saveTimer = (dataToSubmit) => {
     .catch((error) => {});
   return {
     type: SAVE_STOPWATCH,
-<<<<<<< HEAD
-    payload: request.payload,
-=======
     payload: request,
->>>>>>> feature-connect
   };
 };
 
