@@ -191,7 +191,7 @@ const Mypage = () => {
             height="65px"
             color="var(--middle)"
             borderRadius="40px"
-            onClick={() => history.push("/edituser")}
+            onClick={() => history.push(`/edituser`)}
           ></Button>
           <Button
             name="로그아웃"

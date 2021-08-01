@@ -109,7 +109,7 @@ export const recommendedStudy = () => {
 };
 
 //회원정보 수정
-export const editUser = (user_idx, dataToSubmit) => {
+export const editUser = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
     .then((request) => request.data)
