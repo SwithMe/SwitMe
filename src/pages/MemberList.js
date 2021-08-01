@@ -69,6 +69,15 @@ const MemberList = ({ match }) => {
     dispatch(warnMember(data)).then((response) => {
       if (response.type) {
         console.log("경고 성공");
+        dispatch(getMember(study_id)).then((response) => {
+          if (response.payload) {
+            console.log("스터디 멤버 정보 가져오기 성공");
+            console.log(response.payload);
+            setMembers(response.payload);
+          } else {
+            console.log("스터디 멤버 정보 가져오기 실패");
+          }
+        });
       } else {
         console.log("경고 주기 에러 발생");
       }

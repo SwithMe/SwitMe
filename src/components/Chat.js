@@ -27,13 +27,14 @@ const Bubble = styled.div`
   border-radius: 10px;
   font-family: "NotoSans";
   font-size: 14px;
-  text-align: center;
+  text-align: start;
   padding: 10px;
-  max-width: 62px;
+  max-width: 300px;
   margin-bottom: 10px;
   margin-left: 100px;
   margin-right: 15px;
   z-index: 5;
+  word-wrap: break-word;
 `;
 
 const Chat = (props) => {
@@ -69,7 +70,14 @@ const Chat = (props) => {
 
     const callback = (message) => {
       if (message.body) {
-        alert("got message with body " + message.body);
+        dispatch(getMessages(room_idx)).then((response) => {
+          if (response.payload) {
+            setMessages(response.payload);
+            last.current = "";
+          } else {
+            console.log("메세지 목록 가져오기 에러");
+          }
+        });
       } else {
         alert("got empty message");
       }
@@ -111,7 +119,6 @@ const Chat = (props) => {
         console.log("메세지 목록 가져오기 에러");
       }
     });
-    last.current = myid;
   };
 
   const disconnect = () => {
