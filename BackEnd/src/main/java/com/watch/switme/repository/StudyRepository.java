@@ -44,16 +44,9 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     @Query(value="select * from Study_main u where u.leader=:sleader and u.title=:stitle and u.size=:ssize and u.type=:stype and u.activate=:sactive", nativeQuery=true)
     List<Study> getQuery(@Param("sleader")Long leader, @Param("stitle")String title, @Param("ssize")int size, @Param("stype")String type, @Param("sactive")String activate);
 
-    
     //DB 필터링 조건 추가
     @Query(value="select * from Study_main u WHERE (:sleader is null or u.leader=:sleader) and (:stitle is null or u.title like concat('%', :stitle, '%')) and (:ssize is null or u.size=:ssize) and (:stags is null or u.tags like concat('%', :stags, '%')) and (:stype is null or u.type=:stype)", nativeQuery=true)
-    List<Study> getFilterQuery(@Param("sleader")Long leader, @Param("stitle")String title, @Param("ssize")int size, @Param("stags")String tags, @Param("stype")String type);
-
-
-
-
-    @Query(value="select * from Study_main u where u.leader=:sleader", nativeQuery = true)
-    List<Study> getLeader(@Param("sleader")Long leader);
+    List<Study> getFilterQuery(@Param("sleader")String leader, @Param("stitle")String title, @Param("ssize")int size, @Param("stags")String tags, @Param("stype")String type);
 
     /*
     /*쿼리모음*/

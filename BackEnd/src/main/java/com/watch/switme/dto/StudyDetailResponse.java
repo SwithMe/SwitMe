@@ -36,6 +36,9 @@ public class StudyDetailResponse {
     private int manner_temperature;
     private String leader_name;
 
+
+    //삭제
+
     @Builder
     public StudyDetailResponse(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
                         String tags, String location, String extra, String image, Long leader, String link, String studyIntro, int manner_temperature,String leader_name,UserYesOrNo activate, int participant){

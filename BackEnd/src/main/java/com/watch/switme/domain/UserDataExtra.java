@@ -19,6 +19,7 @@ public class UserDataExtra {
     @Column(name="self_image")
     private String selfImage;
 
+    //fk
     @Column(name="user_idx")
     private Long userIdx;
 
