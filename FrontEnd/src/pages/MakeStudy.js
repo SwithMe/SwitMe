@@ -12,6 +12,7 @@ import { makestudy } from "../_actions/actions";
 //antd datePicker
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import Form from "antd/lib/form/Form";
 
 const Wrapper = styled.div`
   display: flex;
@@ -102,8 +103,23 @@ const MakeStudy = () => {
     link: "",
     leader: 0,
   });
+  const [image, setImage] = useState();
 
   const onFormSubmit = () => {
+    // const data = new FormData();
+    // data.append("title", study.title);
+    // data.append("type", study.type);
+    // data.append("termstart", study.termstart);
+    // data.append("termend", study.termend);
+    // data.append("timestart", study.timestart + ":00");
+    // data.append("timeend", study.timeend + ":00");
+    // data.append("size", study.size);
+    // data.append("tags", study.tags);
+    // data.append("location", study.location);
+    // data.append("extra", study.extra);
+    // data.append("link", study.link);
+    // data.append("leader", window.localStorage.getItem("id"));
+    // data.append("image", image);
     const data = {
       title: study.title,
       type: study.type,
@@ -151,6 +167,20 @@ const MakeStudy = () => {
     console.log(study);
   };
 
+  const editImage = () => {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.click();
+    input.onchange = function (e) {
+      const imageFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(imageFile);
+      setStudy({ ...study, image: imageUrl });
+      setImage(imageFile);
+    };
+  };
+
   return (
     <Wrapper>
       <Header page="3" />
@@ -161,7 +191,7 @@ const MakeStudy = () => {
           </div>
           <img
             alt="study profile"
-            src={require("../assets/rectangle.png").default}
+            src={study.image || require("../assets/rectangle.png").default}
             style={{
               width: "220px",
               height: "220px",
@@ -174,6 +204,7 @@ const MakeStudy = () => {
             width="220px"
             height="70px"
             color="#56BE9C"
+            onClick={editImage}
           ></Button>
         </Col>
 

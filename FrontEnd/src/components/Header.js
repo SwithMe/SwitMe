@@ -58,7 +58,7 @@ const Active = styled.div`
 const Search = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid var(--middle);
+  border: 0px solid var(--middle);
   box-sizing: border-box;
   padding-left: 30px;
   margin-left: 80px;
@@ -178,13 +178,7 @@ function Header({ page }) {
         </div>
       ) : null}
 
-      <Search>
-        <Input type="text" placeholder="새로운 스터디를 찾아보세요"></Input>
-        <img
-          src={dot}
-          style={{ width: "20px", height: "20px", marginRight: "20px" }}
-        ></img>
-      </Search>
+      <Search></Search>
       <Button
         onClick={openModal}
         src={message}

@@ -105,6 +105,7 @@ const EditStudy = ({ match }) => {
     title: "",
     type: "",
   });
+  const [image, setImage] = useState();
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
@@ -135,7 +136,21 @@ const EditStudy = ({ match }) => {
   }, []);
 
   const onFormSubmit = () => {
-    console.log(study);
+    // const data = new FormData();
+    // data.append("title", study.title);
+    // data.append("type", study.type);
+    // data.append("termstart", study.termstart);
+    // data.append("termend", study.termend);
+    // data.append("timestart", study.timestart + ":00");
+    // data.append("timeend", study.timeend + ":00");
+    // data.append("size", study.size);
+    // data.append("tags", study.tags);
+    // data.append("location", study.location);
+    // data.append("extra", study.extra);
+    // data.append("link", study.link);
+    // data.append("leader", window.localStorage.getItem("id"));
+    // data.append("image", image);
+    // data.append("activate", study.activate);
     dispatch(editstudy(study_id, study)).then((response) => {
       if (response.payload) {
         alert("스터디가 수정되었습니다..");
@@ -168,6 +183,20 @@ const EditStudy = ({ match }) => {
     console.log(study);
   };
 
+  const editImage = () => {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.click();
+    input.onchange = function (e) {
+      const imageFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(imageFile);
+      setStudy({ ...study, image: imageUrl });
+      setImage(imageFile);
+    };
+  };
+
   return isSet ? (
     <Wrapper>
       <Header page="3" />
@@ -178,7 +207,7 @@ const EditStudy = ({ match }) => {
           </div>
           <img
             alt="study profile"
-            src={require("../assets/rectangle.png").default}
+            src={study.image || require("../assets/rectangle.png").default}
             // src={study.image}
             style={{
               width: "220px",
@@ -187,28 +216,13 @@ const EditStudy = ({ match }) => {
               marginBottom: "20px",
             }}
           />
-          <input
-            style={{ display: "none" }}
-            id="imgfile"
-            type="file"
-            accept="image/*"
-          />
-          <label for="imgfile">
-            <div
-              style={{
-                fontSize: "20px",
-                backgroundColor: "#56BE9C",
-                borderRadius: "10px",
-                height: "70px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "white",
-              }}
-            >
-              이미지추가하기
-            </div>
-          </label>
+          <Button
+            name="이미지 추가하기"
+            width="220px"
+            height="70px"
+            color="#56BE9C"
+            onClick={editImage}
+          ></Button>
         </Col>
 
         <Col style={{ marginLeft: "40px" }}>

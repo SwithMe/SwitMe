@@ -133,13 +133,6 @@ const EditUser = () => {
       const imageUrl = URL.createObjectURL(imageFile);
       setUser({ ...user, user_image: imageUrl });
       setChangedUser({ ...changedUser, image: imageFile });
-      // var reader = new FileReader();
-      // reader.readAsDataURL(e.target.files[0]);
-
-      // reader.onload = function () {
-      //   console.log(reader.result);
-      //   setChangedUser({ profile: reader.result });
-      // };
     };
   };
 
@@ -162,14 +155,14 @@ const EditUser = () => {
         onChange={onInputChange}
         value={changedUser.new_password}
         placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"
-        type="text"
+        type="password"
       ></Input>
       <Input
         name="check_new_password"
         onChange={onInputChange}
         value={changedUser.check_new_password}
         placeholder="비밀번호 확인"
-        type="text"
+        type="password"
       ></Input>
 
       <div style={{ display: "flex", flexDirection: "row" }}>

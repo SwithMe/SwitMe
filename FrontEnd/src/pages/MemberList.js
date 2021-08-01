@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Title from "../components/Title";
@@ -6,8 +6,14 @@ import Input from "../components/Input";
 import Search from "../assets/search.png";
 import Image from "../components/Image";
 import Warn from "../components/Warn";
-import { getStudydetail, getMember, warnMember } from "../_actions/actions";
+import {
+  getStudydetail,
+  getMember,
+  warnMember,
+  leaderMakeChat,
+} from "../_actions/actions";
 import { useDispatch } from "react-redux";
+import Chat from "../components/Chat";
 
 const Fix = styled.div`
   min-height: 100vh;
@@ -34,6 +40,8 @@ const MemberList = ({ match }) => {
   const [study, setStudy] = useState("");
   const [members, setMembers] = useState([]);
   const [isLeader, setIsLeader] = useState(false);
+  const room = useRef();
+  const member_id = useRef();
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
@@ -97,8 +105,44 @@ const MemberList = ({ match }) => {
     setModalOpen(false);
   };
 
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const openChatModal = () => {
+    setChatModalOpen(true);
+  };
+
+  const closeChatModal = () => {
+    setChatModalOpen(false);
+  };
+
+  const leaderChat = (member_idx) => {
+    member_id.current = member_idx;
+    const data = {
+      study_idx: study_id,
+      leader_idx: window.localStorage.getItem("id"),
+      member_idx: member_idx,
+    };
+    dispatch(leaderMakeChat(data)).then((response) => {
+      if (response.payload) {
+        room.current = response.payload.room_idx;
+        openChatModal();
+      } else {
+        alert("채팅 걸기 실패");
+      }
+    });
+  };
   return (
     <>
+      {chatModalOpen ? (
+        <Chat
+          open={chatModalOpen}
+          close={closeChatModal}
+          header=""
+          other_user={member_id.current}
+          room_idx={room.current}
+        ></Chat>
+      ) : (
+        <></>
+      )}
       <Header page="3" />
       <Fix>
         <Row border="none" style={{ marginTop: "1%" }}>
@@ -174,6 +218,28 @@ const MemberList = ({ match }) => {
                 alignItems: "center",
               }}
             >
+              {isLeader &&
+              String(member.user_idx) !== window.localStorage.getItem("id") ? (
+                <button
+                  style={{
+                    border: "1px solid #56BE9C",
+                    borderRadius: "10px",
+                    background: "white",
+                    width: "105px",
+                    height: "45px",
+                    fontSize: "20px",
+                    color: "#56BE9C",
+                    fontFamily: "NotoSans",
+                    cursor: "pointer",
+                    marginRight: "30px",
+                  }}
+                  onClick={() => leaderChat(member.user_idx)}
+                >
+                  문의하기
+                </button>
+              ) : (
+                <></>
+              )}
               {isLeader &&
               String(member.user_idx) !== window.localStorage.getItem("id") ? (
                 <button

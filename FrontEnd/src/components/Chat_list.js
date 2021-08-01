@@ -128,7 +128,7 @@ const Chat_list = (props) => {
                       </div>
                     </Col>
                     <div>
-                      {message.notification > 0 ? (
+                      {message.notification < 0 ? (
                         <div
                           style={{
                             marginRight: "20px",

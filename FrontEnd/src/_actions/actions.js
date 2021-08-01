@@ -28,6 +28,7 @@ const EDIT_TIMER = "EDIT_TIMER";
 const DELETE_STOPWATCH = "DELETE_TIMER";
 const SAVE_STOPWATCH = "SAVE_STOPWATCH";
 const USER_MAKE_CHAT = "USER_MAKE_CHAT";
+const LEADER_MAKE_CHAT = "LEADER_MAKE_CHAT";
 const EDIT_USER = "EDIT_USER";
 const FIND_PASSWORD = "FIND_PASSWORD";
 
@@ -336,6 +337,16 @@ export const userMakeChat = (dataToSubmit) => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: USER_MAKE_CHAT, payload: request };
+};
+
+export const leaderMakeChat = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/api/chat/makeroom/leader`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {
+      return {};
+    });
+  return { type: LEADER_MAKE_CHAT, payload: request };
 };
 
 const actions = (state = {}, action) => {

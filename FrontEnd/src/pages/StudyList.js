@@ -85,13 +85,13 @@ const State = styled.div`
 
 const StudyList = () => {
   const [search, setSearch] = useState({
-    title: "",
-    activate: "",
-    type: "",
-    size: "",
-    tags: "",
-    leader: "",
-    participant: "",
+    title: null,
+    activate: null,
+    type: null,
+    size: null,
+    tags: null,
+    leader: null,
+    participant: null,
   });
   const [studies, setStudies] = useState([]);
   const dispatch = useDispatch();
@@ -119,9 +119,17 @@ const StudyList = () => {
   }, []);
 
   const onFormSubmit = async (evt) => {
-    console.log(search);
     evt.preventDefault();
-    dispatch(getStudylist(search)).then((response) => {
+    const dataToSubmit = {
+      title: search.title || null,
+      activate: search.activate || null,
+      type: search.type || null,
+      size: search.size || null,
+      tags: search.tags || null,
+      leader: search.leader || null,
+      participant: search.participant || null,
+    };
+    dispatch(getStudylist(dataToSubmit)).then((response) => {
       if (response.payload) {
         console.log(response.payload);
         setStudies(response.payload);
