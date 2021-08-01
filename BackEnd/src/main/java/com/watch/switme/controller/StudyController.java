@@ -136,6 +136,14 @@ public class StudyController {
     @PostMapping("/array")
     public List<Study> example (@RequestBody SearchStudyDto searchStudyDto) {
 
+        if(searchStudyDto.getTitle()==null){
+            System.out.println("title없음>>전체반환.");
+            return studyRepository.findAll();
+        }
+        if(searchStudyDto.getTitle()==null&&searchStudyDto.getTags()==null&&
+                searchStudyDto.getType()==null&&searchStudyDto.getActivate()==null&&searchStudyDto.getLeader()==null){
+            return studyRepository.findAll();
+        }
         /*
         if (searchStudyDto.getTags() != null) {
             ResultOfQuery=studyRepository.findAllByTagsContaining(searchStudyDto.getTags());
