@@ -145,7 +145,7 @@ function Watch(props) {
       seconds;
     const dataToSubmit = {
       timer_idx: timer.timer_idx,
-      timer_duration: time.s + time.m * 60 + time.h * 360,
+      timer_duration: time.s + time.m * 60 + time.h * 3600,
       start_time: start_time.current,
       end_time: end_time.current,
     };

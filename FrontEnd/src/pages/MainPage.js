@@ -113,10 +113,12 @@ const MainPage = () => {
     dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
       (response) => {
         if (response.payload) {
-          const time = response.payload.cumulative_time;
-          second.current = time % 60;
+          let time = response.payload.cumulative_time;
+          hour.current = Math.floor(time / 3600);
+          time = time % 3600;
           minute.current = Math.floor(time / 60);
-          hour.current = Math.floor(time / 360);
+          time = time % 60;
+          second.current = time % 60;
         } else {
           console.log("공부 시간 가져오기 에러");
         }
@@ -251,6 +253,11 @@ const MainPage = () => {
             <Rank>
               {ranktoggle === 1
                 ? ranking?.map((person, i) => {
+                    let time = person.cumulative_time;
+                    let hour = Math.floor(time / 3600);
+                    time = time % 3600;
+                    let minute = Math.floor(time / 60);
+                    let second = time % 60;
                     return (
                       <div
                         key={i}
@@ -268,17 +275,19 @@ const MainPage = () => {
                           size="24"
                           color="#56BE9C"
                         >
-                          {Math.floor(person.cumulative_time / 360)} :{" "}
-                          {Math.floor(person.cumulative_time / 60) < 10
-                            ? "0" +
-                              Math.floor(person.cumulative_time / 60).toString()
-                            : Math.floor(person.cumulative_time / 60)}{" "}
-                          : {person.cumulative_time % 60}
+                          {hour} :{" "}
+                          {minute < 10 ? "0" + minute.toString() : minute} :{" "}
+                          {second < 10 ? "0" + second.toString() : second}
                         </Title>
                       </div>
                     );
                   })
                 : studyRanking?.map((person, i) => {
+                    let time = person.cumulative_time;
+                    let hour = Math.floor(time / 3600);
+                    time = time % 3600;
+                    let minute = Math.floor(time / 60);
+                    let second = time % 60;
                     return (
                       <div
                         key={i}
@@ -296,12 +305,9 @@ const MainPage = () => {
                           width="150"
                           color="#56BE9C"
                         >
-                          {Math.floor(person.cumulative_time / 360)} :{" "}
-                          {Math.floor(person.cumulative_time / 60) < 10
-                            ? "0" +
-                              Math.floor(person.cumulative_time / 60).toString()
-                            : Math.floor(person.cumulative_time / 60)}{" "}
-                          : {person.cumulative_time % 60}
+                          {hour} :{" "}
+                          {minute < 10 ? "0" + minute.toString() : minute} :{" "}
+                          {second < 10 ? "0" + second.toString() : second}
                         </Title>
                       </div>
                     );

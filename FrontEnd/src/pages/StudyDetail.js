@@ -143,7 +143,7 @@ const StudyDetail = ({ match }) => {
     const user_id = window.localStorage.getItem("id");
     dispatch(leaveStudy(user_id, study_id)).then((response) => {
       console.log(response);
-      if (response.payload) {
+      if (response.type) {
         alert("스터디에서 탈퇴되었습니다.");
         setJoinChange(!joinChange);
       } else {

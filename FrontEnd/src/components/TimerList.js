@@ -72,22 +72,15 @@ function TimerList({ openModal, changeTimer, change }) {
               name: timer.name,
               duration: 0,
             };
-            const time = timer.duration;
-            const second =
-              time % 60 < 10
-                ? "0" + Math.floor(time % 60)
-                : Math.floor(time % 60);
-            const minute =
-              Math.floor(time / 60) < 10
-                ? "0" + Math.floor(time / 60)
-                : Math.floor(time / 60);
-            const hour = Math.floor(time / 360);
+            let time = timer.duration;
+            const hour = Math.floor(time / 3600);
+            time = Math.floor(time % 3600);
+            const minute = Math.floor(time / 60);
+            const minstr = minute < 10 ? "0" + String(minute) : String(minute);
+            const second = time % 60;
+            const secstr = second < 10 ? "0" + String(second) : String(second);
             stopwatch["duration"] =
-              hour.toString() +
-              " : " +
-              minute.toString() +
-              " : " +
-              second.toString();
+              hour.toString() + " : " + minstr + " : " + secstr;
             tmp_arr.push(stopwatch);
           });
           setTimers(tmp_arr);
