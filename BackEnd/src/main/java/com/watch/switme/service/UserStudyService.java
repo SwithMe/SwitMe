@@ -90,13 +90,20 @@ public class UserStudyService {
     @Transactional
     public void leave(Long user_idx , Long study_idx){
         Long id = userStudyRepository.findByUserAndStudy(study_idx,user_idx).getUserStudyIdx();
+        Study study = studyRepository.findByStudy_idx(study_idx);
         userStudyRepository.deleteById(id);
+        int participant = study.getParticipant().intValue()-1;
+        study.updateParticipant(participant);
     }
 
     @Transactional
     public Long join(Long user_idx, Long study_idx){
+
+       Study study = studyRepository.findById(study_idx).get();
+        int participant = study.getParticipant().intValue()+1;
+        study.updateParticipant(participant);
+
         User user= userRepository.findById(user_idx).get();
-        Study study = studyRepository.findById(study_idx).get();
         JoinStudyRequestDto joinStudyRequestDto = JoinStudyRequestDto.builder()
                 .joinDate(LocalDateTime.now())
                 .study(study)
@@ -106,15 +113,12 @@ public class UserStudyService {
                 .warning(0)
                 .build();
         System.out.println(joinStudyRequestDto.getAmLeader());
+
         return userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
     }
 
     @Transactional
     public UserStudy compare(Long user_idx, Long study_idx){
-        //1. user_idx로 검색
-        //2. 해당 리스트 중 study_idx를 다시 검색
-        //3. 만약 결과가 존재하면 존재함을 리턴
-        //4. 존재 하지 않으면 없음을 리턴
         UserStudy compareStudy = userStudyRepository.findByUserAndStudy(study_idx, user_idx);
         if(compareStudy != null)
             return compareStudy;

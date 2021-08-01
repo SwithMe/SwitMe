@@ -8,10 +8,6 @@ group = 'com.mang.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-group = 'com.watch.swithme'
-version = '0.0.2-SNAPSHOT'
-apply plugin: 'war'
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -21,9 +17,6 @@ configurations {
 repositories {
     mavenCentral()
 }
-
-bootWar.enabled = false
-war.enabled = true
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
@@ -42,10 +35,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 test {
     useJUnitPlatform()
 }
-

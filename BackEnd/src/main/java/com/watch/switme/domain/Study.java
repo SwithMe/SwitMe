@@ -132,4 +132,8 @@ public class Study {
         //this.avgMannerTemperature =study.getAvgMannerTemperature();
         return study;
     }
+
+    public void updateParticipant(Integer participant){
+        this.participant =participant;
+    }
 }

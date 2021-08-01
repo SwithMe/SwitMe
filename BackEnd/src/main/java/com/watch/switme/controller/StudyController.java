@@ -18,6 +18,7 @@ import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.List;
 
 
+
 @CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
@@ -41,10 +42,9 @@ public class StudyController {
     // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
     //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
-    public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
+    public Long createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
         User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
         int temp=user.getManner_temperature();
-
         System.out.println(user.getManner_temperature());
         Study study = Study.builder()
                 .title(makeStudyDto.getTitle())
@@ -62,8 +62,10 @@ public class StudyController {
                 .timeend(makeStudyDto.getTimeend())
                 .timestart(makeStudyDto.getTimestart())
                 .avgMannerTemperature(temp)
+                .participant(0)
                 .build();
-        return studyRepository.save(study);
+                studyRepository.save(study);
+                return userStudyService.join(user.getUser_idx(),study.getStudy_idx());
         }
 
     //스터디 수정하기
@@ -84,6 +86,7 @@ public class StudyController {
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public Long JoinStudy (@PathVariable Long user_idx, @PathVariable Long study_idx){
+
         return userStudyService.join(user_idx, study_idx);
         }
 

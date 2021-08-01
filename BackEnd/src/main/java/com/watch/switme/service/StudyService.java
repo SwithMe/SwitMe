@@ -101,14 +101,14 @@ public class StudyService {
         return studyRepository.findFirstByStudyIdx(study_idx);
     }
 
-    public void leaveStudy(Long study_idx){
+  /*  public void leaveStudy(Long study_idx){
         studyRepository.deleteById(study_idx);
     }
 
     //스터디 추가..?
     public void createStudy(Study study){
         studyRepository.save(study);
-    }
+    }*/
 
     @Transactional
     public List<RecomStudyResDto> getRecomStudyList(){
