@@ -42,7 +42,7 @@ public class StudyController {
     // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
     //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
-    public Long createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
+    public String createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
         User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
         int temp=user.getManner_temperature();
         System.out.println(user.getManner_temperature());
@@ -85,7 +85,7 @@ public class StudyController {
 
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
-    public Long JoinStudy (@PathVariable Long user_idx, @PathVariable Long study_idx){
+    public String JoinStudy (@PathVariable Long user_idx, @PathVariable Long study_idx){
 
         return userStudyService.join(user_idx, study_idx);
         }

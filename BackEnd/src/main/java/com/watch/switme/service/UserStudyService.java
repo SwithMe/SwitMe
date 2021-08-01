@@ -97,24 +97,26 @@ public class UserStudyService {
     }
 
     @Transactional
-    public Long join(Long user_idx, Long study_idx){
-
+    public String join(Long user_idx, Long study_idx){
        Study study = studyRepository.findById(study_idx).get();
-        int participant = study.getParticipant().intValue()+1;
-        study.updateParticipant(participant);
-
-        User user= userRepository.findById(user_idx).get();
-        JoinStudyRequestDto joinStudyRequestDto = JoinStudyRequestDto.builder()
-                .joinDate(LocalDateTime.now())
-                .study(study)
-                .user(user)
-                .activate(UserYesOrNo.Y)
-                .amLeader(UserYesOrNo.N)
-                .warning(0)
-                .build();
-        System.out.println(joinStudyRequestDto.getAmLeader());
-
-        return userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
+        int participant = study.getParticipant().intValue();
+        if(participant < study.getSize()){
+            participant=study.getParticipant().intValue()+1;
+            study.updateParticipant(participant);
+            User user= userRepository.findById(user_idx).get();
+            JoinStudyRequestDto joinStudyRequestDto = JoinStudyRequestDto.builder()
+                    .joinDate(LocalDateTime.now())
+                    .study(study)
+                    .user(user)
+                    .activate(UserYesOrNo.Y)
+                    .amLeader(UserYesOrNo.N)
+                    .warning(0)
+                    .build();
+            System.out.println(joinStudyRequestDto.getAmLeader());
+            userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
+            return "스터디에 가입되었습니다!";
+        }
+        else return "현재 가입 인원이 모두 채워졌습니다. 가입이 불가능합니다.";
     }
 
     @Transactional
