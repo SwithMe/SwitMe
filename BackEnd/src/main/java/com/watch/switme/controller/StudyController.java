@@ -17,10 +17,6 @@ import javax.swing.plaf.synth.SynthTextAreaUI;
 
 import java.util.List;
 
-/*
-* 2. 스터디 가입하기 채우기
-* 4. 스터디 수정하기
-* */
 
 @CrossOrigin("*")
 @RequiredArgsConstructor

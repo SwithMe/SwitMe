@@ -21,8 +21,6 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
 
     List<Study> findAll();
 
-    Study updateStudy(Study study, MakeStudyDto makeStudyDto);
-
     @Query(value="SELECT * from Study_main u where u.study_idx=:sstudy_idx",nativeQuery=true)
     Study findByStudy_idx(@Param("sstudy_idx") Long study_idx);
 
