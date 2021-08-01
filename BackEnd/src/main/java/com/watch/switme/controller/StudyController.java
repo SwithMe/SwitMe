@@ -86,7 +86,6 @@ public class StudyController {
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public String JoinStudy (@PathVariable Long user_idx, @PathVariable Long study_idx){
-
         return userStudyService.join(user_idx, study_idx);
         }
 
@@ -122,6 +121,7 @@ public class StudyController {
                 .timestart(study.getTimestart())
                 .activate(study.getActivate())
                 .leader_name(leader_name)
+                .participant(study.getParticipant())
                 .build();
         return studyDetailResponse;
     }
@@ -136,6 +136,14 @@ public class StudyController {
     @PostMapping("/array")
     public List<Study> example (@RequestBody SearchStudyDto searchStudyDto) {
 
+        if(searchStudyDto.getTitle()==null){
+            System.out.println("title없음>>전체반환.");
+            return studyRepository.findAll();
+        }
+        if(searchStudyDto.getTitle()==null&&searchStudyDto.getTags()==null&&
+                searchStudyDto.getType()==null&&searchStudyDto.getActivate()==null&&searchStudyDto.getLeader()==null){
+            return studyRepository.findAll();
+        }
         /*
         if (searchStudyDto.getTags() != null) {
             ResultOfQuery=studyRepository.findAllByTagsContaining(searchStudyDto.getTags());

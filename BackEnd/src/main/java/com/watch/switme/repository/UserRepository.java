@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository <User, Long> {
 
     User findByEmailAndRealname(String email, String realname);
 
+    User findByEmailAndPw(String email, String pw);
+
     boolean existsByEmail(String email);
 
     @Query(value = "select * from User_data u where u.user_idx = ?1", nativeQuery = true)
