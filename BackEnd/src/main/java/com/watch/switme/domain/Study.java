@@ -80,7 +80,7 @@ public class Study {
     private UserYesOrNo activate;
 
     // 한줄 소개
-    @Column
+    @Column(name = "study_intro")
     private String studyIntro;
 
     // 현재 인원
@@ -88,7 +88,7 @@ public class Study {
     private Integer participant;
 
     // 평균 매너온도
-    @Column
+    @Column()
     private Integer avgMannerTemperature;
 
     @Builder
@@ -114,7 +114,7 @@ public class Study {
     }
 
 
-    public Study update(Study study, MakeStudyDto makeStudyDto){
+    public void update(MakeStudyDto makeStudyDto, String file_url){
         this.title = makeStudyDto.getTitle();
         this.type = makeStudyDto.getType();
         this.termstart = makeStudyDto.getTermstart();
@@ -125,12 +125,10 @@ public class Study {
         this.tags = makeStudyDto.getTags();
         this.location =makeStudyDto.getLocation();
         this.extra = makeStudyDto.getExtra();
-        this.image = makeStudyDto.getImage();
+        this.image = file_url;
         this.link = makeStudyDto.getLink();
         this.activate =makeStudyDto.getActivate();
         this.studyIntro = makeStudyDto.getStudyIntro();
-        //this.avgMannerTemperature =study.getAvgMannerTemperature();
-        return study;
     }
 
     public void updateParticipant(Integer participant){
