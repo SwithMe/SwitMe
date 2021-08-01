@@ -72,6 +72,4 @@ public class UserController {
                 .userList(userService.findAll()).build();
         return ResponseEntity.ok(userListResponseDTO);
     }
-
-
 }
