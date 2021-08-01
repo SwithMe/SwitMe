@@ -43,4 +43,8 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     //DB 검색 추가조건 수정
     @Query(value="select * from Study_main u where u.leader=:sleader and u.title=:stitle and u.size=:ssize and u.type=:stype and u.activate=:sactive", nativeQuery=true)
     List<Study> getQuery(@Param("sleader")Long leader, @Param("stitle")String title, @Param("ssize")int size, @Param("stype")String type, @Param("sactive")String activate);
+
+
+
+
 }
