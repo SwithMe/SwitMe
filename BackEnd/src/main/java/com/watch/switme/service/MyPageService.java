@@ -28,6 +28,7 @@ public class MyPageService {
     private final TimerLogRepository timerLogRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final S3Service s3Service;
 
     @Transactional
     public List<UserStudyListResponseDto> getUserStudyList(Long user_idx) {
@@ -87,25 +88,17 @@ public class MyPageService {
             MultipartFile file = userUpdateDto.getFile();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String current_date = simpleDateFormat.format(System.currentTimeMillis());
+
             String file_name = current_date+file.getOriginalFilename();;
-            String absolute_path = System.getProperty("user.dir")+"\\";
-            String path = "src/main/resources/static/img/user";
-
-            File directory = new File(path);
-            if(!directory.exists()){
-                directory.mkdirs();
-            }
-
-            File new_file = new File(absolute_path+path+"/"+file_name);
-            file.transferTo(new_file);
+            String file_url = s3Service.upload(file, file_name);
 
             if(userDataExtra == null){
                 userDataExtraRepository.save(UserDataExtra.builder()
                         .userIdx(user_idx)
-                        .selfImage("img/user/"+file_name) //without static
+                        .selfImage(file_url)
                         .build());
             } else {
-                userDataExtra.updateUserImage("img/user/"+file_name);
+                userDataExtra.updateUserImage(file_url);
             }
 
         }
