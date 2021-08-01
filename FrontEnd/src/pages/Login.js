@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Input2 from "../components/Input2";
 import Button from "../components/Button";
-import Header from "../components/Header";
 import logo from "../assets/logo.png";
 import { login } from "../_actions/actions";
 import { useDispatch } from "react-redux";
