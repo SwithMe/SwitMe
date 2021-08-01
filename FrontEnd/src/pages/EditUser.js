@@ -49,6 +49,7 @@ const Box = styled.div`
   margin: 20px;
   outline: none;
   font-size: 20px;
+  background: #dddddd;
   padding: 10px;
 `;
 
@@ -66,45 +67,57 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const EditUser = ({ match }) => {
-  const { user_idx } = match.params;
+const EditUser = () => {
+  const user_id = window.localStorage.getItem("id");
   const history = useHistory();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     user_idx: "",
-    user_name: "김선달",
-    user_email: "whkakrkr@gmail.com",
-    file: "",
-
-    profile: Default,
+    user_email: "",
+    username: "",
+    user_image: "",
+    user_manner: "",
+  });
+  const [changedUser, setChangedUser] = useState({
+    image: null,
     new_password: "",
     check_new_password: "",
   });
 
   useEffect(() => {
-    dispatch(getUserInfo(user_idx)).then((response) => {
+    dispatch(getUserInfo(user_id)).then((response) => {
       if (response.payload) {
         setUser(response.payload);
-        // setIsSet(true);
-        console.log(user);
       } else {
-        console.log("기존 유저 정보 가져오기 실패");
+        console.log("회원정보 가져오기 에러");
       }
     });
   }, []);
 
-  //이미지업로드
   const onInputChange = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setChangedUser({ ...changedUser, [name]: value });
   };
 
   const submit = () => {
-    if (user.check_new_password !== user.new_password) {
+    if (changedUser.check_new_password !== changedUser.new_password) {
       alert("비밀번호 확인이 일치하지 않습니다");
+      console.log(changedUser.check_new_password);
+      console.log(changedUser.new_password);
     } else {
-      console.log(user.new_password);
+      const formData = new FormData();
+      formData.append("file", changedUser.image);
+      formData.append("user_idx", user_id);
+      formData.append("password", changedUser.new_password);
+      dispatch(editUser(formData)).then((response) => {
+        console.log(response);
+        if (response.payload) {
+          alert("회원 정보가 수정되었습니다.");
+          window.location.replace("/mypage");
+        } else {
+          console.log("회원 정보 수정 실패");
+        }
+      });
     }
   };
   // const history = useHistory();
@@ -116,21 +129,25 @@ const EditUser = ({ match }) => {
 
     input.click();
     input.onchange = function (e) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+      const imageFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(imageFile);
+      setUser({ ...user, user_image: imageUrl });
+      setChangedUser({ ...changedUser, image: imageFile });
+      // var reader = new FileReader();
+      // reader.readAsDataURL(e.target.files[0]);
 
-      reader.onload = function () {
-        console.log(reader.result);
-        setUser({ profile: reader.result });
-      };
+      // reader.onload = function () {
+      //   console.log(reader.result);
+      //   setChangedUser({ profile: reader.result });
+      // };
     };
   };
 
   return (
     <Wrapper>
-      <Profile src={user.profile}>
-        {/* <Image src={Profile}></Image> */}
+      <Profile src={user.user_image}>
         <img
+          alt="profile img"
           onClick={uploadImage}
           src={Edit}
           style={{ width: "51px", height: "51px", cursor: "pointer" }}
@@ -143,14 +160,14 @@ const EditUser = ({ match }) => {
       <Input
         name="new_password"
         onChange={onInputChange}
-        value={user.new_password}
+        value={changedUser.new_password}
         placeholder="새 비밀번호 (영문, 숫자, 특수기호 포함 8~16자)"
         type="text"
       ></Input>
       <Input
         name="check_new_password"
         onChange={onInputChange}
-        value={user.check_new_password}
+        value={changedUser.check_new_password}
         placeholder="비밀번호 확인"
         type="text"
       ></Input>
