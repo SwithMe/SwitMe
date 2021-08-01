@@ -180,7 +180,10 @@ function Header({ page }) {
 
       <Search>
         <Input type="text" placeholder="새로운 스터디를 찾아보세요"></Input>
-        <img src={dot} style={{ width: "16px", height: "16px" }}></img>
+        <img
+          src={dot}
+          style={{ width: "20px", height: "20px", marginRight: "20px" }}
+        ></img>
       </Search>
       <Button
         onClick={openModal}
