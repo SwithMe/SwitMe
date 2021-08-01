@@ -80,7 +80,7 @@ const StudyDetail = ({ match }) => {
     type: "",
   });
   const [isLeader, setIsLeader] = useState(false);
-  const [isMember, setIsMember] = useState(true);
+  const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
     date: "2021-11-11",
     participation: 3,
@@ -140,7 +140,6 @@ const StudyDetail = ({ match }) => {
       leader_idx: study.leader,
       user_idx: window.localStorage.getItem("id"),
     };
-    console.log(data);
     dispatch(userMakeChat(data)).then((response) => {
       if (response.payload) {
         room.current = response.payload.room_idx;
