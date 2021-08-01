@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Title from "../components/Title";
 import Image from "../components/Image";
-import { getStudylist } from "../_actions/actions";
+import { getStudylist, getStudylistAll } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -86,105 +86,14 @@ const State = styled.div`
 const StudyList = () => {
   const [search, setSearch] = useState({
     title: "",
-    state: "전체",
-    type: "전체",
+    activate: "",
+    type: "",
     size: "",
     tags: "",
-    Leader: "",
+    leader: "",
+    participant: "",
   });
-  const [studies, setStudies] = useState([
-    {
-      id: 1,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 2,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 3,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 4,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 5,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 6,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-    {
-      id: 7,
-      studyprofile: "../assets/rectangle.png",
-      title: "스터디명",
-      state: "모집중",
-      type: "온라인",
-      people: 3,
-      size: 11,
-      manner: "0",
-      leader: "김김김",
-      ownerprofile: ".../assets/circle",
-      tag: "태그1, 태그2, 태그3, 태그4, 태그5, 태그6",
-    },
-  ]);
+  const [studies, setStudies] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const onInputChange = (e) => {
@@ -192,6 +101,17 @@ const StudyList = () => {
     setSearch({ ...search, [name]: value });
     console.log(search);
   };
+
+  useEffect(() => {
+    dispatch(getStudylistAll()).then((response) => {
+      if (response.payload) {
+        console.log(response.payload);
+        setStudies(response.payload);
+      } else {
+        console.log("모든 스터디 목록 에러");
+      }
+    });
+  }, []);
 
   const onFormSubmit = async (evt) => {
     console.log(search);
@@ -237,7 +157,11 @@ const StudyList = () => {
           <Title>모집상태</Title>
           <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
             <Title size="20" weight="400">
-              {search.state}
+              {search.activate === ""
+                ? "전체"
+                : search.activate === "Y"
+                ? "모집중"
+                : "모집 완료"}
             </Title>
             <img
               alt="dropdown"
@@ -246,24 +170,19 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li onClick={() => setSearch({ ...search, state: "전체" })}>
+            <li onClick={() => setSearch({ ...search, activate: "" })}>
               <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li onClick={() => setSearch({ ...search, state: "모집중" })}>
+            <li onClick={() => setSearch({ ...search, activate: "Y" })}>
               <Title size="20" weight="400">
                 모집 중
               </Title>
             </li>
-            <li onClick={() => setSearch({ ...search, state: "활동중" })}>
+            <li onClick={() => setSearch({ ...search, activate: "N" })}>
               <Title size="20" weight="400">
-                활동 중
-              </Title>
-            </li>
-            <li onClick={() => setSearch({ ...search, state: "활동종료" })}>
-              <Title size="20" weight="400">
-                활동 종료
+                모집 완료
               </Title>
             </li>
           </ul>
@@ -272,7 +191,11 @@ const StudyList = () => {
           <Title>진행방식</Title>
           <Input placeholder="검색어를 입력하세요." width="127" marginTop="18">
             <Title size="20" weight="400">
-              {search.type}
+              {search.type === ""
+                ? "전체"
+                : search.type === "online"
+                ? "온라인"
+                : "오프라인"}
             </Title>
             <img
               alt="dropdown"
@@ -281,17 +204,17 @@ const StudyList = () => {
             />
           </Input>
           <ul>
-            <li onClick={() => setSearch({ ...search, type: "전체" })}>
+            <li onClick={() => setSearch({ ...search, type: "" })}>
               <Title size="20" weight="400">
                 전체
               </Title>
             </li>
-            <li onClick={() => setSearch({ ...search, type: "온라인" })}>
+            <li onClick={() => setSearch({ ...search, type: "online" })}>
               <Title size="20" weight="400">
                 온라인
               </Title>
             </li>
-            <li onClick={() => setSearch({ ...search, type: "오프라인" })}>
+            <li onClick={() => setSearch({ ...search, type: "offline" })}>
               <Title size="20" weight="400">
                 오프라인
               </Title>
@@ -313,7 +236,7 @@ const StudyList = () => {
         <Item>
           <Title>스터디장</Title>
           <Input
-            name="Leader"
+            name="leader"
             placeholder="Search"
             width="267"
             marginTop="18"
@@ -392,41 +315,43 @@ const StudyList = () => {
         {studies?.map((study, i) => {
           if (i > 5) return false;
           let statecolor = "#FFE600";
-          if (study.state === "활동중") statecolor = "#56BE9C";
-          else if (study.state === "활동종료") statecolor = "#C70000";
+          if (study.activate === "Y") statecolor = "#56BE9C";
+          else statecolor = "#C70000";
           return (
             <Study key={i}>
               <img
                 alt="study profile"
-                src={require("../assets/rectangle.png").default}
+                src={study.image}
                 style={{ width: "60px", height: "60px", marginRight: "24px" }}
               />
               <div
                 style={{ width: "223px", cursor: "pointer" }}
-                onClick={() => history.push(`/studydetail/${study.id}`)}
+                onClick={() => history.push(`/studydetail/${study.study_idx}`)}
               >
                 <Title size="20" weight="400">
                   {study.title}
                 </Title>
               </div>
-              <State color={statecolor}>{study.state}</State>
+              <State color={statecolor}>
+                {study.activate === "Y" ? "모집중" : "모집 완료"}
+              </State>
               <div style={{ width: "158px", marginLeft: "71px" }}>
                 <Title size="20" weight="400">
-                  {study.type}
+                  {study.type === "online" ? "온라인" : "오프라인"}
                 </Title>
               </div>
               <div style={{ width: "159px" }}>
                 <Title size="20" weight="400">
-                  {study.manner}°C
+                  {study.avgMannerTemperature}°C
                 </Title>
               </div>
               <div style={{ width: "164px" }}>
                 <Title size="20" weight="400">
-                  {study.people}/{study.size}
+                  {study.participant || 0}/{study.size}
                 </Title>
               </div>
               <img
-                alt="study profile"
+                alt="leader profile"
                 src={require("../assets/circle.png").default}
                 style={{ width: "60px", height: "60px", marginRight: "24px" }}
               />
@@ -435,8 +360,8 @@ const StudyList = () => {
                   {study.leader}
                 </Title>
               </div>
-              <Title size="20" weight="400">
-                {study.tag.substr(0, 18)}
+              <Title size="20" weight="400" width="200">
+                {study.tags === null ? "" : study.tags.substr(0, 18)}
               </Title>
             </Study>
           );

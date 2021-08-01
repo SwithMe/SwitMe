@@ -95,6 +95,7 @@ const Mypage = () => {
     dispatch(getUserInfo(user_id)).then((response) => {
       if (response.payload) {
         setUser(response.payload);
+        console.log(response.payload);
       } else {
         console.log("회원정보 가져오기 에러");
       }
@@ -117,14 +118,15 @@ const Mypage = () => {
           const end_time = log.end_time.slice(11);
           const hour = Math.floor(log.duration / 360);
           const minute = Math.floor(log.duration / 60);
+          const strminute = minute < 10 ? "0" + minute : minute;
           const second = log.duration % 60;
+          const strsecond = second < 10 ? "0" + second : second;
           arr.push({
             start_date: start_date,
             end_date: end_date,
             start_time: start_time,
             end_time: end_time,
-            total:
-              String(hour) + " : " + String(minute) + " : " + String(second),
+            total: String(hour) + " : " + strminute + " : " + strsecond,
           });
         });
         setTimes(arr);

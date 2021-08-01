@@ -8,6 +8,7 @@ import {
   joinStudy,
   leaveStudy,
   userMakeChat,
+  getIsMember,
 } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
@@ -61,10 +62,11 @@ const StudyDetail = ({ match }) => {
   const history = useHistory();
   const [study, setStudy] = useState({
     activate: "",
-    avgMannerTemperature: "",
+    manner_temperature: "",
     extra: "",
     image: "",
     leader: "",
+    leader_name: "",
     link: "",
     location: "",
     participant: "",
@@ -79,12 +81,13 @@ const StudyDetail = ({ match }) => {
     title: "",
     type: "",
   });
+  const [joinChange, setJoinChange] = useState(false);
   const [isLeader, setIsLeader] = useState(false);
   const [isMember, setIsMember] = useState(false);
   const [member, setMember] = useState({
-    date: "2021-11-11",
-    participation: 3,
-    warning: 0,
+    date: "",
+    participation: "",
+    warning: "",
   });
   const [modalOpen, setModalOpen] = useState(false);
   const room = useRef();
@@ -97,6 +100,19 @@ const StudyDetail = ({ match }) => {
     setModalOpen(false);
   };
   useEffect(() => {
+    dispatch(getIsMember(user_id, study_id)).then((response) => {
+      if (response.payload) {
+        setIsMember(true);
+        const userdetail = {
+          warning: response.payload.warning,
+          date: response.payload.joinDate.slice(0, 10),
+          participation: "참여중",
+        };
+        setMember(userdetail);
+      } else {
+        setIsMember(false);
+      }
+    });
     dispatch(getStudydetail(study_id)).then((response) => {
       if (response.payload) {
         setStudy(response.payload);
@@ -108,14 +124,14 @@ const StudyDetail = ({ match }) => {
         console.log("스터디 상세정보 가져오기 실패");
       }
     });
-  }, []);
+  }, [joinChange]);
 
   const join = () => {
     const user_id = window.localStorage.getItem("id");
     dispatch(joinStudy(user_id, study_id)).then((response) => {
       if (response.payload) {
         alert("스터디에 가입되었습니다.");
-        window.location.replace(`/#/studydetail/${study.study_idx}`);
+        setJoinChange(!joinChange);
       } else {
         console.log("스터디 가입 실패");
       }
@@ -127,7 +143,7 @@ const StudyDetail = ({ match }) => {
     dispatch(leaveStudy(user_id, study_id)).then((response) => {
       if (response.payload) {
         alert("스터디에서 탈퇴되었습니다.");
-        window.location.replace(`/#/studydetail/${study.study_idx}`);
+        setJoinChange(!joinChange);
       } else {
         console.log("스터디 탈퇴 실패");
       }
@@ -164,11 +180,7 @@ const StudyDetail = ({ match }) => {
       )}
       <Info>
         <div>
-          <Image
-            alt="study profile"
-            src={require("../assets/rectangle.png").default}
-            radius="10px"
-          ></Image>
+          <Image alt="study profile" src={study.image} radius="10px"></Image>
         </div>
         <Detail>
           <Title size="32" color="#064538">
@@ -188,7 +200,7 @@ const StudyDetail = ({ match }) => {
             </div>
             <Content>
               <Title weight="400" size="20">
-                {study.leader}
+                {study.leader_name}
               </Title>
             </Content>
             <div style={{ width: "174px" }}>
@@ -196,7 +208,7 @@ const StudyDetail = ({ match }) => {
             </div>
             <Content>
               <Title weight="400" size="20">
-                {study.avgMannerTemperature}℃
+                {study.manner_temperature}℃
               </Title>
             </Content>
           </Row>
@@ -345,11 +357,11 @@ const StudyDetail = ({ match }) => {
             >
               <div style={{ width: "190px" }}>
                 <Title color="white" size="20">
-                  나의 참여 횟수
+                  나의 참여 여부
                 </Title>
               </div>
               <Title color="white" size="20" weight="400">
-                {member.participation}회
+                {member.participation}
               </Title>
             </div>
             <div
