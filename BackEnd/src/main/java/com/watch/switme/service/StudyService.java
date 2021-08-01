@@ -29,7 +29,7 @@ public class StudyService {
     @Transactional
     public Study update(Study study, MakeStudyDto makeStudyDto){
         study.update(study, makeStudyDto);
-        return studyRepository.save(study);
+        return study;
     }
 
     /*

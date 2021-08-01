@@ -29,6 +29,7 @@ public class StudyController {
 
     @Autowired
     UserStudyService userStudyService;
+    @Autowired
     StudyService studyService;
     @Autowired
     StudyRepository studyRepository;
@@ -72,7 +73,8 @@ public class StudyController {
     @PostMapping("/array/fix/{study_idx}")
     public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
         Study study = studyRepository.findById(study_idx).get(); // not null 값으로 들어가도록.
-        return  studyService.update(study, makeStudyDto);
+        studyService.update(study, makeStudyDto);
+        return studyRepository.save(study);
     }
 
     //전체 스터디 리스트 가져오기.
@@ -88,10 +90,17 @@ public class StudyController {
         }
 
     //스터디 탈퇴하기
-     @DeleteMapping("/array/leave/{user_study_idx}")
-        public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){
-            userStudyService.leave(user_study_idx);
+     @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
+        public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
+            userStudyService.leave(user_idx,study_idx);
     }
+
+    //스터디 탈퇴하기
+   // @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
+    //public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
+   //     userStudyService.leave(user_idx);
+ //   }
+
 
     //스터디 세부사항 보여주기
     //함수 추가
@@ -125,7 +134,7 @@ public class StudyController {
 
     //스터디 가입여부 확인하기
     @GetMapping("/array/status/{user_idx}/{study_idx}")
-    public UserStudy statuStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
+    public UserStudy statusStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
         return userStudyService.compare(user_idx, study_idx);
      }
 

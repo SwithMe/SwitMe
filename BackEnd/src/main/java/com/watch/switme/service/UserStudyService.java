@@ -28,10 +28,13 @@ public class UserStudyService {
     @Autowired
     private final UserStudyRepository userStudyRepository;
 
+    @Autowired
     private final UserDataExtraRepository userDataExtraRepository;
 
     @Autowired
     private final StudyRepository studyRepository;
+
+
 
     @Transactional
     public List<MemberResponseDto> getMemberList(Long study_idx){
@@ -85,8 +88,9 @@ public class UserStudyService {
     }
 
     @Transactional
-    public void leave(Long user_study_idx){
-        userStudyRepository.deleteById(user_study_idx);
+    public void leave(Long user_idx , Long study_idx){
+        Long id = userStudyRepository.findByUserAndStudy(study_idx,user_idx).getUserStudyIdx();
+        userStudyRepository.deleteById(id);
     }
 
     @Transactional
