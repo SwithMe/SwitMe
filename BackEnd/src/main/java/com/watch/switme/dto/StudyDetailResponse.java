@@ -32,12 +32,13 @@ public class StudyDetailResponse {
     private String link;
     private String studyIntro;
     private UserYesOrNo activate;
+    private int participant;
     private int manner_temperature;
     private String leader_name;
 
     @Builder
     public StudyDetailResponse(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
-                        String tags, String location, String extra, String image, Long leader, String link, String studyIntro, int manner_temperature,String leader_name,UserYesOrNo activate){
+                        String tags, String location, String extra, String image, Long leader, String link, String studyIntro, int manner_temperature,String leader_name,UserYesOrNo activate, int participant){
         this.study_idx = study_idx;
         this.title = title;
         this.type = type;
@@ -56,5 +57,6 @@ public class StudyDetailResponse {
         this.manner_temperature=manner_temperature;
         this.leader_name=leader_name;
         this.activate=activate;
+        this.participant = participant;
     }
 }

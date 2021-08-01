@@ -121,6 +121,7 @@ public class StudyController {
                 .timestart(study.getTimestart())
                 .activate(study.getActivate())
                 .leader_name(leader_name)
+                .participant(study.getParticipant())
                 .build();
         return studyDetailResponse;
     }
