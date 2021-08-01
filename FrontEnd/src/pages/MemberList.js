@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import Input from "../components/Input";
 import Search from "../assets/search.png";
 import Image from "../components/Image";
-import Chat_list from "../components/Chat_list";
+import Warn from "../components/Warn";
 import { getStudydetail, getMember, warnMember } from "../_actions/actions";
 import { useDispatch } from "react-redux";
 
@@ -78,10 +78,23 @@ const MemberList = ({ match }) => {
             console.log("스터디 멤버 정보 가져오기 실패");
           }
         });
+        openModal();
       } else {
         console.log("경고 주기 에러 발생");
+        console.log(response);
       }
     });
+  };
+
+  //모달
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -173,6 +186,7 @@ const MemberList = ({ match }) => {
                     color: "#C70000",
                     fontFamily: "NotoSans",
                     cursor: "pointer",
+                    marginRight: "30px",
                   }}
                   // onClick={openModal}
                   onClick={() => warn(member.user_idx)}
@@ -183,6 +197,11 @@ const MemberList = ({ match }) => {
                 <></>
               )}
             </div>
+
+            <React.Fragment>
+              {/* header 부분에 텍스트를 입력한다. */}
+              <Warn open={modalOpen} close={closeModal} header=""></Warn>
+            </React.Fragment>
           </Row>
         ))}
       </Fix>
