@@ -236,7 +236,7 @@ export const getUserStopwatch = (user_idx) => {
 //스터디 수정
 export const editstudy = (study_id, dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/list/array/fix/${study_id}`, dataToSubmit)
+    .put(`${USER_SERVER}/list/array/fix/${study_id}`, dataToSubmit)
     .then((request) => request.data)
     .catch((error) => {});
   return {

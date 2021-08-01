@@ -161,8 +161,8 @@ const Chat = (props) => {
           <Content>
             {messages?.map((message, i) => {
               if (
-                last.current !== message.sender_idx &&
-                message.sender_idx !== myid
+                String(last.current) !== String(message.sender_idx) && //상대방의 프로필사진이 보이는 경우
+                String(message.sender_idx) !== String(myid)
               ) {
                 last.current = message.sender_idx;
                 return (
@@ -191,13 +191,18 @@ const Chat = (props) => {
                     <Bubble>{message.message}</Bubble>
                   </Row>
                 );
-              } else if (message.sender_idx !== myid) {
+              } else if (String(message.sender_idx) !== String(myid)) {
+                //상대방이 연달아 메세지를 보낸 경우
                 return (
                   <Row>
                     <Bubble marginLeft="100">{message.message}</Bubble>
                   </Row>
                 );
-              } else if (last.current !== myid && message.sender_idx === myid) {
+              } else if (
+                String(last.current) !== String(myid) &&
+                String(message.sender_idx) === String(myid)
+              ) {
+                //내가 처음으로 메세지를 보내는 경우
                 last.current = myid;
                 return (
                   <Row location="flex-end">
@@ -214,6 +219,7 @@ const Chat = (props) => {
                   </Row>
                 );
               } else {
+                //내가 연달아 메세지를 보내는 경우
                 return (
                   <Row location="flex-end">
                     <Bubble>{message.message}</Bubble>

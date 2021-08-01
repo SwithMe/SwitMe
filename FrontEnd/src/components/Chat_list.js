@@ -37,13 +37,13 @@ const Chat_list = (props) => {
   const dispatch = useDispatch();
   const user_id = window.localStorage.getItem("id");
 
-  const [studies, setStudies] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     dispatch(getChatlist(user_id)).then((response) => {
       if (response.payload) {
         console.log(response);
-        setStudies(response.payload);
+        setMessages(response.payload);
         let arr = new Array(response.payload.length);
         arr.fill(false);
         setinitial(arr);
@@ -82,7 +82,7 @@ const Chat_list = (props) => {
           <main>
             {props.children}
             <List>
-              {studies?.map((study, i) => {
+              {messages?.map((message, i) => {
                 return (
                   <Study
                     key={i}
@@ -94,32 +94,60 @@ const Chat_list = (props) => {
                           open={openstate2[i]}
                           close={() => close2(i)}
                           header=""
-                          other_user={study.other_user}
-                          room_idx={study.room_idx}
+                          other_user={message.other_user}
+                          room_idx={message.room_idx}
                         ></Chat>
                       ) : (
                         <></>
                       )}
                     </React.Fragment>
                     <img
-                      alt="study profile"
-                      src={require("../assets/circle.png").default}
-                      style={{ marginLeft: "30px" }}
+                      alt="message profile"
+                      src={message.user_image}
+                      style={{
+                        marginLeft: "30px",
+                        width: "70px",
+                        height: "70px",
+                        borderRadius: "50%",
+                      }}
                     />
                     <Col>
                       <div style={{ width: "300px" }}>
                         <Title size="20" weight="400">
-                          {study.other_user}
+                          {message.other_user}
                         </Title>
                       </div>
-                      <div>{study.message}</div>
+                      <div
+                        style={{
+                          marginTop: "5px",
+                          maxWidth: "250px",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {message.message}
+                      </div>
                     </Col>
                     <div>
-                      <img
-                        alt="unread"
-                        src={require("../assets/circle2.png").default}
-                        style={{ marginRight: "35px" }}
-                      />
+                      {message.notification > 0 ? (
+                        <div
+                          style={{
+                            marginRight: "20px",
+                            width: "60px",
+                            height: "60px",
+                            borderRadius: "50%",
+                            background: "#56BE9C",
+                            textAlign: "center",
+                            lineHeight: "60px",
+                            fontFamily: "Notosans",
+                            fontSize: "20px",
+                            color: "white",
+                          }}
+                        >
+                          {message.notification}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </Study>
                 );
