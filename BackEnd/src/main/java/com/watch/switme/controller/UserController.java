@@ -1,6 +1,7 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.config.WebSecurityConfig;
+import com.watch.switme.domain.User;
 import com.watch.switme.dto.LoginDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.dto.UserListResponseDTO;
@@ -52,9 +53,16 @@ public class UserController {
     }
 
     @PostMapping(path="/loginget")
-    public String authloginadd(SignUpDTO signUpDTO) throws Exception {
-        webSecurityConfig.customAuthenticationFilter();
-        return signUpDTO.getPw();
+    public String authloginadd(@RequestBody SignUpDTO signUpDTO) throws Exception {
+        if(signUpDTO.getPw().length()>10){
+            User user=userRepository.findByEmailAndPw(signUpDTO.getEmail(), signUpDTO.getPw());
+            return "success";
+        }
+        else{
+            webSecurityConfig.customAuthenticationFilter();
+            System.out.println(signUpDTO.getRealname());
+            return signUpDTO.getRealname();
+        }
     }
 
     //회원정보 리스트 반환
