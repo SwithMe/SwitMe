@@ -2,6 +2,7 @@ package com.watch.switme.service;
 
 import com.watch.switme.domain.ChatMessage;
 import com.watch.switme.domain.ChatRoom;
+import com.watch.switme.domain.UserDataExtra;
 import com.watch.switme.dto.ChatRoomDto;
 import com.watch.switme.dto.RoomListResponseDto;
 import com.watch.switme.repository.ChatMessageRepository;
@@ -61,11 +62,19 @@ public class ChatRoomService {
                 other_user = room.getInquirer().getRealname();
             }
 
+            UserDataExtra userDataExtra = userDataExtraRepository.findFirstByUserIdx(other_idx);
+            String other_image;
+            if(userDataExtra == null){
+                other_image = null;
+            } else{
+                other_image = userDataExtra.getSelfImage();
+            }
+
             RoomListResponseDto roomListResponseDto = RoomListResponseDto.builder()
                     .room_idx(room.getRoomIdx())
                     .room_name(room_name)
                     .other_user(other_user)
-                    .user_image(userDataExtraRepository.findFirstByUserIdx(other_idx).getSelfImage())
+                    .user_image(other_image)
                     .message(message)
                     .notification(chatMessageRepository.countByCheckReadEquals(0))
                     .build();

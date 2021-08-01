@@ -10,5 +10,5 @@ public interface ChatMessageInterface {
     String getUserName();
     String getSelf_image();
     String getMessage();
-    Date getTime();
+    Date getSend_time();
 }
