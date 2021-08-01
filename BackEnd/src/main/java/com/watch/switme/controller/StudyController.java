@@ -5,7 +5,9 @@ import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.dto.StudyDetailResponse;
 import com.watch.switme.dto.StudyListResponseDto;
+import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
+import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.StudyService;
@@ -36,6 +38,9 @@ public class StudyController {
     StudyRepository studyRepository;
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserDataExtraRepository userDataExtraRepository;
 
     @Autowired
     public StudyController(StudyRepository studyRepository) {
@@ -155,15 +160,23 @@ public class StudyController {
     public List<StudyListResponseDto> example(@RequestBody SearchStudyDto searchStudyDto) {
         List<Study> studyListList = studyRepository.findAll();
         List<StudyListResponseDto> SearchStudy = new ArrayList<>();
+
         for (Study study : studyListList) {
-            System.out.println("222222222222222222");
+
+            User user=userRepository.findById(study.getLeader()).orElseThrow(()-> new NoResultFromDBException("데이터가 존재하지 않습니다."));
+            UserDataExtra userDataExtra=userDataExtraRepository.findByUserIdx(study.getLeader()).orElse(null);
+
+            String img="";
+            if(userDataExtra!=null) img=userDataExtra.getSelfImage();
+
+
             StudyListResponseDto studyListResponseDto = StudyListResponseDto.builder()
                     .avgMannerTemperature(study.getAvgMannerTemperature())
                     .image(study.getImage())
                     .activate(study.getActivate())
                     .leader(study.getLeader())
-                    .leader_name(userRepository.findFirstByUserIdx(study.getLeader()).getRealname())
-                    .leader_image("???")
+                    .leader_name(user.getRealname())
+                    .leader_image(img)
                     .title(study.getTitle())
                     .size(study.getSize())
                     .tags(study.getTags())
