@@ -162,14 +162,48 @@ public class StudyController {
         List<StudyListResponseDto> SearchStudy = new ArrayList<>();
 
         for (Study study : studyListList) {
-
             User user=userRepository.findById(study.getLeader()).orElseThrow(()-> new NoResultFromDBException("데이터가 존재하지 않습니다."));
             UserDataExtra userDataExtra=userDataExtraRepository.findByUserIdx(study.getLeader()).orElse(null);
-
             String img="";
             if(userDataExtra!=null) img=userDataExtra.getSelfImage();
+            StudyListResponseDto studyListResponseDto = StudyListResponseDto.builder()
+                    .study_idx(study.getStudy_idx())
+                    .avgMannerTemperature(study.getAvgMannerTemperature())
+                    .image(study.getImage())
+                    .activate(study.getActivate())
+                    .leader(study.getLeader())
+                    .leader_name(user.getRealname())
+                    .leader_image(img)
+                    .title(study.getTitle())
+                    .size(study.getSize())
+                    .tags(study.getTags())
+                    .participant(study.getParticipant())
+                    .type(study.getType())
+                    .build();
+            SearchStudy.add(studyListResponseDto);
+            System.out.println("");
+        }
+        return SearchStudy;
+    }
 
+    @PostMapping("/array/find")
+    public List<StudyListResponseDto> example2(@RequestBody SearchStudyDto searchStudyDto) {
+        List<StudyListResponseDto> SearchStudy = new ArrayList<>();
 
+        if(searchStudyDto.getTitle()==null){
+            return SearchStudy;
+        }
+        if(searchStudyDto.getTitle()==null&&searchStudyDto.getTags()==null&&
+                searchStudyDto.getType()==null&&searchStudyDto.getActivate()==null&&searchStudyDto.getLeader()==null){
+            return SearchStudy;
+        }
+        List<Study> studyListList = studyRepository.getFilterQuery(searchStudyDto.getLeader(), searchStudyDto.getTitle(), searchStudyDto.getSize(), searchStudyDto.getTags(),searchStudyDto.getType());
+
+        for (Study study : studyListList) {
+            User user=userRepository.findById(study.getLeader()).orElseThrow(()-> new NoResultFromDBException("데이터가 존재하지 않습니다."));
+            UserDataExtra userDataExtra=userDataExtraRepository.findByUserIdx(study.getLeader()).orElse(null);
+            String img="";
+            if(userDataExtra!=null) img=userDataExtra.getSelfImage();
             StudyListResponseDto studyListResponseDto = StudyListResponseDto.builder()
                     .study_idx(study.getStudy_idx())
                     .avgMannerTemperature(study.getAvgMannerTemperature())
