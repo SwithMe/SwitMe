@@ -142,6 +142,7 @@ const EditStudy = ({ match }) => {
         history.push(`/`);
       } else {
         console.log("스터디 수정 실패");
+        console.log(response);
       }
     });
   };
@@ -293,12 +294,13 @@ const EditStudy = ({ match }) => {
                   borderColor: "#56BE9C",
                   borderRadius: "10px",
                   fontSize: "20px",
-                  paddingLeft: "20px",
+                  paddingLeft: "25px",
+                  paddingRight: "20px",
                   width: "200px",
                 }}
                 title={study.termstart}
                 format="YYYY/MM/DD"
-                placeholder="날짜를 입력하세요"
+                placeholder={study.termstart}
                 onChange={(date, dateString) =>
                   handleTermStartChange(date, dateString, 1)
                 }
@@ -326,12 +328,13 @@ const EditStudy = ({ match }) => {
                   borderColor: "#56BE9C",
                   borderRadius: "10px",
                   fontSize: "20px",
-                  paddingLeft: "20px",
+                  paddingLeft: "25px",
                   width: "200px",
+                  paddingRight: "20px",
                 }}
                 title={study.termend}
                 format="YYYY/MM/DD"
-                placeholder="날짜를 입력하세요"
+                placeholder={study.termend}
                 onChange={(date, dateString) =>
                   handleTermEndChange(date, dateString, 2)
                 }

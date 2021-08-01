@@ -9,6 +9,10 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { makestudy } from "../_actions/actions";
 
+//antd datePicker
+import { DatePicker } from "antd";
+import "antd/dist/antd.css";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -131,6 +135,22 @@ const MakeStudy = () => {
     setStudy({ ...study, [name]: value });
   };
 
+  //DatePicker
+
+  const handleTermStartChange = (date, dateString, id) => {
+    dateString = dateString.replaceAll("/", "-");
+    study.termstart = dateString;
+    console.log(study.termstart);
+    console.log(study);
+  };
+
+  const handleTermEndChange = (date, dateString, id) => {
+    dateString = dateString.replaceAll("/", "-");
+    study.termend = dateString;
+    console.log(study.termend);
+    console.log(study);
+  };
+
   return (
     <Wrapper>
       <Header page="3" />
@@ -224,8 +244,8 @@ const MakeStudy = () => {
             <Textbox>
               <Title>기간</Title>
             </Textbox>
-            <Inputbox>
-              <Input
+            <Inputbox style={{ paddingTop: "18px" }}>
+              {/* <Input
                 name="termstart"
                 value={study.termstart}
                 placeholder="날짜를 선택하세요"
@@ -234,7 +254,23 @@ const MakeStudy = () => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
-              ></Input>
+              ></Input> */}
+              <DatePicker
+                style={{
+                  borderColor: "#56BE9C",
+                  borderRadius: "10px",
+                  fontSize: "20px",
+                  paddingLeft: "25px",
+                  paddingRight: "20px",
+                  width: "200px",
+                }}
+                title={study.termstart}
+                format="YYYY/MM/DD"
+                placeholder="날짜를 선택하세요"
+                onChange={(date, dateString) =>
+                  handleTermStartChange(date, dateString, 1)
+                }
+              />
               <div style={{ margin: "15px", marginTop: "30px" }}>
                 <img
                   alt="line"
@@ -242,7 +278,7 @@ const MakeStudy = () => {
                   style={{ width: "57px", height: "3px" }}
                 />
               </div>
-              <Input
+              {/* <Input
                 name="termend"
                 value={study.termend}
                 placeholder="날짜를 선택하세요"
@@ -251,7 +287,23 @@ const MakeStudy = () => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
-              ></Input>
+              ></Input> */}
+              <DatePicker
+                style={{
+                  borderColor: "#56BE9C",
+                  borderRadius: "10px",
+                  fontSize: "20px",
+                  paddingLeft: "25px",
+                  width: "200px",
+                  paddingRight: "20px",
+                }}
+                title={study.termend}
+                format="YYYY/MM/DD"
+                placeholder="날짜를 선택하세요"
+                onChange={(date, dateString) =>
+                  handleTermEndChange(date, dateString, 2)
+                }
+              />
             </Inputbox>
           </Row>
 
