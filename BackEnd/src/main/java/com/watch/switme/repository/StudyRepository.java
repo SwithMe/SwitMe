@@ -1,8 +1,10 @@
 package com.watch.switme.repository;
 
 import com.watch.switme.domain.Study;
+import com.watch.switme.dto.MakeStudyDto;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.security.core.parameters.P;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +20,8 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     Study findFirstByStudyIdx(Long study_idx);
 
     List<Study> findAll();
+
+    Study updateStudy(Study study, MakeStudyDto makeStudyDto);
 
     @Query(value="SELECT * from Study_main u where u.study_idx=:sstudy_idx",nativeQuery=true)
     Study findByStudy_idx(@Param("sstudy_idx") Long study_idx);

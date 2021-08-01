@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 //@AllArgsConstructor
 @Getter
+@Setter
 @Builder
 @Table(name="Study_main")
 @Entity(name="study_main")

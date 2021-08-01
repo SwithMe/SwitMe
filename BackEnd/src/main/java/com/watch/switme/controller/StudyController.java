@@ -22,6 +22,7 @@ import java.util.List;
 * 4. 스터디 수정하기
 * */
 
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/list")
@@ -70,10 +71,13 @@ public class StudyController {
         }
 
     //스터디 수정하기
-    @PostMapping("/array/fix/{study_idx}")
+    @PutMapping("/array/fix/{study_idx}")
     public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
-        Study study = studyRepository.findById(study_idx).get(); // not null 값으로 들어가도록.
-        studyService.update(study, makeStudyDto);
+        Study study = studyRepository.findById(study_idx).get();
+       // not null 값으로 들어가도록.
+        studyService.updateStudy(study, makeStudyDto);
+        System.out.println(study.getTitle());
+        //study 자체가 업데이트 완료. => study를 DB 에 저장하면됨.
         return studyRepository.save(study);
     }
 
@@ -94,13 +98,6 @@ public class StudyController {
         public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
             userStudyService.leave(user_idx,study_idx);
     }
-
-    //스터디 탈퇴하기
-   // @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
-    //public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
-   //     userStudyService.leave(user_idx);
- //   }
-
 
     //스터디 세부사항 보여주기
     //함수 추가

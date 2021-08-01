@@ -20,11 +20,7 @@ public class ChatMessage {
     @Column(name = "message", nullable = false)
     private String message;
 
-<<<<<<< HEAD
     @Column(name = "send_time")
-=======
-    @Column(name = "sned_time")
->>>>>>> 017eb169163de30eda70f63a65c5326d030999fa
     private LocalDateTime sendTime;
 
     @ManyToOne

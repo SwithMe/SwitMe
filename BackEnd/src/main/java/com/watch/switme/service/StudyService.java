@@ -28,10 +28,44 @@ public class StudyService {
 
     @Transactional
     public Study update(Study study, MakeStudyDto makeStudyDto){
+
         study.update(study, makeStudyDto);
         return study;
     }
+    @Transactional
+    public void updateStudy(Study study, MakeStudyDto makeStudyDto) {
+        study.setActivate(makeStudyDto.getActivate());
+        study.setStudyIntro(makeStudyDto.getStudyIntro());
+        study.setExtra(makeStudyDto.getExtra());
+        study.setImage(makeStudyDto.getImage());
+        study.setLeader(makeStudyDto.getLeader());
+        study.setAvgMannerTemperature(makeStudyDto.getManner_temperature());
+        study.setLink(makeStudyDto.getLink());
+        study.setAvgMannerTemperature(makeStudyDto.getManner_temperature());
+        study.setLocation(makeStudyDto.getLocation());
+        study.setSize(makeStudyDto.getSize());
+        study.setActivate(makeStudyDto.getActivate());
+        study.setTags(makeStudyDto.getTags());
+        study.setTermend(makeStudyDto.getTermend());
+    }
+    /*
 
+        this.title = makeStudyDto.getTitle();
+        this.type = makeStudyDto.getType();
+        this.termstart = makeStudyDto.getTermstart();
+        this.termend = makeStudyDto.getTermend();
+        this.timestart = makeStudyDto.getTimestart();
+        this.timeend = makeStudyDto.getTimeend();
+        this.size = makeStudyDto.getSize();
+        this.tags = makeStudyDto.getTags();
+        this.location =makeStudyDto.getLocation();
+        this.extra = makeStudyDto.getExtra();
+        this.image = makeStudyDto.getImage();
+        this.link = makeStudyDto.getLink();
+        this.activate =makeStudyDto.getActivate();
+        this.leader = study.getLeader();
+        this.studyIntro = makeStudyDto.getStudyIntro();
+        this.avgMannerTemperature =study.getAvgMannerTemperature();*/
     /*
     @Transactional
     public User studyBuild(final SignUpDTO signUpDTO) {
