@@ -3,16 +3,10 @@ package com.watch.switme.domain;
 
 import com.watch.switme.dto.MakeStudyDto;
 import lombok.*;
-
-import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
-//@AllArgsConstructor
 @Getter
 @Setter
 @Builder

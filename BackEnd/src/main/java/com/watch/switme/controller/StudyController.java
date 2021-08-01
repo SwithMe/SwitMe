@@ -6,18 +6,12 @@ import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
-import com.watch.switme.repository.UserStudyRepository;
 import com.watch.switme.service.S3Service;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.sound.midi.SysexMessage;
-import javax.swing.plaf.synth.SynthTextAreaUI;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

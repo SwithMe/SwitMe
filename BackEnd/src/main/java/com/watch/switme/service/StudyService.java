@@ -7,7 +7,6 @@ import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -4,15 +4,12 @@ import com.watch.switme.domain.UserYesOrNo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
