@@ -29,6 +29,7 @@ const DELETE_STOPWATCH = "DELETE_TIMER";
 const SAVE_STOPWATCH = "SAVE_STOPWATCH";
 const USER_MAKE_CHAT = "USER_MAKE_CHAT";
 const EDIT_USER = "EDIT_USER";
+const FIND_PASSWORD = "FIND_PASSWORD";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -45,6 +46,18 @@ export const login = (dataToSubmit) => {
     });
   return {
     type: LOGIN,
+    payload: request,
+  };
+};
+
+//비밀번호 찾기
+export const find_password = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/user/email/find`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: FIND_PASSWORD,
     payload: request,
   };
 };
