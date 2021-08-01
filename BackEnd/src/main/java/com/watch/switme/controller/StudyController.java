@@ -134,16 +134,38 @@ public class StudyController {
 
     //스터디 검색 기능
     @PostMapping("/array")
-    public List<Study> example (@RequestBody SearchStudyDto searchStudyDto){
-        return studyRepository.getQuery
+    public List<Study> example (@RequestBody SearchStudyDto searchStudyDto) {
+
+        /*
+        if (searchStudyDto.getTags() != null) {
+            ResultOfQuery=studyRepository.findAllByTagsContaining(searchStudyDto.getTags());
+        }
+        //if (searchStudyDto.getActivate() != null) {
+        //    ResultOfQuery=studyRepository.findAllByActivate(searchStudyDto.getActivate());
+       // }
+        if (searchStudyDto.getType() != null) {
+            ResultOfQuery=studyRepository.findAllByType(searchStudyDto.getType());
+        };
+        if(searchStudyDto.getTitle()!=null){
+            ResultOfQuery=studyRepository.findAllByTitleContaining(searchStudyDto.getTitle());
+        }*/
+
+        return studyRepository.getFilterQuery(searchStudyDto.getLeader(), searchStudyDto.getTitle(), searchStudyDto.getSize(), searchStudyDto.getTags(),searchStudyDto.getType());
+    }
+
+                //studyRepository.findAllByTitleContaining(searchStudyDto.getTitle());
+                //studyRepository.getLeader(searchStudyDto.getLeader());
+                /*studyRepository.getQuery
                 (
                         searchStudyDto.getLeader(),
                         searchStudyDto.getTitle(),
                         searchStudyDto.getSize(),
                         searchStudyDto.getType(),
                         searchStudyDto.getActivate()
-                );
+                );*/
+
+
     }
 
-}
+
 
