@@ -113,7 +113,7 @@ const MakeStudy = () => {
       extra: study.extra,
       image: study.image, //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
       link: study.link,
-      leader: study.leader,
+      leader: window.localStorage.getItem("id"),
     };
     console.log(data);
     dispatch(makestudy(data)).then((response) => {
