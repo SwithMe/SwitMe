@@ -13,5 +13,5 @@ public class SearchStudyDto {
     private int size;
     private String tags;
     private String type;
-    private Long leader;
+    private String leader;
 }

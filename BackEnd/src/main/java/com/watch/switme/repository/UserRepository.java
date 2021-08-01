@@ -19,6 +19,10 @@ public interface UserRepository extends JpaRepository <User, Long> {
     @Query(value = "select * from User_data u where u.user_idx = ?1", nativeQuery = true)
     User findFirstByUserIdx(Long user_idx);
 
+    User findUserByRealname(String realname);
+
+    User findByEmailAndAndPw(String email, String pw);
+
 //    @Modifying
 //    @Query(value = "update User_data u set u.UserPassword = ?1 where u.user_idx = ?2", nativeQuery = true)
 //    void updateUserPassword(String password, Long user_idx);

@@ -135,20 +135,16 @@ public class StudyController {
     //스터디 검색 기능
     @PostMapping("/array")
     public List<Study> example (@RequestBody SearchStudyDto searchStudyDto) {
-
-        /*
-        if (searchStudyDto.getTags() != null) {
-            ResultOfQuery=studyRepository.findAllByTagsContaining(searchStudyDto.getTags());
+        if(searchStudyDto.getTitle()==null){
+            return studyRepository.findAll();
         }
-        //if (searchStudyDto.getActivate() != null) {
-        //    ResultOfQuery=studyRepository.findAllByActivate(searchStudyDto.getActivate());
-       // }
-        if (searchStudyDto.getType() != null) {
-            ResultOfQuery=studyRepository.findAllByType(searchStudyDto.getType());
-        };
-        if(searchStudyDto.getTitle()!=null){
-            ResultOfQuery=studyRepository.findAllByTitleContaining(searchStudyDto.getTitle());
-        }*/
+        if(searchStudyDto.getTitle()==null&&searchStudyDto.getTags()==null&&
+        searchStudyDto.getType()==null&&searchStudyDto.getActivate()==null&&searchStudyDto.getLeader()==null){
+            return studyRepository.findAll();
+        }
+
+        // 1. 리더를 실명으로 프론트에서 입력받는다.
+        // 2. 스터디를 조회할 때 만일 leader_name 하나의 값만 들어오면
 
         return studyRepository.getFilterQuery(searchStudyDto.getLeader(), searchStudyDto.getTitle(), searchStudyDto.getSize(), searchStudyDto.getTags(),searchStudyDto.getType());
     }
