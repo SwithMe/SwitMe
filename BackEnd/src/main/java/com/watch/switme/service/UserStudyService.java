@@ -104,4 +104,17 @@ public class UserStudyService {
         System.out.println(joinStudyRequestDto.getAmLeader());
         return userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
     }
+
+    @Transactional
+    public UserStudy compare(Long user_idx, Long study_idx){
+        //1. user_idx로 검색
+        //2. 해당 리스트 중 study_idx를 다시 검색
+        //3. 만약 결과가 존재하면 존재함을 리턴
+        //4. 존재 하지 않으면 없음을 리턴
+        UserStudy compareStudy = userStudyRepository.findByUserAndStudy(study_idx, user_idx);
+        if(compareStudy != null)
+            return compareStudy;
+        else return null;
+
+    }
 }

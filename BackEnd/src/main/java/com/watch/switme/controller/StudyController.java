@@ -6,6 +6,7 @@ import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
+import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import java.util.List;
 * 4. 스터디 수정하기
 * */
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/list")
@@ -28,17 +28,16 @@ public class StudyController {
 
     @Autowired
     UserStudyService userStudyService;
+    StudyService studyService;
     @Autowired
     StudyRepository studyRepository;
     @Autowired
     UserRepository userRepository;
-    UserStudyRepository userStudyRepository;
 
     @Autowired
     public StudyController(StudyRepository studyRepository) {
         this.studyRepository = studyRepository;
     }
-
     //온/오프라인 스터디 개설하기
     // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
     //makestudydto 를 받는다 (고 생각)
@@ -46,6 +45,7 @@ public class StudyController {
     public Study createnewStudy(@RequestBody MakeStudyDto makeStudyDto){
         User user=userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
         int temp=user.getManner_temperature();
+
         System.out.println(user.getManner_temperature());
         Study study = Study.builder()
                 .title(makeStudyDto.getTitle())
@@ -57,7 +57,7 @@ public class StudyController {
                 .size(makeStudyDto.getSize())
                 .tags(makeStudyDto.getTags())
                 .leader((long) makeStudyDto.getLeader())
-                .activate("N")
+                .activate(UserYesOrNo.Y)
                 .termend(makeStudyDto.getTermend())
                 .termstart(makeStudyDto.getTermstart())
                 .timeend(makeStudyDto.getTimeend())
@@ -68,9 +68,11 @@ public class StudyController {
         }
 
     //스터디 수정하기
-    //@PostMapping("/array/fix/{study_idx}")
-    //public Iterable<Study> edit(@PathVariable Long study_idx, @RequestBody Study study) {
-    //   }
+    @PostMapping("/array/fix/{study_idx}")
+    public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
+        Study study = studyRepository.findById(study_idx).get(); // not null 값으로 들어가도록.
+        return  studyService.update(study, makeStudyDto);
+    }
 
     //전체 스터디 리스트 가져오기.
     @GetMapping("/alllist")
@@ -89,29 +91,30 @@ public class StudyController {
     public void LeaveStudy ( @PathVariable("user_study_idx") long user_study_idx){
         userStudyService.leave(user_study_idx);}
 
-        //스터디 가입여부 확인하기
-        //@GetMapping("/array/status/{user_idx}/{study_idx}")
-        //public void statuStudy(){
-        // }
+    //스터디 가입여부 확인하기
+    @GetMapping("/array/status/{user_idx}/{study_idx}")
+    public UserStudy statuStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
+        return userStudyService.compare(user_idx, study_idx);
+     }
 
-        //스터디 세부사항 보여주기
-        @GetMapping("/array/study/{study_idx}")
-        public Study showStudyDetail (@PathVariable Long study_idx){
-            return studyRepository.findByStudy_idx(study_idx);
-        }
-
-        //스터디 검색 기능
-        @PostMapping("/array")
-        public List<Study> example (@RequestBody SearchStudyDto searchStudyDto){
-            return studyRepository.getQuery
-                    (
-                            searchStudyDto.getLeader(),
-                            searchStudyDto.getTitle(),
-                            searchStudyDto.getSize(),
-                            searchStudyDto.getType(),
-                            searchStudyDto.getActivate()
-                    );
-        }
-
+     //스터디 세부사항 보여주기
+     @GetMapping("/array/study/{study_idx}")
+     public Study showStudyDetail (@PathVariable Long study_idx){
+        return studyRepository.findByStudy_idx(study_idx);
     }
+
+    //스터디 검색 기능
+    @PostMapping("/array")
+    public List<Study> example (@RequestBody SearchStudyDto searchStudyDto){
+        return studyRepository.getQuery
+                (
+                        searchStudyDto.getLeader(),
+                        searchStudyDto.getTitle(),
+                        searchStudyDto.getSize(),
+                        searchStudyDto.getType(),
+                        searchStudyDto.getActivate()
+                );
+    }
+
+}
 

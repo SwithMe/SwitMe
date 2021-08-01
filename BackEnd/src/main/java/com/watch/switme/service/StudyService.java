@@ -4,6 +4,7 @@ import com.watch.switme.domain.Study;
 import com.watch.switme.domain.User;
 import com.watch.switme.domain.UserRole;
 import com.watch.switme.domain.UserYesOrNo;
+import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.RecomStudyResDto;
 import com.watch.switme.dto.SignUpDTO;
 import com.watch.switme.exception.NoResultFromDBException;
@@ -23,8 +24,13 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
+    private final UserStudyRepository userStudyRepository;
 
-
+    @Transactional
+    public Study update(Study study, MakeStudyDto makeStudyDto){
+        study.update(study, makeStudyDto);
+        return studyRepository.save(study);
+    }
 
     /*
     @Transactional
