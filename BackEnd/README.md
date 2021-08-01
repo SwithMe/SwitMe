@@ -22,7 +22,8 @@
 
 |[@Jungeunkim-dev](https://github.com/Jungeunkim-dev)|[@hyojin530](https://github.com/hyojin530)|[@Inryu](https://github.com/Inryu)|[@yhjune](https://github.com/yhjune)|
 |------|---|---|---|
-|-|• 채팅 기능 </br> • 마이페이지 </br> • 스터디 멤버 목록 페이지 |• 메인 페이지 </br> • 스톱워치 페이지|-|
+|• 회원가입/로그인 <br> • 스터디 목록 |• 채팅 기능 </br> • 마이페이지 </br> • 스터디 멤버 목록 페이지 |• 메인 페이지 </br> • 스톱워치 페이지| • 스터디 화면(생성 수정 탈퇴 가입)
+|
 
 
 ## 💡 기술 스택
