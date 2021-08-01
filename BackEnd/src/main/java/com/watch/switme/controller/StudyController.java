@@ -171,6 +171,7 @@ public class StudyController {
 
 
             StudyListResponseDto studyListResponseDto = StudyListResponseDto.builder()
+                    .study_idx(study.getStudy_idx())
                     .avgMannerTemperature(study.getAvgMannerTemperature())
                     .image(study.getImage())
                     .activate(study.getActivate())
