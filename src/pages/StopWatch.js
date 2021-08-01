@@ -22,16 +22,21 @@ const StopWatch = () => {
     name: "",
     duration: "0:00:00",
   });
+
+  const [save, isSave] = useState(false);
   const changeTimer = (newTimer) => {
     setTimer(newTimer);
   };
-  useEffect(() => {}, [timer]);
+  useEffect(() => {
+    console.log(save);
+  }, [timer, save]);
+
   return (
     <div>
       <Header page="1"></Header>
       <Wrapper>
-        <TimerList changeTimer={changeTimer}></TimerList>
-        <Watch timer={timer}></Watch>
+        <TimerList changeTimer={changeTimer} change={save}></TimerList>
+        <Watch timer={timer} save={save} isSave={isSave}></Watch>
       </Wrapper>
     </div>
   );

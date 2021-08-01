@@ -54,12 +54,12 @@ const AddTimer = styled.input`
   border-bottom: 1px solid var(--middle);
 `;
 
-function TimerList({ openModal, changeTimer }) {
+function TimerList({ openModal, changeTimer, change }) {
   //타이머 목록
   const [status, setStatus] = useState(0);
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
-  const [timers, setTimers] = useState();
+  const [timers, setTimers] = useState([]);
 
   useEffect(() => {
     dispatch(getTimerList(window.localStorage.getItem("id"))).then(
@@ -89,7 +89,6 @@ function TimerList({ openModal, changeTimer }) {
               " : " +
               second.toString();
             tmp_arr.push(stopwatch);
-            console.log(timer.duration);
           });
           setTimers(tmp_arr);
           if (tmp_arr.length > 0) changeTimer(tmp_arr[0]);
@@ -98,7 +97,7 @@ function TimerList({ openModal, changeTimer }) {
         }
       }
     );
-  }, [toggle]);
+  }, [toggle, change]);
 
   //추가하기 status:1
   const Add = () => {
@@ -107,11 +106,25 @@ function TimerList({ openModal, changeTimer }) {
 
   //input
   const [value, setValue] = useState("");
-
   const onInputChange = useCallback((e) => {
     setValue(e.target.value);
     console.log(value);
   }, []);
+
+  const nextId = useRef(2);
+
+  const onInsert = useCallback(
+    (value) => {
+      const timer = {
+        id: nextId.current,
+        name: value,
+        time: "00",
+      };
+      setTimers(timers.concat(timer));
+      nextId.current += 1;
+    },
+    [timers]
+  );
 
   const onSubmit = useCallback(
     (e) => {
