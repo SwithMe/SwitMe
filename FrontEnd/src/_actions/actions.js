@@ -7,8 +7,10 @@ const GET_TOTAL_TIME = "GET_TOTAL_TIME";
 const GET_RANK = "GET_RANK";
 const GET_RANK_STUDY = "GET_RANK_STUDY";
 const RECOMMENDED_STUDY = "RECOMMENDED_STUDY";
+const GET_STUDYLIST_ALL = "GET_STUDYLIST_ALL";
 const GET_STUDYLIST = "GET_STUDYLIST";
 const GET_STUDYDETAIL = "GET_STUDYDETAIL";
+const GET_ISMEMBER = "GET_ISMEMBER";
 const JOIN_STUDY = "JOIN_STUDY";
 const LEAVE_STUDY = "LEAVE_STUDY";
 const MAKE_STUDY = "MAKE_STUDY";
@@ -27,6 +29,7 @@ const DELETE_STOPWATCH = "DELETE_TIMER";
 const SAVE_STOPWATCH = "SAVE_STOPWATCH";
 const USER_MAKE_CHAT = "USER_MAKE_CHAT";
 const EDIT_USER = "EDIT_USER";
+const FIND_PASSWORD = "FIND_PASSWORD";
 
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
@@ -43,6 +46,18 @@ export const login = (dataToSubmit) => {
     });
   return {
     type: LOGIN,
+    payload: request,
+  };
+};
+
+//비밀번호 찾기
+export const find_password = (dataToSubmit) => {
+  const request = axios
+    .post(`${USER_SERVER}/user/email/find`, dataToSubmit)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return {
+    type: FIND_PASSWORD,
     payload: request,
   };
 };
@@ -105,7 +120,16 @@ export const editUser = (user_idx, dataToSubmit) => {
   };
 };
 
-//스터디 리스트 불러오기
+//모든 스터디 리스트 불러오기
+export const getStudylistAll = () => {
+  const request = axios
+    .get(`${USER_SERVER}/list/alllist`)
+    .then((request) => request.data)
+    .catch((error) => {});
+  return { type: GET_STUDYLIST_ALL, payload: request };
+};
+
+//검색된 스터디 리스트 불러오기
 export const getStudylist = (dataToSubmit) => {
   const request = axios
     .post(`${USER_SERVER}/list/array`, dataToSubmit)
@@ -121,6 +145,15 @@ export const getStudydetail = (id) => {
     .then((response) => response.data)
     .catch((error) => {});
   return { type: GET_STUDYDETAIL, payload: request };
+};
+
+//스터디 가입여부 확인
+export const getIsMember = (user_idx, study_idx) => {
+  const request = axios
+    .get(`${USER_SERVER}/list/array/status/${user_idx}/${study_idx}`)
+    .then((response) => response.data)
+    .catch((error) => {});
+  return { type: GET_ISMEMBER, payload: request };
 };
 
 //스터디 가입
