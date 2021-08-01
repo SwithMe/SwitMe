@@ -138,10 +138,6 @@ function Header({ page }) {
     } else history.push("/StudyList");
   };
 
-  // const StudyList = () => {
-  //   history.push("/StudyList");
-  // };
-
   return (
     <Wrapper>
       <Logo

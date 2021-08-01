@@ -113,7 +113,7 @@ const MakeStudy = () => {
       extra: study.extra,
       image: study.image, //추후에 이미지 받아오는 부분 구현되면 formData로 보내기
       link: study.link,
-      leader: study.leader,
+      leader: window.localStorage.getItem("id"),
     };
     console.log(data);
     dispatch(makestudy(data)).then((response) => {
@@ -493,58 +493,42 @@ const MakeStudy = () => {
                       04:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "05:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "05:00" })}>
                     <Title size="20" weight="400">
                       05:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "06:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "06:00" })}>
                     <Title size="20" weight="400">
                       06:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "07:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "07:00" })}>
                     <Title size="20" weight="400">
                       07:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "08:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "08:00" })}>
                     <Title size="20" weight="400">
                       08:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "09:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "09:00" })}>
                     <Title size="20" weight="400">
                       09:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "10:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "10:00" })}>
                     <Title size="20" weight="400">
                       10:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "11:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "11:00" })}>
                     <Title size="20" weight="400">
                       11:00
                     </Title>
                   </li>
-                  <li
-                    onClick={() => setStudy({ ...study, timestart: "12:00" })}
-                  >
+                  <li onClick={() => setStudy({ ...study, timeend: "12:00" })}>
                     <Title size="20" weight="400">
                       12:00
                     </Title>

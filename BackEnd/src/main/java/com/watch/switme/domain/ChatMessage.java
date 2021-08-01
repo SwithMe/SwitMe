@@ -20,7 +20,7 @@ public class ChatMessage {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "sned_time")
+    @Column(name = "send_time")
     private LocalDateTime sendTime;
 
     @ManyToOne

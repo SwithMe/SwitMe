@@ -24,14 +24,61 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
+
     private final UserStudyRepository userStudyRepository;
 
     @Transactional
-    public Study update(Study study, MakeStudyDto makeStudyDto){
-        study.update(study, makeStudyDto);
-        return studyRepository.save(study);
+    public Study updateOldStudy(Study study, MakeStudyDto makeStudyDto){
+            /*study.update(study.getStudy_idx(), makeStudyDto.getTitle(), makeStudyDto.getType()
+            ,makeStudyDto.getTermstart(), makeStudyDto.getTermend(), makeStudyDto.getTimestart(),
+                    makeStudyDto.getTimeend(), makeStudyDto.getSize(), makeStudyDto.getTags(),
+                    makeStudyDto.getLocation(), makeStudyDto.getExtra(), makeStudyDto.getImage(),
+                    makeStudyDto.getLeader(), makeStudyDto.getLink());*/
+            study.update(study, makeStudyDto);
+        return study;
     }
 
+    /*
+    Long study_idx, String title, String type, Date termstart, Date termend,
+    Time timestart, Time timeend, Integer size, String tags, String location,
+    String extra, String image, Long leader, String link,
+     */
+    //UserYesOrNo activate, String studyIntro, Integer participant, Integer avgMannerTemperatur
+
+    @Transactional
+    public void updateStudy(Study study, MakeStudyDto makeStudyDto) {
+        study.setActivate(makeStudyDto.getActivate());
+        study.setStudyIntro(makeStudyDto.getStudyIntro());
+        study.setExtra(makeStudyDto.getExtra());
+        study.setImage(makeStudyDto.getImage());
+        study.setLeader(makeStudyDto.getLeader());
+        study.setAvgMannerTemperature(makeStudyDto.getManner_temperature());
+        study.setLink(makeStudyDto.getLink());
+        study.setAvgMannerTemperature(makeStudyDto.getManner_temperature());
+        study.setLocation(makeStudyDto.getLocation());
+        study.setSize(makeStudyDto.getSize());
+        study.setActivate(makeStudyDto.getActivate());
+        study.setTags(makeStudyDto.getTags());
+        study.setTermend(makeStudyDto.getTermend());
+    }
+    /*
+
+        this.title = makeStudyDto.getTitle();
+        this.type = makeStudyDto.getType();
+        this.termstart = makeStudyDto.getTermstart();
+        this.termend = makeStudyDto.getTermend();
+        this.timestart = makeStudyDto.getTimestart();
+        this.timeend = makeStudyDto.getTimeend();
+        this.size = makeStudyDto.getSize();
+        this.tags = makeStudyDto.getTags();
+        this.location =makeStudyDto.getLocation();
+        this.extra = makeStudyDto.getExtra();
+        this.image = makeStudyDto.getImage();
+        this.link = makeStudyDto.getLink();
+        this.activate =makeStudyDto.getActivate();
+        this.leader = study.getLeader();
+        this.studyIntro = makeStudyDto.getStudyIntro();
+        this.avgMannerTemperature =study.getAvgMannerTemperature();*/
     /*
     @Transactional
     public User studyBuild(final SignUpDTO signUpDTO) {
