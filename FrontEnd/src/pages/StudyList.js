@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Input from "../components/Input";
@@ -101,11 +101,16 @@ const StudyList = () => {
     setSearch({ ...search, [name]: value });
     console.log(search);
   };
+  const pagestart = useRef(0);
+  const pageend = useRef(5);
+  const page = useRef(1);
+  const maxpage = useRef(1);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     dispatch(getStudylistAll()).then((response) => {
       if (response.payload) {
-        console.log(response.payload);
+        maxpage.current = Math.ceil(response.payload.length / 6);
         setStudies(response.payload);
       } else {
         console.log("모든 스터디 목록 에러");
@@ -124,6 +129,27 @@ const StudyList = () => {
         alert("스터디 검색 오류");
       }
     });
+  };
+
+  const movepageup = () => {
+    if (page.current < maxpage.current) {
+      pagestart.current = pagestart.current + 6;
+      pageend.current = pageend.current + 6;
+      page.current = page.current + 1;
+      setRerender(!rerender);
+    } else {
+      alert("마지막 페이지입니다.");
+    }
+  };
+  const movepagedown = () => {
+    if (page.current > 1) {
+      pagestart.current = pagestart.current - 6;
+      pageend.current = pageend.current - 6;
+      page.current = page.current - 1;
+      setRerender(!rerender);
+    } else {
+      alert("첫번째 페이지입니다.");
+    }
   };
 
   return (
@@ -277,7 +303,7 @@ const StudyList = () => {
                 height: "25px",
                 marginRight: "72px",
               }}
-              onClick={() => console.log("왼쪽")}
+              onClick={movepagedown}
             >
               <Image
                 alt="left arrow"
@@ -286,14 +312,16 @@ const StudyList = () => {
                 height="25px"
               />
             </div>
-            <Title color="#56BE9C">2/11</Title>
+            <Title color="#56BE9C">
+              {page.current}/{maxpage.current}
+            </Title>
             <div
               style={{
                 width: "14.7px",
                 height: "25px",
                 marginLeft: "72px",
               }}
-              onClick={() => console.log("오른쪽")}
+              onClick={movepageup}
             >
               <Image
                 alt="right arrow"
@@ -313,7 +341,8 @@ const StudyList = () => {
           }}
         ></div>
         {studies?.map((study, i) => {
-          if (i > 5) return false;
+          if (i < pagestart.current) return false;
+          else if (i > pageend.current) return false;
           let statecolor = "#FFE600";
           if (study.activate === "Y") statecolor = "#56BE9C";
           else statecolor = "#C70000";

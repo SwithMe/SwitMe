@@ -104,7 +104,8 @@ const MainPage = () => {
   const [studyRanking, setStudyRanking] = useState([]);
   const [studies, setStudies] = useState([]);
   const move = useRef(0);
-  const move_max = useRef(0);
+  const move_max_online = useRef(0);
+  const move_max_offline = useRef(0);
 
   const slideRef = useRef();
 
@@ -138,7 +139,14 @@ const MainPage = () => {
     dispatch(recommendedStudy()).then((response) => {
       if (response.payload) {
         setStudies(response.payload);
-        move_max.current = studies.length >= 6 ? (studies.length - 6) * 260 : 0;
+        let online = 0;
+        let offline = 0;
+        response.payload?.map((study) => {
+          if (study.type === "online") online++;
+          else offline++;
+        });
+        move_max_online.current = online >= 6 ? (online - 6) * 260 : 0;
+        move_max_offline.current = offline >= 6 ? (offline - 6) * 260 : 0;
       } else {
         console.log("추천 스터디 가져오기 에러");
       }
@@ -147,13 +155,35 @@ const MainPage = () => {
   }, []);
 
   const slide = (dir) => {
-    if (dir === "left" && move.current !== 0) {
-      move.current += 260;
-      slideRef.current.style.transform = `translateX(${move.current}px)`;
-    } else if (dir === "right" && move.current !== -move_max.current) {
-      move.current -= 260;
-      slideRef.current.style.transform = `translateX(${move.current}px)`;
+    if (typetoggle === 1) {
+      if (dir === "left" && move.current !== 0) {
+        move.current += 260;
+        slideRef.current.style.transform = `translateX(${move.current}px)`;
+      } else if (dir === "right" && move.current !== -move_max_online.current) {
+        console.log(move_max_online.current);
+        console.log(-move.current);
+        move.current -= 260;
+        slideRef.current.style.transform = `translateX(${move.current}px)`;
+      }
+    } else {
+      if (dir === "left" && move.current !== 0) {
+        move.current += 260;
+        slideRef.current.style.transform = `translateX(${move.current}px)`;
+      } else if (
+        dir === "right" &&
+        move.current !== -move_max_offline.current
+      ) {
+        console.log(move_max_offline.current);
+        console.log(-move.current);
+        move.current -= 260;
+        slideRef.current.style.transform = `translateX(${move.current}px)`;
+      }
     }
+  };
+  const changeonoff = (type) => {
+    slideRef.current.style.transform = `translateX(${0}px)`;
+    setTypeToggle(type);
+    move.current = 0;
   };
 
   return (
@@ -291,14 +321,14 @@ const MainPage = () => {
               <span style={{ float: "right" }}>
                 <span
                   style={{ marginRight: "31px", cursor: "pointer" }}
-                  onClick={() => setTypeToggle(1)}
+                  onClick={() => changeonoff(1)}
                 >
                   <Circle />
                   온라인
                 </span>
                 <span
                   style={{ color: "#cccccc", cursor: "pointer" }}
-                  onClick={() => setTypeToggle(2)}
+                  onClick={() => changeonoff(2)}
                 >
                   <Circle color="#cccccc" />
                   오프라인
@@ -312,14 +342,14 @@ const MainPage = () => {
                     color: "#cccccc",
                     cursor: "pointer",
                   }}
-                  onClick={() => setTypeToggle(1)}
+                  onClick={() => changeonoff(1)}
                 >
                   <Circle color="#cccccc" />
                   온라인
                 </span>
                 <span
                   style={{ cursor: "pointer" }}
-                  onClick={() => setTypeToggle(2)}
+                  onClick={() => changeonoff(2)}
                 >
                   <Circle />
                   오프라인
