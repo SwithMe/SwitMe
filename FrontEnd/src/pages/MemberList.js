@@ -128,7 +128,7 @@ const MemberList = ({ match }) => {
             background: "#56BE9C",
           }}
         ></div>
-        {members.map((member, i) => (
+        {members?.map((member, i) => (
           <Row>
             <div
               style={{
@@ -174,7 +174,8 @@ const MemberList = ({ match }) => {
                 alignItems: "center",
               }}
             >
-              {isLeader ? (
+              {isLeader &&
+              String(member.user_idx) !== window.localStorage.getItem("id") ? (
                 <button
                   style={{
                     border: "1px solid #C70000",
