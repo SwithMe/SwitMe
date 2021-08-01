@@ -1,6 +1,5 @@
 package com.watch.switme.domain;
 
-import jdk.jfr.Timestamp;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -86,7 +86,6 @@ public class StudyController {
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
     public String JoinStudy (@PathVariable Long user_idx, @PathVariable Long study_idx){
-
         return userStudyService.join(user_idx, study_idx);
         }
 
