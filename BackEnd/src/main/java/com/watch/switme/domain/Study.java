@@ -106,7 +106,7 @@ public class Study {
         this.image = image;
         this.leader = leader;
         this.link = link;
-        this.activate = activate;
+        this.activate=activate;
         this.studyIntro = studyIntro;
         this.participant = participant;
         this.avgMannerTemperature = avgMannerTemperature;
