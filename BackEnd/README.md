@@ -1,10 +1,10 @@
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSwithMe%2FSwitMe%2Ftree%2Fdevelop%2FBackEnd&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)<br/>
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
 
 <p align="center"><img src="https://user-images.githubusercontent.com/55133794/127760251-3263fb22-a891-4038-8dfc-cb9594c91174.png" width="300"></p>
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSwithMe%2FSwitMe%2Ftree%2Fdevelop%2FBackEnd&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)<br/>
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
 > `온오프라인 스터디팟`을 구하고 `스톱워치` 기능을 통해 자신의 공부시간을 측정, 공유함으로써 공부에 동기 부여를 제공하는 서비스의 백엔드 리포지토리입니다.
 
