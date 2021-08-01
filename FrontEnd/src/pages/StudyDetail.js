@@ -129,6 +129,7 @@ const StudyDetail = ({ match }) => {
   const join = () => {
     const user_id = window.localStorage.getItem("id");
     dispatch(joinStudy(user_id, study_id)).then((response) => {
+      console.log(response);
       if (response.payload) {
         alert("스터디에 가입되었습니다.");
         setJoinChange(!joinChange);
@@ -141,7 +142,8 @@ const StudyDetail = ({ match }) => {
   const leave = () => {
     const user_id = window.localStorage.getItem("id");
     dispatch(leaveStudy(user_id, study_id)).then((response) => {
-      if (response) {
+      console.log(response);
+      if (response.payload) {
         alert("스터디에서 탈퇴되었습니다.");
         setJoinChange(!joinChange);
       } else {

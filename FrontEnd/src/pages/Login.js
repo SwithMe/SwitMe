@@ -49,9 +49,8 @@ const Login = () => {
     evt.preventDefault();
     console.log(user);
     dispatch(login(user)).then((response) => {
-      if (response) {
+      if (response.payload) {
         console.log("로그인 성공");
-        console.log(response.payload);
         window.localStorage.setItem("id", response.payload);
         window.localStorage.setItem("isAuth", "true");
         window.location.replace("/");
