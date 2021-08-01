@@ -93,14 +93,44 @@ const EditStudy = ({ match }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isSet, setIsSet] = useState();
-  const [study, setStudy] = useState();
+  const [study, setStudy] = useState({
+    activate: "",
+    extra: null,
+    image: "",
+    leader: "",
+    link: "",
+    location: "",
+    size: "",
+    tags: "",
+    termend: "",
+    termstart: "",
+    timeend: "",
+    timestart: "",
+    title: "",
+    type: "",
+  });
 
   useEffect(() => {
     dispatch(getStudydetail(study_id)).then((response) => {
+      console.log(study);
       if (response.payload) {
-        setStudy(response.payload);
+        setStudy({
+          activate: response.payload.activate,
+          extra: response.payload.extra,
+          image: response.payload.image,
+          leader: response.payload.leader,
+          link: response.payload.link,
+          location: response.payload.location,
+          size: response.payload.size,
+          tags: response.payload.tags,
+          termend: response.payload.termend,
+          termstart: response.payload.termstart,
+          timeend: response.payload.timeend,
+          timestart: response.payload.timestart,
+          title: response.payload.title,
+          type: response.payload.type,
+        });
         setIsSet(true);
-        console.log(study);
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
       }
@@ -120,7 +150,6 @@ const EditStudy = ({ match }) => {
   };
 
   const onInputChange = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     setStudy({ ...study, [name]: value });
   };
