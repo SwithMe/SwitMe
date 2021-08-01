@@ -1,8 +1,10 @@
 package com.watch.switme.repository;
 
 import com.watch.switme.domain.Study;
+import com.watch.switme.dto.MakeStudyDto;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.security.core.parameters.P;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +43,8 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
     //DB 검색 추가조건 수정
     @Query(value="select * from Study_main u where u.leader=:sleader and u.title=:stitle and u.size=:ssize and u.type=:stype and u.activate=:sactive", nativeQuery=true)
     List<Study> getQuery(@Param("sleader")Long leader, @Param("stitle")String title, @Param("ssize")int size, @Param("stype")String type, @Param("sactive")String activate);
+
+
+
+
 }

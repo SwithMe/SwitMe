@@ -17,11 +17,8 @@ import javax.swing.plaf.synth.SynthTextAreaUI;
 
 import java.util.List;
 
-/*
-* 2. 스터디 가입하기 채우기
-* 4. 스터디 수정하기
-* */
 
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/list")
@@ -70,11 +67,12 @@ public class StudyController {
         }
 
     //스터디 수정하기
-    @PostMapping("/array/fix/{study_idx}")
+    @PutMapping("/array/fix/{study_idx}")
     public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
-        Study study = studyRepository.findById(study_idx).get(); // not null 값으로 들어가도록.
-        studyService.update(study, makeStudyDto);
-        return studyRepository.save(study);
+        Study study01 = studyRepository.findById(study_idx).get();
+        study01=studyService.updateOldStudy(study01, makeStudyDto);
+        System.out.println(study01.getTitle());
+        return studyRepository.save(study01);
     }
 
     //전체 스터디 리스트 가져오기.
@@ -94,13 +92,6 @@ public class StudyController {
         public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
             userStudyService.leave(user_idx,study_idx);
     }
-
-    //스터디 탈퇴하기
-   // @DeleteMapping("/array/leave/{user_idx}/{study_idx}")
-    //public void LeaveStudy(@PathVariable("user_idx") long user_idx, @PathVariable("study_idx") Long study_idx){
-   //     userStudyService.leave(user_idx);
- //   }
-
 
     //스터디 세부사항 보여주기
     //함수 추가
