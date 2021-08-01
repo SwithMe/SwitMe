@@ -3,6 +3,7 @@ package com.watch.switme.controller;
 import com.watch.switme.domain.*;
 import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.SearchStudyDto;
+import com.watch.switme.dto.StudyDetailResponse;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
@@ -57,7 +58,7 @@ public class StudyController {
                 .size(makeStudyDto.getSize())
                 .tags(makeStudyDto.getTags())
                 .leader((long) makeStudyDto.getLeader())
-                .activate("N")
+                .activate(UserYesOrNo.N)
                 .termend(makeStudyDto.getTermend())
                 .termstart(makeStudyDto.getTermstart())
                 .timeend(makeStudyDto.getTimeend())
@@ -100,12 +101,38 @@ public class StudyController {
     //스터디 탈퇴하기
      @DeleteMapping("/array/leave/{user_study_idx}")
         public void LeaveStudy(@PathVariable("user_study_idx") long user_study_idx){
-            userStudyService.leave(user_study_idx);}
+            userStudyService.leave(user_study_idx);
+    }
 
     //스터디 세부사항 보여주기
+    //함수 추가
     @GetMapping("/array/study/{study_idx}")
-    public Study showStudyDetail(@PathVariable Long study_idx){
-        return studyRepository.findByStudy_idx(study_idx);
+    public StudyDetailResponse showStudyDetail(@PathVariable Long study_idx){
+        Study study= studyRepository.findByStudy_idx(study_idx);
+        String leader_name=userRepository.findFirstByUserIdx(study.getLeader()).getRealname();
+
+        StudyDetailResponse studyDetailResponse= StudyDetailResponse.builder()
+                .study_idx(study.getStudy_idx())
+                .title(study.getTitle())
+                .extra(study.getExtra())
+                .image(study.getImage())
+                .leader(study.getLeader())
+                .studyIntro(study.getStudyIntro())
+                .image(study.getImage())
+                .location(study.getLocation())
+                .link(study.getLink())
+                .size(study.getSize())
+                .type(study.getType())
+                .tags(study.getTags())
+                .leader((long) study.getLeader())
+                .termend(study.getTermend())
+                .termstart(study.getTermstart())
+                .timeend(study.getTimeend())
+                .timestart(study.getTimestart())
+                .activate(study.getActivate())
+                .leader_name(leader_name)
+                .build();
+        return studyDetailResponse;
     }
 
     //스터디 검색 기능
