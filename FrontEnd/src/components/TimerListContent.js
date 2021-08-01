@@ -3,6 +3,9 @@ import styled from "styled-components";
 import pencil from "../assets/pencil.png";
 import whitePencil from "../assets/whitepencil.png";
 import x from "../assets/close.png";
+import ModalTimer from "./ModalTimer";
+import { useDispatch } from "react-redux";
+import { editTimer } from "../_actions/actions";
 
 const Content = styled.div`
   display: flex;
@@ -70,16 +73,62 @@ const Content = styled.div`
   }
 `;
 
-const TimerListContent = ({ timer, onRemove, openModal }) => {
-  const { id, name, time } = timer;
+const TimerListContent = ({
+  timer,
+  onRemove,
+  toggle,
+  setToggle,
+  changeTimer,
+}) => {
+  const { timer_idx, name, duration } = timer;
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newName, setNewName] = useState(name);
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const onInputChange = (e) => {
+    setNewName(e.target.value);
+  };
+
+  const onSubmit = () => {
+    console.log(timer_idx);
+    dispatch(editTimer(timer_idx, { timer_name: newName })).then((response) => {
+      if (response.payload) {
+        console.log(response.payload);
+        setToggle(!toggle);
+      } else {
+        console.log("스톱워치 이름 변경 오류");
+      }
+    });
+    closeModal();
+  };
+
   return (
     <>
+      <ModalTimer
+        open={modalOpen}
+        close={closeModal}
+        onInputChange={onInputChange}
+        onSubmit={onSubmit}
+        value={newName}
+      ></ModalTimer>
       <Content>
-        <div class="name">{name}</div>
+        <div
+          class="name"
+          style={{ cursor: "pointer" }}
+          onClick={() => changeTimer(timer)}
+        >
+          {name}
+        </div>
         <div class="green">
-          <div class="time">{time}</div>
+          <div class="time">{duration}</div>
           <div class="edit" onClick={openModal}></div>
-          <div class="delete" onClick={() => onRemove(id)}></div>
+          <div class="delete" onClick={() => onRemove(timer_idx)}></div>
         </div>
       </Content>
     </>

@@ -32,17 +32,14 @@ const Wrapper = styled.div`
   background-color: white;
   position: fixed;
   font-size: 20px;
-
   .header {
     display: fixed;
     justify-content: flex-end;
   }
-
   .img {
     width: 14.5px;
     height: 14.5px;
   }
-
   .content {
     display: flex;
     flex-direction: column;
@@ -90,7 +87,7 @@ const Modal = (props) => {
                 value={value}
                 onChange={onInputChange}
               ></Input>
-              <Button onClick={(onSubmit, close)}>변경하기</Button>
+              <Button onClick={onSubmit}>변경하기</Button>
             </div>
           </Wrapper>
         </Screen>
