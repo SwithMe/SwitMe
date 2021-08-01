@@ -113,8 +113,8 @@ public class Study {
         this.avgMannerTemperature = avgMannerTemperature;
     }
 
+
     public Study update(Study study, MakeStudyDto makeStudyDto){
-        this.study_idx = study.getStudy_idx();
         this.title = makeStudyDto.getTitle();
         this.type = makeStudyDto.getType();
         this.termstart = makeStudyDto.getTermstart();
@@ -128,9 +128,8 @@ public class Study {
         this.image = makeStudyDto.getImage();
         this.link = makeStudyDto.getLink();
         this.activate =makeStudyDto.getActivate();
-        this.leader = study.getLeader();
         this.studyIntro = makeStudyDto.getStudyIntro();
-        this.avgMannerTemperature =study.getAvgMannerTemperature();
+        //this.avgMannerTemperature =study.getAvgMannerTemperature();
         return study;
     }
 }

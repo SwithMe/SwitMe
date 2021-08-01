@@ -73,12 +73,10 @@ public class StudyController {
     //스터디 수정하기
     @PutMapping("/array/fix/{study_idx}")
     public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
-        Study study = studyRepository.findById(study_idx).get();
-       // not null 값으로 들어가도록.
-        studyService.updateStudy(study, makeStudyDto);
-        System.out.println(study.getTitle());
-        //study 자체가 업데이트 완료. => study를 DB 에 저장하면됨.
-        return studyRepository.save(study);
+        Study study01 = studyRepository.findById(study_idx).get();
+        study01=studyService.updateOldStudy(study01, makeStudyDto);
+        System.out.println(study01.getTitle());
+        return studyRepository.save(study01);
     }
 
     //전체 스터디 리스트 가져오기.

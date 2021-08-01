@@ -24,14 +24,27 @@ public class StudyService {
 
     @Autowired
     private final StudyRepository studyRepository;
+
     private final UserStudyRepository userStudyRepository;
 
     @Transactional
-    public Study update(Study study, MakeStudyDto makeStudyDto){
-
-        study.update(study, makeStudyDto);
+    public Study updateOldStudy(Study study, MakeStudyDto makeStudyDto){
+            /*study.update(study.getStudy_idx(), makeStudyDto.getTitle(), makeStudyDto.getType()
+            ,makeStudyDto.getTermstart(), makeStudyDto.getTermend(), makeStudyDto.getTimestart(),
+                    makeStudyDto.getTimeend(), makeStudyDto.getSize(), makeStudyDto.getTags(),
+                    makeStudyDto.getLocation(), makeStudyDto.getExtra(), makeStudyDto.getImage(),
+                    makeStudyDto.getLeader(), makeStudyDto.getLink());*/
+            study.update(study, makeStudyDto);
         return study;
     }
+
+    /*
+    Long study_idx, String title, String type, Date termstart, Date termend,
+    Time timestart, Time timeend, Integer size, String tags, String location,
+    String extra, String image, Long leader, String link,
+     */
+    //UserYesOrNo activate, String studyIntro, Integer participant, Integer avgMannerTemperatur
+
     @Transactional
     public void updateStudy(Study study, MakeStudyDto makeStudyDto) {
         study.setActivate(makeStudyDto.getActivate());
