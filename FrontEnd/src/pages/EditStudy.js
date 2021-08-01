@@ -9,13 +9,9 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { editstudy, getStudydetail } from "../_actions/actions";
 
-// import "react-datepicker/dist/react-datepicker.css";
-// import DatePicker from "react-datepicker";
-// import "../pages/datePicker.css";
-// import Calendar from "../components/Calendar";
-
-// //antd datePicker
-// import { DatePicker } from "antd";
+//antd datePicker
+import { DatePicker } from "antd";
+import "antd/dist/antd.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -100,7 +96,7 @@ const EditStudy = ({ match }) => {
       if (response.payload) {
         setStudy(response.payload);
         setIsSet(true);
-        console.log(study);
+        console.log(response.payload);
       } else {
         console.log("기존 스터디 정보 가져오기 실패");
       }
@@ -123,6 +119,22 @@ const EditStudy = ({ match }) => {
     console.log(e.target.value);
     const { name, value } = e.target;
     setStudy({ ...study, [name]: value });
+  };
+
+  //DatePicker
+
+  const handleTermStartChange = (date, dateString, id) => {
+    dateString = dateString.replaceAll("/", "-");
+    study.termstart = dateString;
+    console.log(study.termstart);
+    console.log(study);
+  };
+
+  const handleTermEndChange = (date, dateString, id) => {
+    dateString = dateString.replaceAll("/", "-");
+    study.termend = dateString;
+    console.log(study.termend);
+    console.log(study);
   };
 
   return isSet ? (
@@ -236,7 +248,7 @@ const EditStudy = ({ match }) => {
               <Title>기간</Title>
             </Textbox>
             <Inputbox style={{ paddingTop: "18px" }}>
-              <Input
+              {/* <Input
                 name="termstart"
                 value={study.termstart}
                 placeholder="날짜를 선택하세요"
@@ -245,9 +257,22 @@ const EditStudy = ({ match }) => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
+              /> */}
+              <DatePicker
+                style={{
+                  borderColor: "#56BE9C",
+                  borderRadius: "10px",
+                  fontSize: "20px",
+                  paddingLeft: "20px",
+                  width: "200px",
+                }}
+                title={study.termstart}
+                format="YYYY/MM/DD"
+                placeholder="날짜를 입력하세요"
+                onChange={(date, dateString) =>
+                  handleTermStartChange(date, dateString, 1)
+                }
               />
-              {/* <Calendar /> */}
-
               <div style={{ margin: "15px", marginTop: "30px" }}>
                 <img
                   alt="line"
@@ -255,7 +280,7 @@ const EditStudy = ({ match }) => {
                   style={{ width: "57px", height: "3px" }}
                 />
               </div>
-              <Input
+              {/* <Input
                 name="termend"
                 value={study.termend}
                 placeholder="날짜를 선택하세요"
@@ -264,8 +289,23 @@ const EditStudy = ({ match }) => {
                 marginTop="18"
                 validinput="true"
                 onChange={onInputChange}
+              /> */}
+
+              <DatePicker
+                style={{
+                  borderColor: "#56BE9C",
+                  borderRadius: "10px",
+                  fontSize: "20px",
+                  paddingLeft: "20px",
+                  width: "200px",
+                }}
+                title={study.termend}
+                format="YYYY/MM/DD"
+                placeholder="날짜를 입력하세요"
+                onChange={(date, dateString) =>
+                  handleTermEndChange(date, dateString, 2)
+                }
               />
-              {/* <Calendar /> */}
             </Inputbox>
           </Row>
 
