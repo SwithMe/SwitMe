@@ -5,6 +5,7 @@ import com.watch.switme.dto.MakeStudyDto;
 import com.watch.switme.dto.SearchStudyDto;
 import com.watch.switme.dto.StudyDetailResponse;
 import com.watch.switme.dto.StudyListResponseDto;
+import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
@@ -13,6 +14,7 @@ import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import javax.sound.midi.SysexMessage;
 import javax.swing.plaf.synth.SynthTextAreaUI;
@@ -151,14 +153,22 @@ public class StudyController {
     }
 
     //스터디 검색 기능
-    @PostMapping("/array")
-    public List<StudyListResponseDto> example(@RequestBody SearchStudyDto searchStudyDto) {
+    @GetMapping("/array")
+    public List<StudyListResponseDto> example() {
         List<Study> studyListList = studyRepository.findAll();
         List<StudyListResponseDto> SearchStudy = new ArrayList<>();
+        if(studyListList.isEmpty()){
+            return null;
+        }
+        StudyListResponseDto studyListResponseDto = new StudyListResponseDto();
         for (Study study : studyListList) {
-            System.out.println("222222222222222222");
-            StudyListResponseDto studyListResponseDto = StudyListResponseDto.builder()
-                    .avgMannerTemperature(study.getAvgMannerTemperature())
+            User user=userRepository.findById(study.getLeader()).orElseThrow(()->new NoResultFromDBException("데이터가 존재하지 않습니다."));
+            UserDataExtra userDataExtra=userDataExtraRepository.findByUserIdx(study.getLeader()).orElse(null);
+
+            System.out.println(study.getTitle());
+            studyListResponseDto = StudyListResponseDto.builder()
+                    .study_idx(study.getStudy_idx())
+                    .avgMannerTemperature(10) //study.getAvgMannerTemperature(10)
                     .image(study.getImage())
                     .activate(study.getActivate())
                     .leader(study.getLeader())
@@ -175,7 +185,47 @@ public class StudyController {
         }
         return SearchStudy;
     }
-}
+
+    @PostMapping("array/find")
+    public List<StudyListResponseDto> example2(@RequestBody SearchStudyDto searchStudyDto) {
+        List<StudyListResponseDto> SearchStudy = new ArrayList<>();
+        if (searchStudyDto.getTitle() == null && searchStudyDto.getTags() == null &&
+                searchStudyDto.getType() == null && searchStudyDto.getActivate() == null && searchStudyDto.getLeader() == null) {
+            return null;
+        }
+        if (searchStudyDto.getTitle() == null) {
+            return null;
+        }
+        StudyListResponseDto studyListResponseDto = new StudyListResponseDto();
+        List<Study> studyListList = studyRepository.getFilterQuery(searchStudyDto.getLeader(), searchStudyDto.getTitle(), searchStudyDto.getSize(), searchStudyDto.getTags(), searchStudyDto.getType());
+        ;
+        for (Study study : studyListList) {
+            System.out.println(study.getTitle());
+            studyListResponseDto = StudyListResponseDto.builder()
+                    .study_idx(study.getStudy_idx())
+                    .avgMannerTemperature(10) //study.getAvgMannerTemperature(10)
+                    .image(study.getImage())
+                    .activate(study.getActivate())
+                    .leader(study.getLeader())
+                    .leader_name(userRepository.findFirstByUserIdx(study.getLeader()).getRealname())
+                    .leader_image("???")
+                    .title(study.getTitle())
+                    .size(study.getSize())
+                    .tags(study.getTags())
+                    .participant(study.getParticipant())
+                    .type(study.getType())
+                    .build();
+            SearchStudy.add(studyListResponseDto);
+            System.out.println("");
+        }
+        return SearchStudy;
+    }
+
+    }
+
+
+
+
             //return SearchStudy;
 
 
