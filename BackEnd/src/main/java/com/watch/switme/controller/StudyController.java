@@ -99,7 +99,6 @@ public class StudyController {
     public StudyDetailResponse showStudyDetail(@PathVariable Long study_idx){
         Study study= studyRepository.findByStudy_idx(study_idx);
         String leader_name=userRepository.findFirstByUserIdx(study.getLeader()).getRealname();
-
         StudyDetailResponse studyDetailResponse= StudyDetailResponse.builder()
                 .study_idx(study.getStudy_idx())
                 .title(study.getTitle())
@@ -129,12 +128,6 @@ public class StudyController {
     public UserStudy statuStudy(@PathVariable Long user_idx, @PathVariable Long study_idx){
         return userStudyService.compare(user_idx, study_idx);
      }
-
-     //스터디 세부사항 보여주기
-     @GetMapping("/array/study/{study_idx}")
-     public Study showStudyDetail (@PathVariable Long study_idx){
-        return studyRepository.findByStudy_idx(study_idx);
-    }
 
     //스터디 검색 기능
     @PostMapping("/array")
