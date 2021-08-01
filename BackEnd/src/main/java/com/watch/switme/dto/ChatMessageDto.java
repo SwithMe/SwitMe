@@ -33,7 +33,7 @@ public class ChatMessageDto {
         return ChatMessage.builder()
                 .message(this.message)
                 .sender(this.sender)
-                .room(this.room)
+                .room(room)
                 .time(this.time)
                 .check(this.check)
                 .build();
