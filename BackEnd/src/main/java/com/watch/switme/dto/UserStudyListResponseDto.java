@@ -1,5 +1,6 @@
 package com.watch.switme.dto;
 
+import com.watch.switme.domain.UserYesOrNo;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,11 @@ public class UserStudyListResponseDto {
     private Date start_date;
     private Date end_date;
     private int warning;
-    private String activate;    //check type
+    private UserYesOrNo activate;    //check type
 
     @Builder
     public UserStudyListResponseDto(Long study_idx, String study_title, String study_image,
-                                    Date start_date, Date end_date, int warning, String activate){
+                                    Date start_date, Date end_date, int warning, UserYesOrNo activate){
         this.study_idx = study_idx;
         this.study_title = study_title;
         this.study_image = study_image;

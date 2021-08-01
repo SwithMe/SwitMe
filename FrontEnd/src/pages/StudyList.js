@@ -198,6 +198,7 @@ const StudyList = () => {
     evt.preventDefault();
     dispatch(getStudylist(search)).then((response) => {
       if (response.payload) {
+        console.log(response.payload);
         setStudies(response.payload);
       } else {
         alert("스터디 검색 오류");
