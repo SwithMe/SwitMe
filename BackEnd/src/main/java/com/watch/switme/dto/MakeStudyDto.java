@@ -4,21 +4,18 @@ import com.watch.switme.domain.UserYesOrNo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Data
 public class MakeStudyDto {
-    private Long study_idx;
     private String title;
     private String type;
     private Date termstart;
@@ -29,17 +26,15 @@ public class MakeStudyDto {
     private String tags;
     private String location;
     private String extra;
-    private String image;
+    private MultipartFile image;
     private Long leader;
     private String link;
     private String studyIntro;
     private UserYesOrNo activate;
-    private int manner_temperature;
 
     @Builder
-    public MakeStudyDto(Long study_idx, String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
-                        String tags, String location, String extra, String image, Long leader, String link, String studyIntro, int manner_temperature){
-        this.study_idx = study_idx;
+    public MakeStudyDto(String title, String type, Date termstart, Date termend, Time timestart, Time timeend, Integer size,
+                        String tags, String location, String extra, MultipartFile image, Long leader, String link, String studyIntro){
         this.title = title;
         this.type = type;
         this.termstart = termstart;
@@ -54,7 +49,6 @@ public class MakeStudyDto {
         this.leader = leader;
         this.link = link;
         this.studyIntro = studyIntro;
-        this.manner_temperature=manner_temperature;
     }
 
 }

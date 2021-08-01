@@ -33,7 +33,6 @@ public class UserStudy {
     @Column(name = "warning", nullable = false)
     private Integer warning;
 
-    @CreationTimestamp
     @Column(name="join_date", nullable = false)
     private LocalDateTime joinDate;
 
@@ -41,8 +40,6 @@ public class UserStudy {
     @Enumerated(EnumType.STRING)
     private UserYesOrNo activate;
 
-    // 저는 조회만 하면 돼서 변수명이랑 타입만 바뀌지 않으면 효정님이 편한 방향으로 수정해서 사용하셔도 상관없어요!
-    // 다만 변수명/타입이 바뀌게 되면 알려주세요
     @Builder
     public UserStudy(Study study, User user, UserYesOrNo amLeader, Integer warning, LocalDateTime joinDate, UserYesOrNo activate){
         this.study = study;

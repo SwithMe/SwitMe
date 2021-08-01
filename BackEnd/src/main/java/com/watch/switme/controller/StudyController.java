@@ -1,24 +1,20 @@
 package com.watch.switme.controller;
 
 import com.watch.switme.domain.*;
-import com.watch.switme.dto.MakeStudyDto;
-import com.watch.switme.dto.SearchStudyDto;
-import com.watch.switme.dto.StudyDetailResponse;
-import com.watch.switme.dto.StudyListResponseDto;
+import com.watch.switme.dto.*;
 import com.watch.switme.exception.NoResultFromDBException;
 import com.watch.switme.repository.StudyRepository;
 import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
-import com.watch.switme.repository.UserStudyRepository;
+import com.watch.switme.service.S3Service;
 import com.watch.switme.service.StudyService;
 import com.watch.switme.service.UserStudyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.sound.midi.SysexMessage;
-import javax.swing.plaf.synth.SynthTextAreaUI;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,37 +25,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/list")
 public class StudyController {
+    private final UserStudyService userStudyService;
+    private final StudyService studyService;
+    private final StudyRepository studyRepository;
+    private final UserRepository userRepository;
+    private final UserDataExtraRepository userDataExtraRepository;
 
-    @Autowired
-    UserStudyService userStudyService;
-    @Autowired
-    StudyService studyService;
-    @Autowired
-    StudyRepository studyRepository;
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserDataExtraRepository userDataExtraRepository;
-
-    @Autowired
-    public StudyController(StudyRepository studyRepository) {
-        this.studyRepository = studyRepository;
-    }
+    private final S3Service s3Service;
 
     //온/오프라인 스터디 개설하기
     // 3. 사진 넣는 거 바꾸기 resources save /server 주소 /폴더 위치
     //makestudydto 를 받는다 (고 생각)
     @PostMapping("/array/enroll")
-    public String createnewStudy(@RequestBody MakeStudyDto makeStudyDto) {
+    public SuccessResponseDto createnewStudy(MakeStudyDto makeStudyDto) throws IOException {
         User user = userRepository.findFirstByUserIdx(makeStudyDto.getLeader());
         int temp = user.getManner_temperature();
-        System.out.println(user.getManner_temperature());
+        MultipartFile file = makeStudyDto.getImage();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        String current_date = simpleDateFormat.format(System.currentTimeMillis());
+
+        String file_name = current_date+file.getOriginalFilename();;
+        String file_url = s3Service.upload(file, file_name);
+
         Study study = Study.builder()
                 .title(makeStudyDto.getTitle())
                 .type(makeStudyDto.getType())
                 .studyIntro(makeStudyDto.getStudyIntro())
-                .image(makeStudyDto.getImage())
+                .image(file_url)
                 .location(makeStudyDto.getLocation())
                 .link(makeStudyDto.getLink())
                 .size(makeStudyDto.getSize())
@@ -73,38 +65,27 @@ public class StudyController {
                 .avgMannerTemperature(temp)
                 .participant(0)
                 .build();
-        studyRepository.save(study);
-        return userStudyService.join(user.getUser_idx(), study.getStudy_idx());
+
+        Study saved_study = studyService.saveStudy(study);
+        userStudyService.joinLeader(user, saved_study);
+
+        return SuccessResponseDto.builder().success(true).build();
     }
 
     //스터디 수정하기
     @PutMapping("/array/fix/{study_idx}")
-    public Study edit(@PathVariable("study_idx") Long study_idx, @RequestBody MakeStudyDto makeStudyDto) {
-        Study study01 = studyRepository.findById(study_idx).get();
-        study01 = studyService.updateOldStudy(study01, makeStudyDto);
-        System.out.println(study01.getTitle());
-        return studyRepository.save(study01);
+    public SuccessResponseDto edit(@PathVariable("study_idx") Long study_idx, MakeStudyDto makeStudyDto) throws IOException{
+        MultipartFile file = makeStudyDto.getImage();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        String current_date = simpleDateFormat.format(System.currentTimeMillis());
+
+        String file_name = current_date+file.getOriginalFilename();;
+        String file_url = s3Service.upload(file, file_name);
+
+        studyService.updateStudy(study_idx, makeStudyDto, file_url);
+
+        return SuccessResponseDto.builder().success(true).build();
     }
-
-    //전체 스터디 리스트 가져오기.
-    //@GetMapping("/alllist")
-    //public Iterable<Study> list(){
-    //    return studyRepository.findAll();
-    //}
-
-
-    /*
-
-        //회원정보 리스트 반환
-    @GetMapping(value = "/list")
-    public ResponseEntity<UserListResponseDTO> findAll() {
-        final UserListResponseDTO userListResponseDTO = UserListResponseDTO.builder()
-                .userList(userService.findAll()).build();
-        return ResponseEntity.ok(userListResponseDTO);
-    }
-
-     */
-
 
     //스터디 가입하기
     @PostMapping("/array/join/{user_idx}/{study_idx}")
@@ -224,17 +205,6 @@ public class StudyController {
         return SearchStudy;
     }
 }
-            //return SearchStudy;
-
-
-
-        /*
-        if(searchStudyDto.getTitle()==null&&searchStudyDto.getTags()==null&&
-                searchStudyDto.getType()==null&&searchStudyDto.getActivate()==null&&searchStudyDto.getLeader()==null) {
-            return Study
-        }*/
-        //return studyRepository.getFilterQuery(searchStudyDto.getLeader(), searchStudyDto.getTitle(), searchStudyDto.getSize(), searchStudyDto.getTags(),searchStudyDto.getType());
-
 
 
 

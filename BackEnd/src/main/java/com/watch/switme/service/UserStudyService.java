@@ -8,10 +8,6 @@ import com.watch.switme.repository.UserDataExtraRepository;
 import com.watch.switme.repository.UserRepository;
 import com.watch.switme.repository.UserStudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,19 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserStudyService {
-    @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final UserStudyRepository userStudyRepository;
-
-    @Autowired
     private final UserDataExtraRepository userDataExtraRepository;
-
-    @Autowired
     private final StudyRepository studyRepository;
-
-
 
     @Transactional
     public List<MemberResponseDto> getMemberList(Long study_idx){
@@ -97,12 +84,21 @@ public class UserStudyService {
     }
 
     @Transactional
+    public void joinLeader(User user, Study study){
+        UserStudy userStudy = UserStudy.builder()
+                .study(study).user(user).joinDate(LocalDateTime.now())
+                .amLeader(UserYesOrNo.Y).activate(UserYesOrNo.Y).warning(0).build();
+        userStudyRepository.save(userStudy);
+    }
+
+    @Transactional
     public String join(Long user_idx, Long study_idx){
-       Study study = studyRepository.findById(study_idx).get();
+        Study study = studyRepository.findById(study_idx).get();
         int participant = study.getParticipant().intValue();
+        int new_participant;
         if(participant < study.getSize()){
-            participant=study.getParticipant().intValue()+1;
-            study.updateParticipant(participant);
+            new_participant = study.getParticipant().intValue()+1;
+            study.updateParticipant(new_participant);
             User user= userRepository.findById(user_idx).get();
             JoinStudyRequestDto joinStudyRequestDto = JoinStudyRequestDto.builder()
                     .joinDate(LocalDateTime.now())
@@ -113,7 +109,7 @@ public class UserStudyService {
                     .warning(0)
                     .build();
             System.out.println(joinStudyRequestDto.getAmLeader());
-            userStudyRepository.save(joinStudyRequestDto.toEntity()).getUserStudyIdx();
+            userStudyRepository.save(joinStudyRequestDto.toEntity());
             return "스터디에 가입되었습니다!";
         }
         else return "현재 가입 인원이 모두 채워졌습니다. 가입이 불가능합니다.";
