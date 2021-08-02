@@ -46,7 +46,7 @@
 
 ## 💡 API 명세서
 
-- [🔗 link](https://six-sapphire-eb2.notion.site/API-86c2c2fa669a430eb97669b3b13cfa30)
+- [🔗 link](https://inryuuu.notion.site/Switme-API-7f1feff08fe84b539c536f60e50c7f9a)
 
 ## 💡 프로젝트 구조
 ```
