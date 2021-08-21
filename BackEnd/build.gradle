@@ -43,3 +43,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+apply plugin:'war'
+
+bootWar{
+    archiveBaseName="switme-api"
+    archiveFileName="switme-api.war"
+    archiveVersion="0.0.0"
+}
