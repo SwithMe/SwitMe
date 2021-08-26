@@ -59,7 +59,9 @@ const Chat = (props) => {
     });
     client.current = new StompJs.Client({
       //brokerURL: "ws://localhost:8080/sock",
-      webSocketFactory: () => new SockJS("/sock"),
+      // webSocketFactory: () => new SockJS("/sock"),
+      webSocketFactory: () =>
+        new SockJS("http://3.37.242.72:8080/switme-api/sock"),
       debug: function (str) {
         console.log(str);
       },

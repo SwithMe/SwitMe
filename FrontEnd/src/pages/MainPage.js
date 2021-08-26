@@ -110,7 +110,9 @@ const MainPage = () => {
   const slideRef = useRef();
 
   useEffect(() => {
-    dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
+    // dispatch(getTotalTime(window.localStorage.getItem("id"))).then(
+    // 코드 수정
+    dispatch(getTotalTime(window.localStorage.getItem("id") ?? 5)).then(
       (response) => {
         if (response.payload) {
           let time = response.payload.cumulative_time;
