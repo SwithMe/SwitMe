@@ -35,7 +35,7 @@ const FIND_PASSWORD = "FIND_PASSWORD";
 //로그인, 회원가입 관련
 export const login = (dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/auth/login`, dataToSubmit)
+    .post(`${USER_SERVER}/auth/loginget`, dataToSubmit)
     .then((response) => {
       return new Promise(function (resolve, reject) {
         let idx = response.headers["user_idx"];
@@ -112,7 +112,8 @@ export const recommendedStudy = () => {
 //회원정보 수정
 export const editUser = (dataToSubmit) => {
   const request = axios
-    .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
+    // .post(`${USER_SERVER}/api/mypage/user_update/`, dataToSubmit)
+    .post(`${USER_SERVER}/api/mypage/user_update`, dataToSubmit)
     .then((request) => request.data)
     .catch((error) => {});
   return {
